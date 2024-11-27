@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
           title: const Text('Welcome to amicae'),
         ),
         body: const Center(
-          child: Text('COMING SOON!'),
+          child: Text('The best app ever made, ever.'),
         ),
       ),
     );
