@@ -59,6 +59,11 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  assets:
+    - images/ae_short_black.png
+    - images/ae_short_white.png
+    - images/amicae_long_black.png
+    - images/amicae_long_white.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
