@@ -27,3 +27,40 @@ class AppThemes {
     brightness: Brightness.dark
   );
 }
+
+//Home page
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        backgroundColor: Colors.green,
+        body: Container(
+          margin: const EdgeInsets.all(20),
+          width: double.infinity,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Padding(
+                padding: EdgeInsets.all(10),
+                child: Text("home page goes here")
+              ),
+              Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: IconButton(
+                      icon: const Icon(Icons.arrow_back),
+                      color: Colors.black,
+                      onPressed: () {
+                        Navigator.pop(context);
+                      }
+                  )
+              ),
+            ],
+          ),
+        )
+      )
+    );
+  }
+}
