@@ -62,8 +62,8 @@ flutter:
   assets:
     - images/ae_short_black.png
     - images/ae_short_white.png
-    - images/amicae_long_black.png
-    - images/amicae_long_white.png
+    - images/ae_long_black.png
+    - images/ae_long_white.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

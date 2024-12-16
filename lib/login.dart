@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import "home.dart";
+import "nav_bar.dart";
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -91,7 +91,7 @@ class LoginPage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder:
-                        (context) => const HomePage()
+                        (context) => const NavBar()
                       )
                     );
                   },

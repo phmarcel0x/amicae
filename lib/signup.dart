@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import "home.dart";
+import "nav_bar.dart";
 
 class SignupPage extends StatelessWidget {
   const SignupPage({super.key});
@@ -91,7 +91,7 @@ class SignupPage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder:
-                        (context) => const HomePage()
+                        (context) => const NavBar()
                       )
                     );
                   },
