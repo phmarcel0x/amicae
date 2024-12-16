@@ -19,10 +19,10 @@ class _EventsPage extends State<EventsPage> {
             body: Container(
               margin: const EdgeInsets.all(20),
               width: double.infinity,
-              child: Column(
+              child: const Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Padding(
+                  Padding(
                       padding: EdgeInsets.all(10),
                       child: Text("events page goes here")
                   ),
