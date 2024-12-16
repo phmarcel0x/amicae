@@ -12,7 +12,10 @@ class _SpotsPage extends State<SpotsPage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
+
         home: Scaffold(
+
             backgroundColor: Colors.green,
             body: Container(
               margin: const EdgeInsets.all(20),

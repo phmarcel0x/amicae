@@ -7,6 +7,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+
       theme: ThemeData(
         textSelectionTheme: const TextSelectionThemeData(
           cursorColor: Colors.black,

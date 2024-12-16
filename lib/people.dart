@@ -12,6 +12,8 @@ class _PeoplePage extends State<PeoplePage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
+
         home: Scaffold(
             backgroundColor: Colors.pink,
             body: Container(

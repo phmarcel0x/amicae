@@ -12,7 +12,9 @@ class _HomePage extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
+        debugShowCheckedModeBanner: false,
+
+        home: Scaffold(
         backgroundColor: Colors.red,
         body: Container(
           margin: const EdgeInsets.all(20),

@@ -13,6 +13,8 @@ class _ProfilePage extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
+
         home: Scaffold(
             backgroundColor: Colors.blue,
             body: Container(

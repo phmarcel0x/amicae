@@ -12,6 +12,8 @@ class _EventsPage extends State<EventsPage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
+
         home: Scaffold(
             backgroundColor: Colors.yellow,
             body: Container(
