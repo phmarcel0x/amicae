@@ -25,6 +25,7 @@ class LoginPage extends StatelessWidget {
                 padding: const EdgeInsets.all(10),
                 child: IconButton(
                   icon: const Icon(Icons.arrow_back),
+
                   color: Colors.black,
                   onPressed: () {
                     Navigator.pop(context);
@@ -86,8 +87,11 @@ class LoginPage extends StatelessWidget {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black,
-                    foregroundColor: Colors.white
-                  ),
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    )
+                ),
                   onPressed: () {
                     Navigator.push(
                       context,
