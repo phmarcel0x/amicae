@@ -1,4 +1,4 @@
-<img src="./assets/logo/short_logo_dark.png" width="15%" alt="Amicae Logo">
+![Amicae Logo](./assets/logo/short_logo_dark.png)
 
 # Amicae: Your Networking & Study App
 
