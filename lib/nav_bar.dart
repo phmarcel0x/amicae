@@ -40,7 +40,7 @@ class _NavBar extends State<NavBar> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
-                  "images/ae_long_black.png",
+                  "assets/ae_long_black.png",
                   fit: BoxFit.contain,
                   height: 200,
                 ),

@@ -60,10 +60,10 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
-    - images/ae_short_black.png
-    - images/ae_short_white.png
-    - images/ae_long_black.png
-    - images/ae_long_white.png
+    - assets/ae_short_black.png
+    - assets/ae_short_white.png
+    - assets/ae_long_black.png
+    - assets/ae_long_white.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
