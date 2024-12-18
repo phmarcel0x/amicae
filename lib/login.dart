@@ -35,7 +35,7 @@ class LoginPage extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.all(0),
                 child: CircleAvatar(
-                  backgroundImage: AssetImage("images/ae_short_white.png"),
+                  backgroundImage: AssetImage("assets/ae_short_white.png"),
                   radius: 50,
                 ),
               ),
