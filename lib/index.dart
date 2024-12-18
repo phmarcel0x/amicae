@@ -20,7 +20,7 @@ class LandingPage extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.all(10),
                 child: CircleAvatar(
-                  backgroundImage: AssetImage("images/ae_short_black.png"),
+                  backgroundImage: AssetImage("assets/ae_short_black.png"),
                   radius: 100,
                 ),
               ),
