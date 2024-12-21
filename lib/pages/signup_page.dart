@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import './home_page.dart';
+import '../services/auth_service.dart';
+import 'home_page.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -10,16 +10,18 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final AuthService _authService = AuthService();
 
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
-  // Firebase Signup Method
-  void _signUpUser() async {
+  // Sign-up logic with validation
+  Future<void> _signUpUser() async {
     if (_formKey.currentState!.validate()) {
       if (_passwordController.text != _confirmPasswordController.text) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -29,39 +31,24 @@ class _SignupPageState extends State<SignupPage> {
       }
 
       try {
-        UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+        final user = await _authService.signUp(
           email: _emailController.text,
           password: _passwordController.text,
         );
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Signup Successful! Redirecting...')),
-        );
+        if (user != null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Sign Up Successful! Redirecting...')),
+          );
 
-        // Navigate to HomePage on successful signup
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const HomePage()),
-        );
-      } on FirebaseAuthException catch (e) {
-        // Handle specific errors
-        String errorMessage;
-        if (e.code == 'email-already-in-use') {
-          errorMessage = 'The email address is already in use by another account.';
-        } else if (e.code == 'weak-password') {
-          errorMessage = 'Password is too weak. Use at least 6 characters.';
-        } else if (e.code == 'invalid-email') {
-          errorMessage = 'Invalid email format. Please check your email.';
-        } else {
-          errorMessage = 'An unexpected error occurred. Please try again.';
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const HomePage()),
+          );
         }
-
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(errorMessage)),
-        );
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: $e')),
+          SnackBar(content: Text(e.toString())),
         );
       }
     }
@@ -69,56 +56,104 @@ class _SignupPageState extends State<SignupPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        textSelectionTheme: const TextSelectionThemeData(
-          cursorColor: Colors.black,
-        ),
-      ),
-      home: Scaffold(
-        backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          child: Container(
-            margin: const EdgeInsets.all(20),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  const CircleAvatar(
-                    backgroundImage: AssetImage("images/ae_short_white.png"),
-                    radius: 50,
-                  ),
-                  const Text(
-                    "Sign up for AMICAE",
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                  ),
-                  TextFormField(
-                    controller: _emailController,
-                    decoration: const InputDecoration(labelText: "Email"),
-                    validator: (value) =>
-                        value!.isEmpty ? "Enter an email" : null,
-                  ),
-                  TextFormField(
-                    controller: _passwordController,
-                    obscureText: true,
-                    decoration: const InputDecoration(labelText: "Password"),
-                    validator: (value) =>
-                        value!.length < 6 ? "Password must be at least 6 characters" : null,
-                  ),
-                  TextFormField(
-                    controller: _confirmPasswordController,
-                    obscureText: true,
-                    decoration: const InputDecoration(labelText: "Confirm Password"),
-                    validator: (value) =>
-                        value!.isEmpty ? "Confirm your password" : null,
-                  ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: _signUpUser,
-                    child: const Text("Sign Up"),
-                  ),
-                ],
-              ),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Container(
+          margin: const EdgeInsets.all(20),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const CircleAvatar(
+                  backgroundImage: AssetImage('images/ae_short_white.png'),
+                  radius: 50,
+                ),
+                const Text(
+                  "Sign up for AMICAE",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                ),
+                const SizedBox(height: 20),
+
+                // First Name Field
+                TextFormField(
+                  controller: _firstNameController,
+                  decoration: const InputDecoration(labelText: "First Name"),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please enter your first name";
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 10),
+
+                // Last Name Field
+                TextFormField(
+                  controller: _lastNameController,
+                  decoration: const InputDecoration(labelText: "Last Name"),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please enter your last name";
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 10),
+
+                // Email Field
+                TextFormField(
+                  controller: _emailController,
+                  decoration: const InputDecoration(labelText: "Email"),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please enter your email";
+                    }
+                    if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                      return "Enter a valid email";
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 10),
+
+                // Password Field
+                TextFormField(
+                  controller: _passwordController,
+                  obscureText: true,
+                  decoration: const InputDecoration(labelText: "Password"),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please enter a password";
+                    }
+                    if (value.length < 6) {
+                      return "Password must be at least 6 characters";
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 10),
+
+                // Confirm Password Field
+                TextFormField(
+                  controller: _confirmPasswordController,
+                  obscureText: true,
+                  decoration: const InputDecoration(labelText: "Confirm Password"),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Please confirm your password";
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 20),
+
+                ElevatedButton(
+                  onPressed: _signUpUser,
+                  child: const Text("SIGN UP"),
+                ),
+              ],
             ),
           ),
         ),
