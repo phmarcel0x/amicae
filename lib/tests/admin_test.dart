@@ -1,5 +1,7 @@
 // Importation of the test framework 
 import "package:test/test.dart";
+// importation of the module for the user abstract class
+import "../user_modules/user.dart";
 // importation of the file containing the admin class 
 import "../user_modules/admin.dart";
 // importing the exception files 
@@ -41,7 +43,7 @@ void main() {
       final random = Random();
 
       // for loop to have a random first name chosen from the list
-      for (int i = 0; i < Admin.maxChange; i++) {
+      for (int i = 0; i < User.maxChange; i++) {
         String randomName;
         do {
           randomName = firstNameList[random.nextInt(firstNameList.length)];
@@ -51,7 +53,7 @@ void main() {
       }
 
       // Verify that the number of changes is equal to the adminMaxChange
-      expect(admin.firstNameChangeCounter, equals(Admin.maxChange));
+      expect(admin.firstNameChangeCounter, equals(User.maxChange));
 
       // Change the first name one more time: with a name not in the list 
       bool exceptionThrown = false;
@@ -86,7 +88,7 @@ void main() {
       final random = Random();
 
       // for loop to have a random middle name chosen from the list
-      for (int i = 0; i < Admin.maxChange; i++) {
+      for (int i = 0; i < User.maxChange; i++) {
         String randomName;
         do {
           randomName = middleNameList[random.nextInt(middleNameList.length)];
@@ -95,7 +97,7 @@ void main() {
       }
 
       // Verify that the number of changes is equal to the adminMaxChange
-      expect(admin.middleNameChangeCounter, equals(Admin.maxChange));
+      expect(admin.middleNameChangeCounter, equals(User.maxChange));
 
       // Change the middle Name one more time: with a name not in the list
       bool exceptionThrown = false;
@@ -130,7 +132,7 @@ void main() {
       final random = Random();
 
       // for loop to have a random last name chosen from the list
-      for (int i = 0; i < Admin.maxChange; i++) {
+      for (int i = 0; i < User.maxChange; i++) {
         String randomName;
         do {
           randomName = lastNameList[random.nextInt(lastNameList.length)];
@@ -139,7 +141,7 @@ void main() {
       }
 
       // Verify that the number of changes is equal to the adminMaxChange
-      expect(admin.lastNameChangeCounter, equals(Admin.maxChange));
+      expect(admin.lastNameChangeCounter, equals(User.maxChange));
 
       // Change the last Name one more time: with a name not in the list
       bool exceptionThrown = false;
