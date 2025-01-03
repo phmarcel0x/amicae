@@ -145,7 +145,7 @@ abstract class User {
 
   // Method to show the input
   String toString(){
-    if (totalNameChangeCounter == 0) {
+    if (totalNameChangeCounter == 0)  {
       if (middleName != null) {
       return "Your name is: $firstName $middleName $lastName. You registered with the following email: $email.";
       }
