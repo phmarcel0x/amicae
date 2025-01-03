@@ -5,18 +5,24 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        textTheme: const TextTheme(
+          bodyMedium: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+        ),
+      ),
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Welcome to amicae'),
         ),
         body: const Center(
-          child: Text('The best app ever made, ever.'),
+          child: Text('The best app ever made, ever. Now with a new theme!'),
         ),
       ),
     );
