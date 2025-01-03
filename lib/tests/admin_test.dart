@@ -59,7 +59,7 @@ void main() {
         admin.firstName = "Vanessa";
       }
       catch (error) {
-        if (error is maxChangeExceeded) {
+        if (error is MaxChangeExceeded) {
           exceptionThrown = true;
         }
       }
@@ -103,7 +103,7 @@ void main() {
         admin.middleName = "Vanessa";
       }
       catch (error) {
-        if (error is maxChangeExceeded) {
+        if (error is MaxChangeExceeded) {
           exceptionThrown = true;
         }
       }
@@ -147,7 +147,7 @@ void main() {
         admin.lastName = "Michel";
       }
       catch (error) {
-        if (error is maxChangeExceeded) {
+        if (error is MaxChangeExceeded) {
           exceptionThrown = true;
         }
       }
