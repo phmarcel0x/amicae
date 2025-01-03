@@ -86,7 +86,7 @@ class Admin extends User {
       }
     }
     else {
-      throw maxChangeExceeded();
+      throw MaxChangeExceeded();
     }
   }
 
@@ -109,7 +109,7 @@ class Admin extends User {
     }
 
     else {
-      throw maxChangeExceeded();
+      throw MaxChangeExceeded();
     }
   }
 
@@ -131,7 +131,7 @@ class Admin extends User {
       }
     }
     else {
-      throw maxChangeExceeded();
+      throw MaxChangeExceeded();
     }
   }
 
