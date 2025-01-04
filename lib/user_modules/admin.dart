@@ -2,9 +2,6 @@
   // to have the parent attribute and methods 
 import "../user_modules/user.dart";
 
-// importing the custom exception module
-import "../exception_modules/custom_exceptions.dart";
-
 
 // Class for the Admin
 class Admin extends User {
@@ -17,4 +14,6 @@ class Admin extends User {
   Admin(String username, String password, {required String firstName, String? middleName, required String lastName, required String email})
       : super(username, password, firstName: firstName, middleName: middleName, lastName: lastName, email: email);
 
+  // admins should have the right to change delete users that may be problematic 
+    // admin should have the right to observe the app in a mentor or student view 
 }
