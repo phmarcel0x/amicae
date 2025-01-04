@@ -2,9 +2,6 @@
   // to have the parent attribute and methods 
 import "../user_modules/user.dart";
 
-// importing the custom exception module
-import "../exception_modules/custom_exceptions.dart";
-
 
 // Class for the Admin
 class Student extends User {
@@ -16,5 +13,10 @@ class Student extends User {
   // Admin constructor
   Student(String username, String password, {required String firstName, String? middleName, required String lastName, required String email})
       : super(username, password, firstName: firstName, middleName: middleName, lastName: lastName, email: email);
+
+
+  int? studentID;
+  String? collegeUniversity;
+  int? currentYear; //First, second, third, fourth, etc.
 
 }
