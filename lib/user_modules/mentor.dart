@@ -2,10 +2,6 @@
   // to have the parent attribute and methods 
 import "../user_modules/user.dart";
 
-// importing the custom exception module
-import "../exception_modules/custom_exceptions.dart";
-
-
 // Class for the Mentor
 class Mentor extends User {
   // Admin could start with a special character to differenciate it
