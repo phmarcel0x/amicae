@@ -1,6 +1,8 @@
 // Importation of the abstract class 
   // to have the parent attribute and methods 
 import "../user_modules/user.dart";
+// importing the io to get user input
+import "dart:io";
 
 
 // Class for the Admin
@@ -69,25 +71,62 @@ class Student extends User {
   }
 }
 
+
+
 main(){
-  Student student = Student("student_username", 
-                    "student_password", 
-                    firstName: "Jackie", 
-                    lastName: "Rene",
-                    email: "jackie.renee@polymtl.ca", 
-                    studentID: 1234567890,
-                    collegeUniversity: "PolyMTL",
-                    expectedGraduationYear: 2028);
+  // Get user input for student details
+  print("Enter username:");
+  String username = stdin.readLineSync()!;
 
-  print(student.courses);
+  print("Enter password:");
+  String password = stdin.readLineSync()!;
 
-  student.addCourse("MTH1008");
+  print("Enter first name:");
+  String firstName = stdin.readLineSync()!;
 
-  student.addCourse("GCH2730");
+  print("Enter middle name (optional):");
+  String? middleName = stdin.readLineSync();
+  if (middleName!.isEmpty) middleName = null;
 
-  print(student.courses);
+  print("Enter last name:");
+  String lastName = stdin.readLineSync()!;
 
+  print("Enter email:");
+  String email = stdin.readLineSync()!;
+
+  print("Enter student ID:");
+  int studentID = int.parse(stdin.readLineSync()!);
+
+  print("Enter college/university:");
+  String collegeUniversity = stdin.readLineSync()!;
+
+  print("Enter expected graduation year:");
+  int expectedGraduationYear = int.parse(stdin.readLineSync()!);
+
+  // Create a Student object
+  Student student = Student(
+    username,
+    password,
+    firstName: firstName,
+    middleName: middleName,
+    lastName: lastName,
+    email: email,
+    studentID: studentID,
+    collegeUniversity: collegeUniversity,
+    expectedGraduationYear: expectedGraduationYear,
+  );
+
+  // Add courses
+  while (true) {
+    print("Enter a course to add (or type 'done' to finish):");
+    String course = stdin.readLineSync()!;
+    if (course.toUpperCase() == 'done') {
+      break;
+    }
+    student.addCourse(course);
+  }
+
+  // Print student info
   print(student.getStudentInfo());
-  
 }
 
