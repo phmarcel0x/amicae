@@ -37,7 +37,7 @@ void main() {
       email: "meow.woof@amicae.com", 
       studentID: 123456789,
       collegeUniversity: "PolyMTL",
-      currentYear: 2);
+      expectedGraduationYear: 2028);
 
       // Initial change count should be 0
       expect(student.firstName, equals("Meow"));
@@ -85,7 +85,7 @@ void main() {
       email: "meow.woof@amicae.com", 
       studentID: 123456789,
       collegeUniversity: "PolyMTL",
-      currentYear: 2);
+      expectedGraduationYear: 2028);
 
       // Initial change count should be 0
       expect(student.middleName, equals("Manoushka"));
@@ -132,7 +132,7 @@ void main() {
       email: "meow.woof@amicae.com", 
       studentID: 123456789,
       collegeUniversity: "PolyMTL",
-      currentYear: 2);
+      expectedGraduationYear: 2028);
 
       // Initial change count should be 0
       expect(student.lastName, equals("Woof"));
@@ -180,7 +180,7 @@ void main() {
       email: "meow.woof@amicae.com", 
       studentID: 123456789,
       collegeUniversity: "PolyMTL",
-      currentYear: 2);
+      expectedGraduationYear: 2028);
 
       // Initial change count should be 0 
       expect(student.firstName, equals("Meow"));
@@ -212,7 +212,7 @@ void main() {
       email: "meow.woof@amicae.com", 
       studentID: 123456789,
       collegeUniversity: "PolyMTL",
-      currentYear: 2);
+      expectedGraduationYear: 2028);
 
       // Initial change count should be 0 
       expect(student.middleName, equals("Manoushka"));
@@ -244,7 +244,7 @@ void main() {
       email: "meow.woof@amicae.com", 
       studentID: 123456789,
       collegeUniversity: "PolyMTL",
-      currentYear: 2);
+      expectedGraduationYear: 2028);
 
       // Initial change count should be 0 
       expect(student.lastName, equals("Woof"));
