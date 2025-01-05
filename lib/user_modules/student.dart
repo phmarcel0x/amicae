@@ -8,7 +8,9 @@ class Student extends User {
   // Additionnal attributes 
   int? studentID;
   String? collegeUniversity;
-  int? currentYear; //First, second, third, fourth, etc.
+  List <String> courses;
+  int? expectedGraduationYear; 
+  double? GPA;
 
 
   // Admin could start with a special character to differenciate it
@@ -16,30 +18,76 @@ class Student extends User {
   // and the mentors)
   // All these would be protected attributes 
   
-  // Admin constructor
-  Student(super.username, super.password, {required super.firstName, 
-          super.middleName, required super.lastName, 
-          required super.email, required this.studentID,
-          required this.collegeUniversity, required this.currentYear});
 
-  @override
-  String toString() {
-    String? parentString = super.toString();
-    if (currentYear == 1){
-      return "$parentString Your student ID is $studentID and you study at $collegeUniversity. You are in your ${currentYear}st";
-      }
-    
-    else if (currentYear == 2) {
-      return "$parentString Your student ID is $studentID and you study at $collegeUniversity. You are in your ${currentYear}nd";
-      }
-    
-    else if (currentYear == 3) {
-      return "$parentString Your student ID is $studentID and you study at $collegeUniversity. You are in your ${currentYear}rd";
-      }
-    
-    else {
-      return "$parentString Your student ID is $studentID and you study at $collegeUniversity. You are in your ${currentYear}th";
-      }
+  // I do not understand the super parameters.
+
+
+
+  // Student constructor
+  Student(String username, String password, {required String firstName, 
+          String? middleName, required String lastName, required String email, required this.studentID, 
+          required this.collegeUniversity, required this.expectedGraduationYear, List <String>? courses, this.GPA}):
+          courses = courses ?? [],
+          super(username, password, firstName: firstName, middleName: middleName, lastName: lastName, email: email);
+
+  // Method to add a course 
+  void addCourse(String course) {
+    if (!courses.contains(course)) {
+      courses.add(course);
+    }
+    else{
+      print("The course is already added to your courses list.");
     }
   }
+
+  // Method to remove a course
+  void removeCourse(String course) {
+    if (courses.contains(course)){
+      courses.remove(course);
+    }
+    else{
+      print("The course is not in your courses list.");
+    }
+  }
+
+
+  // Method to update the GPA
+  void updateGPA(double newGPA){
+    GPA = newGPA;
+  }
+
+  // Method to get the student info
+    // What will be printed on their presentation card 
+  String getStudentInfo() {
+    if (middleName != null)  {
+    return "Student: $firstName $middleName $lastName \nSchool: $collegeUniversity\nGrduation Year: $expectedGraduationYear\nCourses:${courses.join(",")}";
+    }
+
+    else {
+      return "Student: $firstName $lastName \nSchool: $collegeUniversity\nGrduation Year: $expectedGraduationYear\nCourses: ${courses.join(",")}";
+    }
+  }
+}
+
+main(){
+  Student student = Student("student_username", 
+                    "student_password", 
+                    firstName: "Jackie", 
+                    lastName: "Rene",
+                    email: "jackie.renee@polymtl.ca", 
+                    studentID: 1234567890,
+                    collegeUniversity: "PolyMTL",
+                    expectedGraduationYear: 2028);
+
+  print(student.courses);
+
+  student.addCourse("MTH1008");
+
+  student.addCourse("GCH2730");
+
+  print(student.courses);
+
+  print(student.getStudentInfo());
+  
+}
 
