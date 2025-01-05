@@ -17,16 +17,14 @@ class Mentor extends User {
 
 
   // Admin constructor
-  Mentor(String username, String password, {required String firstName, String? middleName, 
-        required String lastName, required String email, required this.company, 
-        required this.startYear, this.menteesList})
-      : super(username, password, firstName: firstName, middleName: middleName, 
-        lastName: lastName, email: email);
+  Mentor(super.username, super.password, {required super.firstName, super.middleName, 
+        required super.lastName, required super.email, required this.company, 
+        required this.startYear, this.menteesList});
 
   @override
   String toString(){
     String? parentString = super.toString();
-    return "$parentString You work at ${this.company} since ${this.startYear}.";
+    return "$parentString You work at $company since $startYear.";
     }
 
   // maybe add a sort of CV like on LinkedIn 
