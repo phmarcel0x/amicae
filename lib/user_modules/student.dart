@@ -17,12 +17,10 @@ class Student extends User {
   // All these would be protected attributes 
   
   // Admin constructor
-  Student(String username, String password, {required String firstName, 
-          String? middleName, required String lastName, 
-          required String email, required this.studentID,
-          required this.collegeUniversity, required this.currentYear})
-      : super(username, password, firstName: firstName, 
-              middleName: middleName, lastName: lastName, email: email);
+  Student(super.username, super.password, {required super.firstName, 
+          super.middleName, required super.lastName, 
+          required super.email, required this.studentID,
+          required this.collegeUniversity, required this.currentYear});
 
   @override
   String toString() {
