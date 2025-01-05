@@ -2,12 +2,12 @@ import "../exception_modules/custom_exceptions.dart";
 
 // Creation of the abstract User class
 abstract class User {
-  String? _username;
+  final String? _username;
   String? _password;
   String? _firstName;
   String? _middleName;
   String? _lastName;
-  String? _email;
+  final String? _email;
 
 
   // counter for the number of times the info coould be changed 
