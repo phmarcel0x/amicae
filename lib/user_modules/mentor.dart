@@ -17,9 +17,25 @@ class Mentor extends User {
 
 
   // Admin constructor
-  Mentor(super.username, super.password, {required super.firstName, super.middleName, 
-        required super.lastName, required super.email, required this.company, 
-        required this.startYear, this.menteesList});
+  Mentor(String username, String password, {required String firstName, 
+        String? middleName, required String lastName, required String email, 
+        required this.company, required this.startYear, 
+        List <String>? menteesList}): 
+        menteesList = menteesList ?? [],
+        super(username, password, firstName: firstName, 
+        middleName: middleName, lastName: lastName, email: email);
+
+  // Method to add a mentee
+  void addMentee(String mentee) {
+    if (!menteesList.contains(mentee)) {
+      menteesList.add(mentee);
+      print("Mentee $mentee added.");
+    } else {
+      print("Mentee $mentee is already in the list.");
+    }
+  }
+
+
 
   @override
   String toString(){
@@ -40,4 +56,8 @@ main() {
   startYear: 2024);
 
   print(mentor);
+
+  mentor.addMentee("Johanna");
+
+  print(mentor.menteesList);
 }
