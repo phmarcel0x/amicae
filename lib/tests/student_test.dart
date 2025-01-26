@@ -3,7 +3,7 @@ import "package:test/test.dart";
 // importation of the module for the user abstract class
 import "../user_modules/user.dart";
 // importation of the file containing the admin class 
-import "../user_modules/admin.dart";
+import "../user_modules/student.dart";
 // importing the exception files 
 import "../exception_modules/custom_exceptions.dart";
 // import the math library 
@@ -25,19 +25,22 @@ List <String> lastNameList = ["Saintil", "Lindor", "Civil", "Exantus", "Constant
 // function where the tests are defined 
 void main() {
   // grouping of all the related tests together 
-  group("Admin", (){
+  group("Student", (){
 
 
     test("firstName can only be changed a limited amount of times", () {
-      final admin = Admin("admin_username", 
+      final student = Student("admin_username", 
       "admin_password", 
       firstName: "Meow", 
       middleName: "Manoushka", 
       lastName: "Woof", 
-      email: "meow.woof@amicae.com");
+      email: "meow.woof@amicae.com", 
+      studentID: 123456789,
+      collegeUniversity: "PolyMTL",
+      expectedGraduationYear: 2028);
 
       // Initial change count should be 0
-      expect(admin.firstName, equals("Meow"));
+      expect(student.firstName, equals("Meow"));
 
       // make a random number generator
       final random = Random();
@@ -47,18 +50,18 @@ void main() {
         String randomName;
         do {
           randomName = firstNameList[random.nextInt(firstNameList.length)];
-        } while(randomName == admin.firstName);
-        admin.firstName = randomName;
-        print(admin);
+        } while(randomName == student.firstName);
+        student.firstName = randomName;
+        print(student);
       }
 
       // Verify that the number of changes is equal to the adminMaxChange
-      expect(admin.firstNameChangeCounter, equals(User.maxChange));
+      expect(student.firstNameChangeCounter, equals(User.maxChange));
 
       // Change the first name one more time: with a name not in the list 
       bool exceptionThrown = false;
       try {
-        admin.firstName = "Vanessa";
+        student.firstName = "Vanessa";
       }
       catch (error) {
         if (error is MaxChangeExceeded) {
@@ -70,19 +73,22 @@ void main() {
       expect(exceptionThrown, isTrue);
 
       // verify that the first name is still in the list 
-      expect(admin.firstName, isIn(firstNameList));
+      expect(student.firstName, isIn(firstNameList));
     });
 
     test("middleName can only be changed a limited amount of times", () {
-      final admin = Admin("admin_username", 
+      final student = Student("admin_username", 
       "admin_password", 
       firstName: "Meow", 
       middleName: "Manoushka", 
       lastName: "Woof", 
-      email: "meow.woof@amicae.com");
+      email: "meow.woof@amicae.com", 
+      studentID: 123456789,
+      collegeUniversity: "PolyMTL",
+      expectedGraduationYear: 2028);
 
       // Initial change count should be 0
-      expect(admin.middleName, equals("Manoushka"));
+      expect(student.middleName, equals("Manoushka"));
 
       // make a random number generator
       final random = Random();
@@ -92,17 +98,17 @@ void main() {
         String randomName;
         do {
           randomName = middleNameList[random.nextInt(middleNameList.length)];
-        } while(randomName == admin.middleName);
-        admin.middleName = randomName;
+        } while(randomName == student.middleName);
+        student.middleName = randomName;
       }
 
       // Verify that the number of changes is equal to the adminMaxChange
-      expect(admin.middleNameChangeCounter, equals(User.maxChange));
+      expect(student.middleNameChangeCounter, equals(User.maxChange));
 
       // Change the middle Name one more time: with a name not in the list
       bool exceptionThrown = false;
       try {
-        admin.middleName = "Vanessa";
+        student.middleName = "Vanessa";
       }
       catch (error) {
         if (error is MaxChangeExceeded) {
@@ -114,19 +120,22 @@ void main() {
       expect(exceptionThrown, isTrue);
 
       // verify that the middle name is still in the list 
-      expect(admin.middleName, isIn(middleNameList));
+      expect(student.middleName, isIn(middleNameList));
     });
 
     test("lastName can only be changed a limited amount of times", () {
-      final admin = Admin("admin_username", 
+      final student = Student("admin_username", 
       "admin_password", 
       firstName: "Meow", 
       middleName: "Manoushka", 
       lastName: "Woof", 
-      email: "meow.woof@amicae.com");
+      email: "meow.woof@amicae.com", 
+      studentID: 123456789,
+      collegeUniversity: "PolyMTL",
+      expectedGraduationYear: 2028);
 
       // Initial change count should be 0
-      expect(admin.lastName, equals("Woof"));
+      expect(student.lastName, equals("Woof"));
 
       // make a random number generator
       final random = Random();
@@ -136,17 +145,17 @@ void main() {
         String randomName;
         do {
           randomName = lastNameList[random.nextInt(lastNameList.length)];
-        } while(randomName == admin.lastName);
-        admin.lastName = randomName;
+        } while(randomName == student.lastName);
+        student.lastName = randomName;
       }
 
       // Verify that the number of changes is equal to the adminMaxChange
-      expect(admin.lastNameChangeCounter, equals(User.maxChange));
+      expect(student.lastNameChangeCounter, equals(User.maxChange));
 
       // Change the last Name one more time: with a name not in the list
       bool exceptionThrown = false;
       try {
-        admin.lastName = "Michel";
+        student.lastName = "Michel";
       }
       catch (error) {
         if (error is MaxChangeExceeded) {
@@ -158,93 +167,102 @@ void main() {
       expect(exceptionThrown, isTrue);
 
       // verify that the last name is still in the list 
-      expect(admin.lastName, isIn(lastNameList));
+      expect(student.lastName, isIn(lastNameList));
     });
 
 
     test("changing to the same first name does not decrement the change counter", () {
-      final admin = Admin("admin_username", 
+      final student = Student("admin_username", 
       "admin_password", 
       firstName: "Meow", 
       middleName: "Manoushka", 
       lastName: "Woof", 
-      email: "meow.woof@amicae.com");
+      email: "meow.woof@amicae.com", 
+      studentID: 123456789,
+      collegeUniversity: "PolyMTL",
+      expectedGraduationYear: 2028);
 
       // Initial change count should be 0 
-      expect(admin.firstName, equals("Meow"));
-      expect(admin.firstNameChangeCounter, equals(0));
-      print(admin);
+      expect(student.firstName, equals("Meow"));
+      expect(student.firstNameChangeCounter, equals(0));
+      print(student);
 
       // Changing the firstName to a different name 
-      admin.firstName = firstNameList[0];
-      expect(admin.firstName, equals(firstNameList[0]));
-      expect(admin.firstNameChangeCounter, equals(1));
-      print(admin);
+      student.firstName = firstNameList[0];
+      expect(student.firstName, equals(firstNameList[0]));
+      expect(student.firstNameChangeCounter, equals(1));
+      print(student);
 
       // Changing the firstName to the same name 
-      admin.firstName = firstNameList[0];
-      expect(admin.firstName, equals(firstNameList[0]));
-      expect(admin.firstNameChangeCounter, equals(1));
-      print(admin);
+      student.firstName = firstNameList[0];
+      expect(student.firstName, equals(firstNameList[0]));
+      expect(student.firstNameChangeCounter, equals(1));
+      print(student);
         // Counter should not increment 
 
     });
 
 
     test("changing to the same middle name does not decrement the change counter", () {
-      final admin = Admin("admin_username", 
+      final student = Student("admin_username", 
       "admin_password", 
       firstName: "Meow", 
       middleName: "Manoushka", 
       lastName: "Woof", 
-      email: "meow.woof@amicae.com");
+      email: "meow.woof@amicae.com", 
+      studentID: 123456789,
+      collegeUniversity: "PolyMTL",
+      expectedGraduationYear: 2028);
 
       // Initial change count should be 0 
-      expect(admin.middleName, equals("Manoushka"));
-      expect(admin.middleNameChangeCounter, equals(0));
-      print(admin);
+      expect(student.middleName, equals("Manoushka"));
+      expect(student.middleNameChangeCounter, equals(0));
+      print(student);
 
       // Changing the firstName to a different name 
-      admin.middleName = middleNameList[0];
-      expect(admin.middleName, equals(middleNameList[0]));
-      expect(admin.middleNameChangeCounter, equals(1));
-      print(admin);
+      student.middleName = middleNameList[0];
+      expect(student.middleName, equals(middleNameList[0]));
+      expect(student.middleNameChangeCounter, equals(1));
+      print(student);
 
       // Changing the firstName to the same name 
-      admin.middleName = middleNameList[0];
-      expect(admin.middleName, equals(middleNameList[0]));
-      expect(admin.middleNameChangeCounter, equals(1));
+      student.middleName = middleNameList[0];
+      expect(student.middleName, equals(middleNameList[0]));
+      expect(student.middleNameChangeCounter, equals(1));
         // Counter should not increment 
-      print(admin);
+      print(student);
 
     });
 
 
     test("changing to the same last name does not decrement the change counter", () {
-      final admin = Admin("admin_username", 
+      final student = Student("admin_username", 
       "admin_password", 
       firstName: "Meow", 
       middleName: "Manoushka", 
       lastName: "Woof", 
-      email: "meow.woof@amicae.com");
+      email: "meow.woof@amicae.com", 
+      studentID: 123456789,
+      collegeUniversity: "PolyMTL",
+      expectedGraduationYear: 2028);
 
       // Initial change count should be 0 
-      expect(admin.lastName, equals("Woof"));
-      expect(admin.lastNameChangeCounter, equals(0));
-      print(admin);
+      expect(student.lastName, equals("Woof"));
+      expect(student.lastNameChangeCounter, equals(0));
+      print(student);
 
       // Changing the firstName to a different name 
-      admin.lastName = lastNameList[0];
-      expect(admin.lastName, equals(lastNameList[0]));
-      expect(admin.lastNameChangeCounter, equals(1));
-      print(admin);
+      student.lastName = lastNameList[0];
+      expect(student.lastName, equals(lastNameList[0]));
+      expect(student.lastNameChangeCounter, equals(1));
+      print(student);
 
       // Changing the firstName to the same name 
-      admin.lastName = lastNameList[0];
-      expect(admin.lastName, equals(lastNameList[0]));
-      expect(admin.lastNameChangeCounter, equals(1));
+      student.lastName = lastNameList[0];
+      expect(student.lastName, equals(lastNameList[0]));
+      expect(student.lastNameChangeCounter, equals(1));
         // Counter should not increment 
-      print(admin);
+      print(student);
 
     });
 
