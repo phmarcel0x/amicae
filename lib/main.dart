@@ -1,30 +1,29 @@
 import 'package:flutter/material.dart';
+import "features/login/index.dart";
 
 void main() {
-  runApp(const MyApp());
+  runApp(MaterialApp(
+    home: const LandingPage(),
+    theme: AppThemes.lightTheme,
+    darkTheme: AppThemes.darkTheme,
+    themeMode: ThemeMode.system,
+
+  ));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class AppColors {
+  static const black = Colors.black;
+  static const white = Colors.white;
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        textTheme: const TextTheme(
-          bodyMedium: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-        ),
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Welcome to amicae'),
-        ),
-        body: const Center(
-          child: Text('The best app ever made, ever. Now with a new theme!'),
-        ),
-      ),
-    );
-  }
+}
+
+class AppThemes {
+  static final lightTheme = ThemeData(
+    primaryColor: AppColors.white,
+    brightness: Brightness.light
+  );
+  static final darkTheme = ThemeData(
+    primaryColor: AppColors.black,
+    brightness: Brightness.dark
+  );
 }
