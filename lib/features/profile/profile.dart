@@ -39,7 +39,7 @@ class _ProfilePage extends State<ProfilePage> {
                       )
                     );
                   }
-                )
+                ),
               ),
             ],
           ),
