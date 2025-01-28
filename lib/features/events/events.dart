@@ -1,9 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-
-import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
 
 class EventsPage extends StatefulWidget {
   const EventsPage({super.key});
