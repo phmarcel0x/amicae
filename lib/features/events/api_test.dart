@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+//import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:http/http.dart' as http;
 
 Future<List<Album>> fetchAlbum() async {
@@ -12,8 +13,6 @@ Future<List<Album>> fetchAlbum() async {
       HttpHeaders.authorizationHeader: 'Basic ODIwOjljNzYzZDRmYWQ3MzZhYTliYzYxYWVhOTczZGY5MDMz',
     },
   );
-
-  print(response.body);
 
   if (response.statusCode == 200) {
     // return Album.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
@@ -28,73 +27,80 @@ Future<List<Album>> fetchAlbum() async {
     throw Exception('Failed to load album');
   }
 }
-//with a lot of error handling
-/*
+
 class Album {
   final int id;
   final String title;
-  final bool allday;
+  final bool allDay;
   final DateTime start;
   final DateTime end;
   final String description;
-  final String? publicUrl;
-  final String? adminUrl;
-  final Location? location;
-  final List<Category> categories;
-  final Owner owner;
+  final String publicUrl;
+  final String adminUrl;
+  final Location location;
+  final String presenter;
   final Calendar calendar;
-  final String? seats;
   final bool registration;
   final String color;
   final String featuredImage;
-  final List<FutureDate> futureDates;
 
   Album({
     required this.id,
     required this.title,
-    required this.allday,
+    required this.allDay,
     required this.start,
     required this.end,
     required this.description,
-    this.publicUrl,
-    this.adminUrl,
-    this.location,
-    required this.categories,
-    required this.owner,
+    required this.publicUrl,
+    required this.adminUrl,
+    required this.location,
+    required this.presenter,
     required this.calendar,
-    this.seats,
     required this.registration,
     required this.color,
-    required this.featuredImage,
-    required this.futureDates,
+    required this.featuredImage
   });
 
   factory Album.fromJson(Map<String, dynamic> json) {
     try {
       return Album(
-        id: json['id'] ?? (throw FormatException('Missing field: id')),
-        title: json['title'] ?? (throw FormatException('Missing field: title')),
-        allday: json['allday'] ?? (throw FormatException('Missing field: allday')),
-        start: json['start'] != null ? DateTime.parse(json['start']) : (throw FormatException('Missing or invalid field: start')),
-        end: json['end'] != null ? DateTime.parse(json['end']) : (throw FormatException('Missing or invalid field: end')),
-        description: json['description'] ?? (throw FormatException('Missing field: description')),
-        publicUrl: json['public'],
-        adminUrl: json['admin'],
-        location: json['location'] != null
-            ? Location.fromJson(json['location'])
-            : null,
-        categories: (json['category'] as List?)?.map((e) => Category.fromJson(e)).toList() ?? (throw FormatException('Missing field: category')),
-        owner: json['owner'] != null ? Owner.fromJson(json['owner']) : (throw FormatException('Missing field: owner')),
-        calendar: json['calendar'] != null ? Calendar.fromJson(json['calendar']) : (throw FormatException('Missing field: calendar')),
-        seats: json['seats'],
-        registration: json['registration'] ?? (throw FormatException('Missing field: registration')),
-        color: json['color'] ?? (throw FormatException('Missing field: color')),
-        featuredImage: json['featured_image'] ?? (throw FormatException('Missing field: featured_image')),
-        futureDates: (json['future_dates'] as List?)?.map((e) => FutureDate.fromJson(e)).toList() ?? (throw FormatException('Missing field: future_dates')),
+        id: json['id'] ?? 0,
+        title: json['title'] ?? '',
+        allDay: json['allday'] ?? false,
+        start: DateTime.parse(json['start'] ?? DateTime.now().toIso8601String()),
+        end: DateTime.parse(json['end'] ?? DateTime.now().toIso8601String()),
+        description: json['description'] ?? '',
+        publicUrl: json['public'] ?? '',
+        adminUrl: json['admin'] ?? '',
+        location: Location.fromJson(json['location'] ?? {}),
+        presenter: json['presenter'] ?? '',
+        calendar: Calendar.fromJson(json['calendar'] ?? {}),
+        registration: json['registration'] ?? false,
+        color: json['color'] ?? '',
+        featuredImage: json['featured_image'] ?? '',
       );
     } catch (e) {
-      throw FormatException('Error parsing Album JSON: \$e');
+      throw Exception("Error parsing Album JSON: $e");
     }
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'allday': allDay,
+      'start': start.toIso8601String(),
+      'end': end.toIso8601String(),
+      'description': description,
+      'public': publicUrl,
+      'admin': adminUrl,
+      'location': location.toJson(),
+      'presenter': presenter,
+      'calendar': calendar.toJson(),
+      'registration': registration,
+      'color': color,
+      'featured_image': featuredImage,
+    };
   }
 }
 
@@ -102,340 +108,189 @@ class Location {
   final int id;
   final int type;
   final String name;
-  final String? campus;
+  final String campus;
 
   Location({
     required this.id,
     required this.type,
     required this.name,
-    this.campus,
+    required this.campus,
   });
 
   factory Location.fromJson(Map<String, dynamic> json) {
     try {
       return Location(
-        id: json['id'] ?? (throw FormatException('Missing field: id in Location')),
-        type: json['type'] ?? (throw FormatException('Missing field: type in Location')),
-        name: json['name'] ?? (throw FormatException('Missing field: name in Location')),
-        campus: json['campus'],
+        id: json['id'] ?? 0,
+        type: json['type'] ?? 0,
+        name: json['name'] ?? '',
+        campus: json['campus'] ?? '',
       );
     } catch (e) {
-      throw FormatException('Error parsing Location JSON: \$e');
+      throw Exception("Error parsing Location JSON: $e");
     }
   }
-}
 
-class Category {
-  final int id;
-  final String name;
-
-  Category({
-    required this.id,
-    required this.name,
-  });
-
-  factory Category.fromJson(Map<String, dynamic> json) {
-    try {
-      return Category(
-        id: json['id'] ?? (throw FormatException('Missing field: id in Category')),
-        name: json['name'] ?? (throw FormatException('Missing field: name in Category')),
-      );
-    } catch (e) {
-      throw FormatException('Error parsing Category JSON: \$e');
-    }
-  }
-}
-
-class Owner {
-  final int id;
-  final String name;
-
-  Owner({
-    required this.id,
-    required this.name,
-  });
-
-  factory Owner.fromJson(Map<String, dynamic> json) {
-    try {
-      return Owner(
-        id: json['id'] ?? (throw FormatException('Missing field: id in Owner')),
-        name: json['name'] ?? (throw FormatException('Missing field: name in Owner')),
-      );
-    } catch (e) {
-      throw FormatException('Error parsing Owner JSON: \$e');
-    }
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'type': type,
+      'name': name,
+      'campus': campus,
+    };
   }
 }
 
 class Calendar {
   final int id;
   final String name;
-  final String? publicUrl;
-  final String? adminUrl;
+  final String publicUrl;
+  final String adminUrl;
 
   Calendar({
     required this.id,
     required this.name,
-    this.publicUrl,
-    this.adminUrl,
+    required this.publicUrl,
+    required this.adminUrl,
   });
 
   factory Calendar.fromJson(Map<String, dynamic> json) {
     try {
       return Calendar(
-        id: json['id'] ?? (throw FormatException('Missing field: id in Calendar')),
-        name: json['name'] ?? (throw FormatException('Missing field: name in Calendar')),
-        publicUrl: json['public'],
-        adminUrl: json['admin'],
+        id: json['id'] ?? 0,
+        name: json['name'] ?? '',
+        publicUrl: json['public'] ?? '',
+        adminUrl: json['admin'] ?? '',
       );
     } catch (e) {
-      throw FormatException('Error parsing Calendar JSON: \$e');
+      throw Exception("Error parsing Calendar JSON: $e");
     }
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'public': publicUrl,
+      'admin': adminUrl,
+    };
   }
 }
 
-class FutureDate {
+class EventDate {
   final int eventId;
   final DateTime start;
 
-  FutureDate({
+  EventDate({
     required this.eventId,
     required this.start,
   });
 
-  factory FutureDate.fromJson(Map<String, dynamic> json) {
+  factory EventDate.fromJson(Map<String, dynamic> json) {
     try {
-      return FutureDate(
-        eventId: json['event_id'] ?? (throw FormatException('Missing field: event_id in FutureDate')),
-        start: json['start'] != null ? DateTime.parse(json['start']) : (throw FormatException('Missing or invalid field: start in FutureDate')),
+      return EventDate(
+        eventId: json['event_id'] ?? 0,
+        start: DateTime.parse(json['start'] ?? DateTime.now().toIso8601String()),
       );
     } catch (e) {
-      throw FormatException('Error parsing FutureDate JSON: \$e');
+      throw Exception("Error parsing EventDate JSON: $e");
     }
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'event_id': eventId,
+      'start': start.toIso8601String(),
+    };
   }
 }
 
+class EventDetailScreen extends StatelessWidget {
+  final Album album;
 
- */
-
-class Album {
-  final int id;
-  final String title;
-  final bool allday;
-  final DateTime start;
-  final DateTime end;
-  final String description;
-  final String? publicUrl;
-  final String? adminUrl;
-  final Location? location;
-  final List<Category> categories;
-  final Owner owner;
-  final Calendar calendar;
-  final String? seats;
-  final bool registration;
-  final String color;
-  final String featuredImage;
-  final List<FutureDate> futureDates;
-
-  Album({
-    required this.id,
-    required this.title,
-    required this.allday,
-    required this.start,
-    required this.end,
-    required this.description,
-    this.publicUrl,
-    this.adminUrl,
-    this.location,
-    required this.categories,
-    required this.owner,
-    required this.calendar,
-    this.seats,
-    required this.registration,
-    required this.color,
-    required this.featuredImage,
-    required this.futureDates,
-  });
-
-  factory Album.fromJson(Map<String, dynamic> json) {
-    try {
-      return Album(
-        id: json['id'],
-        title: json['title'],
-        allday: json['allday'],
-        start: DateTime.parse(json['start']),
-        end: DateTime.parse(json['end']),
-        description: json['description'],
-        publicUrl: json['public'],
-        adminUrl: json['admin'],
-        location: json['location'] != null
-            ? Location.fromJson(json['location'])
-            : null,
-        categories: (json['category'] as List)
-            .map((e) => Category.fromJson(e))
-            .toList(),
-        owner: Owner.fromJson(json['owner']),
-        calendar: Calendar.fromJson(json['calendar']),
-        seats: json['seats'],
-        registration: json['registration'],
-        color: json['color'],
-        featuredImage: json['featured_image'],
-        futureDates: (json['future_dates'] as List)
-            .map((e) => FutureDate.fromJson(e))
-            .toList(),
-      );
-    } catch (e) {
-      throw const FormatException('Error parsing Album JSON: \$e');
-    }
-  }
-}
-
-class Location {
-  final int id;
-  final int type;
-  final String name;
-  final String? campus;
-
-  Location({
-    required this.id,
-    required this.type,
-    required this.name,
-    this.campus,
-  });
-
-  factory Location.fromJson(Map<String, dynamic> json) {
-    try {
-      return Location(
-        id: json['id'],
-        type: json['type'],
-        name: json['name'],
-        campus: json['campus'],
-      );
-    } catch (e) {
-      throw const FormatException('Error parsing Location JSON: \$e');
-    }
-  }
-}
-
-class Category {
-  final int id;
-  final String name;
-
-  Category({
-    required this.id,
-    required this.name,
-  });
-
-  factory Category.fromJson(Map<String, dynamic> json) {
-    try {
-      return Category(
-        id: json['id'],
-        name: json['name'],
-      );
-    } catch (e) {
-      throw const FormatException('Error parsing Category JSON: \$e');
-    }
-  }
-}
-
-class Owner {
-  final int id;
-  final String name;
-
-  Owner({
-    required this.id,
-    required this.name,
-  });
-
-  factory Owner.fromJson(Map<String, dynamic> json) {
-    try {
-      return Owner(
-        id: json['id'],
-        name: json['name'],
-      );
-    } catch (e) {
-      throw const FormatException('Error parsing Owner JSON: \$e');
-    }
-  }
-}
-
-class Calendar {
-  final int id;
-  final String name;
-  final String? publicUrl;
-  final String? adminUrl;
-
-  Calendar({
-    required this.id,
-    required this.name,
-    this.publicUrl,
-    this.adminUrl,
-  });
-
-  factory Calendar.fromJson(Map<String, dynamic> json) {
-    try {
-      return Calendar(
-        id: json['id'],
-        name: json['name'],
-        publicUrl: json['public'],
-        adminUrl: json['admin'],
-      );
-    } catch (e) {
-      throw const FormatException('Error parsing Calendar JSON: \$e');
-    }
-  }
-}
-
-class FutureDate {
-  final int eventId;
-  final DateTime start;
-
-  FutureDate({
-    required this.eventId,
-    required this.start,
-  });
-
-  factory FutureDate.fromJson(Map<String, dynamic> json) {
-    try {
-      return FutureDate(
-        eventId: json['event_id'],
-        start: DateTime.parse(json['start']),
-      );
-    } catch (e) {
-      throw const FormatException('Error parsing FutureDate JSON: \$e');
-    }
-  }
-}
-
-void main() => runApp(const MyApp());
-
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  const EventDetailScreen({Key? key, required this.album}) : super(key: key);
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(album.title),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                album.title,
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Start: ${album.start}',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'End: ${album.end}',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                album.description,
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Location: ${album.location.name}, ${album.location.campus}',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                'More Information:',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Public URL: ${album.publicUrl}',
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
 
-class _MyAppState extends State<MyApp> {
+void main() => runApp(const ApiTest());
+
+class ApiTest extends StatefulWidget {
+  const ApiTest({super.key});
+
+  @override
+  State<ApiTest> createState() => _ApiTestState();
+}
+
+class _ApiTestState extends State<ApiTest> {
   late Future<List<Album>> futureAlbums;
 
   @override
   void initState() {
     super.initState();
-    futureAlbums = fetchAlbum();  // Fetch the list of albums (events)
+    futureAlbums = fetchAlbum(); // Fetch the list of albums (events)
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Fetch Data Example',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Fetch Data Example'),
-        ),
         body: Center(
           child: FutureBuilder<List<Album>>(
             future: futureAlbums,
@@ -448,6 +303,14 @@ class _MyAppState extends State<MyApp> {
                     return ListTile(
                       title: Text(albums[index].title),
                       subtitle: Text(albums[index].start.toString()),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EventDetailScreen(album: albums[index]),
+                          ),
+                        );
+                      },
                     );
                   },
                 );
