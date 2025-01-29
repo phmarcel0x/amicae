@@ -36,14 +36,14 @@ class _NavBar extends State<NavBar> {
     return MaterialApp(
         home: Scaffold(
           appBar: AppBar(
-            backgroundColor: Colors.black,
+            backgroundColor: Colors.white,
             title: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
-                  "assets/ae_long_black.png",
+                  "assets/ae_short_white.png",
                   fit: BoxFit.contain,
-                  height: 200,
+                  height: 100,
                 ),
 
               ],
@@ -53,10 +53,10 @@ class _NavBar extends State<NavBar> {
             selectedFontSize: 15,
             selectedItemColor: Colors.orange,
             selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
-            unselectedItemColor: Colors.white,
+            unselectedItemColor: Colors.black,
             // showSelectedLabels: false,
             // showUnselectedLabels: false,
-            backgroundColor: Colors.black,
+            backgroundColor: Colors.white,
             type: BottomNavigationBarType.fixed,
 
             items: const <BottomNavigationBarItem> [

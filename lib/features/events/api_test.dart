@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
-//import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 Future<List<Album>> fetchAlbum() async {
   final response = await http.get(
@@ -236,9 +237,8 @@ class EventDetailScreen extends StatelessWidget {
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               const SizedBox(height: 8),
-              Text(
+              HtmlWidget(
                 album.description,
-                style: Theme.of(context).textTheme.bodyLarge,
               ),
               const SizedBox(height: 8),
               Text(
