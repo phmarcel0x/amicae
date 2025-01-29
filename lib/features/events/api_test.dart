@@ -5,7 +5,6 @@ import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 Future<List<Album>> fetchAlbum() async {
   final response = await http.get(
