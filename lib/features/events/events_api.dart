@@ -16,7 +16,6 @@ Future<List<Album>> fetchAlbum() async {
 
   if (response.statusCode == 200) {
     // return Album.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
-
     // Decode the response and extract the 'events' list
     final jsonData = jsonDecode(response.body);
     final events = jsonData['events'] as List;
@@ -103,7 +102,6 @@ class Album {
     };
   }
 }
-
 class Location {
   final int id;
   final int type;
@@ -139,7 +137,6 @@ class Location {
     };
   }
 }
-
 class Calendar {
   final int id;
   final String name;
@@ -175,7 +172,6 @@ class Calendar {
     };
   }
 }
-
 class EventDate {
   final int eventId;
   final DateTime start;
@@ -212,10 +208,21 @@ class EventDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
+
       appBar: AppBar(
         title: Text(album.title),
+        backgroundColor: Colors.white,
+        // titleTextStyle: TextStyle(
+        //   color: Colors.white,
+        // ),
+        shape: RoundedRectangleBorder(
+          side: const BorderSide(color: Colors.black, width: 5),
+          borderRadius: BorderRadius.circular(0),
+        ),
       ),
       body: SingleChildScrollView(
+
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -256,6 +263,7 @@ class EventDetailScreen extends StatelessWidget {
               ),
 
             ],
+
           ),
         ),
       ),
@@ -263,16 +271,16 @@ class EventDetailScreen extends StatelessWidget {
   }
 }
 
-void main() => runApp(const ApiTest());
+void main() => runApp(const API_EventsPage());
 
-class ApiTest extends StatefulWidget {
-  const ApiTest({super.key});
+class API_EventsPage extends StatefulWidget {
+  const API_EventsPage({super.key});
 
   @override
-  State<ApiTest> createState() => _ApiTestState();
+  State<API_EventsPage> createState() => _API_EventsPageState();
 }
 
-class _ApiTestState extends State<ApiTest> {
+class _API_EventsPageState extends State<API_EventsPage> {
   late Future<List<Album>> futureAlbums;
 
   @override
@@ -290,7 +298,10 @@ class _ApiTestState extends State<ApiTest> {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       home: Scaffold(
+        backgroundColor: Colors.white,
+
         body: Center(
+
           child: FutureBuilder<List<Album>>(
             future: futureAlbums,
             builder: (context, snapshot) {
@@ -299,17 +310,24 @@ class _ApiTestState extends State<ApiTest> {
                 return ListView.builder(
                   itemCount: albums.length,
                   itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(albums[index].title),
-                      subtitle: Text(albums[index].start.toString()),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => EventDetailScreen(album: albums[index]),
+                    return Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: ListTile(
+                          title: Text(albums[index].title),
+                          subtitle: Text(albums[index].start.toString()),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EventDetailScreen(album: albums[index]),
+                              ),
+                            );
+                          },
+                          shape: RoundedRectangleBorder(
+                            side: const BorderSide(color: Colors.black, width: 2),
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                        );
-                      },
+                        ),
                     );
                   },
                 );
