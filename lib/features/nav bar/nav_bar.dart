@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 import "../home/home.dart";
 import "../people/people.dart";
-import "../events/events.dart";
-import "../events/api_test.dart";
+import "../events/events_api.dart";
 import "../spots/spots.dart";
 import "../profile/profile.dart";
 
@@ -26,7 +25,7 @@ class _NavBar extends State<NavBar> {
   final List<Widget> pages = [
     const HomePage(),
     const PeoplePage(),
-    const ApiTest(),
+    const API_EventsPage(),
     const SpotsPage(),
     const ProfilePage(),
   ];
