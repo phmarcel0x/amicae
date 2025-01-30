@@ -1,3 +1,4 @@
+import "package:amicae_app/features/login/login.dart";
 import 'package:flutter/material.dart';
 
 import "../home/home.dart";
@@ -5,6 +6,8 @@ import "../people/people.dart";
 import "../events/events_api.dart";
 import "../spots/spots.dart";
 import "../profile/profile.dart";
+
+import "../info/info.dart";
 
 class NavBar extends StatefulWidget {
   const NavBar({super.key});
@@ -15,6 +18,10 @@ class NavBar extends StatefulWidget {
 
 class _NavBar extends State<NavBar> {
   int selectedIndex = 0;
+
+  // bool _pinned = true;
+  // bool _snap = false;
+  // bool _floating = false;
 
   void onItemTapped(int index) {
     setState(() {
@@ -27,7 +34,7 @@ class _NavBar extends State<NavBar> {
     const PeoplePage(),
     const API_EventsPage(),
     const SpotsPage(),
-    const ProfilePage(),
+    // const ProfilePage(),
   ];
 
   @override
@@ -35,19 +42,84 @@ class _NavBar extends State<NavBar> {
     return MaterialApp(
         home: Scaffold(
           appBar: AppBar(
-            backgroundColor: Colors.white,
+
+            forceMaterialTransparency: true,
+
             title: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset(
-                  "assets/ae_short_white.png",
-                  fit: BoxFit.contain,
-                  height: 100,
-                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 200),
+                  child:
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(builder:
+                                (context) => const InfoPage()
+                            )
+                        );
+                      }, // Image tapped
+                      child: Image.asset(
+                        "assets/ae_short_white.png",
+                        fit: BoxFit.contain,
+                        height: 70,
+                      ),
+                    )
 
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: IconButton(
+                      icon: const Icon(Icons.account_circle),
+                      color: Colors.black,
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(builder:
+                                (context) => const ProfilePage()
+                            )
+                        );
+                      }
+                  ),
+                ),
               ],
-            )
+            ),
+            shape: const Border(
+                bottom: BorderSide(
+                    color: Colors.black,
+                    width: 4
+                )
+            ),
           ),
+
+
+          body: pages[selectedIndex],
+
+            // CustomScrollView(
+            //
+            //   slivers: <Widget>[
+            //
+            //     SliverAppBar(
+            //       pinned: _pinned,
+            //       snap: _snap,
+            //       floating: _floating,
+            //       expandedHeight: 30.0,
+            //       flexibleSpace: const FlexibleSpaceBar(
+            //         title: Text('SliverAppBar'),
+            //       ),
+            //     ),
+            //     SliverFillRemaining(
+            //       hasScrollBody: true,
+            //       child: Container(
+            //         child: pages[selectedIndex]
+            //       ),
+            //     ),
+            //   ]
+            // ),
+
+
+
           bottomNavigationBar: BottomNavigationBar(
             selectedFontSize: 15,
             selectedItemColor: Colors.orange,
@@ -75,16 +147,15 @@ class _NavBar extends State<NavBar> {
                 icon: Icon(Icons.coffee),
                 label: "Spots",
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle),
-                label: "Profile",
-              )
+              // BottomNavigationBarItem(
+              //   icon: Icon(Icons.account_circle),
+              //   label: "Profile",
+              // )
             ],
             currentIndex: selectedIndex,
             onTap: onItemTapped,
           ),
           backgroundColor: Colors.white,
-          body: pages[selectedIndex],
         )
     );
   }
