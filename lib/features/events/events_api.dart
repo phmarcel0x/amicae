@@ -211,8 +211,10 @@ class EventDetailScreen extends StatelessWidget {
       backgroundColor: Colors.white,
 
       appBar: AppBar(
-        title: Text(album.title),
+        title: const Text("back to list"),
         backgroundColor: Colors.white,
+        forceMaterialTransparency: true,
+
         // titleTextStyle: TextStyle(
         //   color: Colors.white,
         // ),
@@ -224,7 +226,7 @@ class EventDetailScreen extends StatelessWidget {
       body: SingleChildScrollView(
 
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -295,8 +297,10 @@ class _API_EventsPageState extends State<API_EventsPage> {
       debugShowCheckedModeBanner: false,
       title: 'Fetch Data Example',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
+
       ),
+
       home: Scaffold(
         backgroundColor: Colors.white,
 
@@ -336,7 +340,9 @@ class _API_EventsPageState extends State<API_EventsPage> {
               }
 
               // By default, show a loading spinner.
-              return const CircularProgressIndicator();
+              return const CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+              );
             },
           ),
         ),
