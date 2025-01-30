@@ -37,7 +37,7 @@ class _ProfilePage extends State<ProfilePage> {
                     Navigator.pushReplacement(
                       context,
                       PageRouteBuilder(
-                        pageBuilder: (context, animation1, animation2) => NavBar(),
+                        pageBuilder: (context, animation1, animation2) => const NavBar(),
                         transitionDuration: Duration.zero,
                         reverseTransitionDuration: Duration.zero,
                       ),

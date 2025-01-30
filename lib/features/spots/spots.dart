@@ -15,7 +15,7 @@ class _SpotsPage extends State<SpotsPage> {
   @override
   Widget build(BuildContext context) {
     return FlutterMap(
-      options: MapOptions(
+      options: const MapOptions(
         initialCenter: LatLng(45.497059, -73.578421), // Center the map over Concordia University
         initialZoom: 16,
       ),

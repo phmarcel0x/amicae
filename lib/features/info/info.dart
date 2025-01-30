@@ -23,18 +23,18 @@ class _InfoPage extends State<InfoPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Padding(
+                  const Padding(
                       padding: EdgeInsets.all(10),
                       child: Text("WELCOME TO AMICAE")
                   ),
-                  Padding(
+                  const Padding(
                       padding: EdgeInsets.all(10),
                       child: Text(
                         "Amicae is a mobile app designed to connect students at Concordia University with mentors and potential study buddies based on shared interests. It also recommends the best on- and off- campus study spots to support academic success.",
                         textAlign: TextAlign.center,
                       )
                   ),
-                  Padding(
+                  const Padding(
                       padding: EdgeInsets.all(10),
                       child: Text("info page goes here")
                   ),
@@ -47,7 +47,7 @@ class _InfoPage extends State<InfoPage> {
                           Navigator.pushReplacement(
                             context,
                             PageRouteBuilder(
-                              pageBuilder: (context, animation1, animation2) => NavBar(),
+                              pageBuilder: (context, animation1, animation2) => const NavBar(),
                               transitionDuration: Duration.zero,
                               reverseTransitionDuration: Duration.zero,
                             ),
