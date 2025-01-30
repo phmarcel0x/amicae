@@ -1,4 +1,6 @@
+import 'package:amicae_app/features/home/home.dart';
 import 'package:amicae_app/features/login/index.dart';
+import 'package:amicae_app/features/nav%20bar/nav_bar.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -32,13 +34,37 @@ class _ProfilePage extends State<ProfilePage> {
                   icon: const Icon(Icons.arrow_back),
                   color: Colors.black,
                   onPressed: () {
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder:
-                        (context) => const LandingPage()
-                      )
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation1, animation2) => NavBar(),
+                        transitionDuration: Duration.zero,
+                        reverseTransitionDuration: Duration.zero,
+                      ),
                     );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(builder:
+                    //     (context) => const NavBar()
+                    //   )
+                    // );
                   }
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: IconButton(
+                    icon: const Icon(Icons.logout),
+
+                    color: Colors.black,
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(builder:
+                              (context) => const LandingPage()
+                          )
+                      );
+                    }
                 ),
               ),
             ],
