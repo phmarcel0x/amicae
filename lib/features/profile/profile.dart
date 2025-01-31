@@ -1,5 +1,6 @@
 import 'package:amicae/pages/landing_page.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../nav bar/nav_bar.dart';
 
@@ -50,6 +51,7 @@ class ProfilePage extends StatelessWidget {
                 color: Colors.black,
                 onPressed: () {
                   // TODO: firebase logout
+                  FirebaseAuth.instance.signOut();
                   Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
                       builder: (context) => const LandingPage(),

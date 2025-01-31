@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
-import 'home_page.dart';
+import 'package:amicae/features/nav%20bar/nav_bar.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -44,7 +44,7 @@ class _SignupPageState extends State<SignupPage> {
 
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => const HomePage()),
+            MaterialPageRoute(builder: (context) => const NavBar()),
           );
         }
       } catch (e) {
