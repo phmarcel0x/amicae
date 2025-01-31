@@ -1,4 +1,4 @@
-import 'package:amicae/temp_profile.dart';
+import 'package:amicae/swipeFeature/temp_profile.dart';
 
 class ProfilesBrain {
   int userNumber = 1;
