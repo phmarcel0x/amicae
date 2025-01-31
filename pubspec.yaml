@@ -10,6 +10,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  http:
+  flutter_widget_from_html_core: ^0.15.2
+  flutter_map: any
+
 
   cupertino_icons: ^1.0.8
   firebase_core: ^3.9.0
@@ -21,6 +25,8 @@ dev_dependencies:
 
   flutter_test:
     sdk: flutter
+  test: ^1.16.0 # to add the test package
+
 
   flutter_lints: ^4.0.0
 
@@ -28,6 +34,11 @@ dev_dependencies:
 flutter:
 
   uses-material-design: true
+  assets:
+    - assets/ae_short_black.png
+    - assets/ae_short_white.png
+    - assets/ae_long_black.png
+    - assets/ae_long_white.png
 
   assets:
     - images/ae_short_white.png
