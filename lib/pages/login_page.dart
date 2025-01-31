@@ -7,15 +7,15 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _emailController = TextEditingController();
-    final TextEditingController _passwordController = TextEditingController();
-    final AuthService _authService = AuthService();
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
+    final AuthService authService = AuthService();
 
-    Future<void> _loginUser() async {
+    Future<void> loginUser() async {
       try {
-        final user = await _authService.login(
-          email: _emailController.text,
-          password: _passwordController.text,
+        final user = await authService.login(
+          email: emailController.text,
+          password: passwordController.text,
         );
 
         if (user != null) {
@@ -42,7 +42,7 @@ class LoginPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const CircleAvatar(
-              backgroundImage: AssetImage('images/ae_short_white.png'),
+              backgroundImage: AssetImage('assets/ae_short_white.png'),
               radius: 50,
             ),
             const Text(
@@ -50,17 +50,17 @@ class LoginPage extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
             ),
             TextField(
-              controller: _emailController,
+              controller: emailController,
               decoration: const InputDecoration(labelText: "Email"),
             ),
             TextField(
-              controller: _passwordController,
+              controller: passwordController,
               obscureText: true,
               decoration: const InputDecoration(labelText: "Password"),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: _loginUser,
+              onPressed: loginUser,
               child: const Text("LOG IN"),
             ),
           ],

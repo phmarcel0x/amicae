@@ -16,7 +16,8 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -67,7 +68,7 @@ class _SignupPageState extends State<SignupPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const CircleAvatar(
-                  backgroundImage: AssetImage('images/ae_short_white.png'),
+                  backgroundImage: AssetImage('assets/ae_short_white.png'),
                   radius: 50,
                 ),
                 const Text(
@@ -139,7 +140,8 @@ class _SignupPageState extends State<SignupPage> {
                 TextFormField(
                   controller: _confirmPasswordController,
                   obscureText: true,
-                  decoration: const InputDecoration(labelText: "Confirm Password"),
+                  decoration:
+                      const InputDecoration(labelText: "Confirm Password"),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return "Please confirm your password";

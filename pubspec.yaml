@@ -18,6 +18,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   firebase_core: ^3.9.0
   firebase_auth: ^5.3.4
+  latlong2: ^0.9.1
 
 
 dev_dependencies:
@@ -39,12 +40,6 @@ flutter:
     - assets/ae_short_white.png
     - assets/ae_long_black.png
     - assets/ae_long_white.png
-
-  assets:
-    - images/ae_short_white.png
-    - images/ae_short_black.png
-    - images/amicae_long_black.png
-    - images/amicae_long_white.png
 
 flutter_launcher_icons:
   android: true

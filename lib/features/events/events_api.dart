@@ -10,7 +10,8 @@ Future<List<Album>> fetchAlbum() async {
   final response = await http.get(
     Uri.parse('https://opendata.concordia.ca/API/v1/library/events/'),
     headers: {
-      HttpHeaders.authorizationHeader: 'Basic ODIwOjljNzYzZDRmYWQ3MzZhYTliYzYxYWVhOTczZGY5MDMz',
+      HttpHeaders.authorizationHeader:
+          'Basic ODIwOjljNzYzZDRmYWQ3MzZhYTliYzYxYWVhOTczZGY5MDMz',
     },
   );
 
@@ -43,22 +44,21 @@ class Album {
   final String color;
   final String featuredImage;
 
-  Album({
-    required this.id,
-    required this.title,
-    required this.allDay,
-    required this.start,
-    required this.end,
-    required this.description,
-    required this.publicUrl,
-    required this.adminUrl,
-    required this.location,
-    required this.presenter,
-    required this.calendar,
-    required this.registration,
-    required this.color,
-    required this.featuredImage
-  });
+  Album(
+      {required this.id,
+      required this.title,
+      required this.allDay,
+      required this.start,
+      required this.end,
+      required this.description,
+      required this.publicUrl,
+      required this.adminUrl,
+      required this.location,
+      required this.presenter,
+      required this.calendar,
+      required this.registration,
+      required this.color,
+      required this.featuredImage});
 
   factory Album.fromJson(Map<String, dynamic> json) {
     try {
@@ -66,7 +66,8 @@ class Album {
         id: json['id'] ?? 0,
         title: json['title'] ?? '',
         allDay: json['allday'] ?? false,
-        start: DateTime.parse(json['start'] ?? DateTime.now().toIso8601String()),
+        start:
+            DateTime.parse(json['start'] ?? DateTime.now().toIso8601String()),
         end: DateTime.parse(json['end'] ?? DateTime.now().toIso8601String()),
         description: json['description'] ?? '',
         publicUrl: json['public'] ?? '',
@@ -102,6 +103,7 @@ class Album {
     };
   }
 }
+
 class Location {
   final int id;
   final int type;
@@ -137,6 +139,7 @@ class Location {
     };
   }
 }
+
 class Calendar {
   final int id;
   final String name;
@@ -172,6 +175,7 @@ class Calendar {
     };
   }
 }
+
 class EventDate {
   final int eventId;
   final DateTime start;
@@ -185,7 +189,8 @@ class EventDate {
     try {
       return EventDate(
         eventId: json['event_id'] ?? 0,
-        start: DateTime.parse(json['start'] ?? DateTime.now().toIso8601String()),
+        start:
+            DateTime.parse(json['start'] ?? DateTime.now().toIso8601String()),
       );
     } catch (e) {
       throw Exception("Error parsing EventDate JSON: $e");
@@ -203,13 +208,15 @@ class EventDate {
 class EventDetailScreen extends StatelessWidget {
   final Album album;
 
-  const EventDetailScreen({Key? key, required this.album}) : super(key: key);
+  const EventDetailScreen({
+    super.key,
+    required this.album,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-
       appBar: AppBar(
         title: const Text("back to list"),
         backgroundColor: Colors.white,
@@ -224,7 +231,6 @@ class EventDetailScreen extends StatelessWidget {
         ),
       ),
       body: SingleChildScrollView(
-
         child: Padding(
           padding: const EdgeInsets.all(5),
           child: Column(
@@ -263,9 +269,7 @@ class EventDetailScreen extends StatelessWidget {
                 'Public URL: ${album.publicUrl}',
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
-
             ],
-
           ),
         ),
       ),
@@ -298,14 +302,10 @@ class _API_EventsPageState extends State<API_EventsPage> {
       title: 'Fetch Data Example',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
-
       ),
-
       home: Scaffold(
         backgroundColor: Colors.white,
-
         body: Center(
-
           child: FutureBuilder<List<Album>>(
             future: futureAlbums,
             builder: (context, snapshot) {
@@ -315,23 +315,24 @@ class _API_EventsPageState extends State<API_EventsPage> {
                   itemCount: albums.length,
                   itemBuilder: (context, index) {
                     return Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: ListTile(
-                          title: Text(albums[index].title),
-                          subtitle: Text(albums[index].start.toString()),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => EventDetailScreen(album: albums[index]),
-                              ),
-                            );
-                          },
-                          shape: RoundedRectangleBorder(
-                            side: const BorderSide(color: Colors.black, width: 2),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
+                      padding: const EdgeInsets.all(10),
+                      child: ListTile(
+                        title: Text(albums[index].title),
+                        subtitle: Text(albums[index].start.toString()),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  EventDetailScreen(album: albums[index]),
+                            ),
+                          );
+                        },
+                        shape: RoundedRectangleBorder(
+                          side: const BorderSide(color: Colors.black, width: 2),
+                          borderRadius: BorderRadius.circular(10),
                         ),
+                      ),
                     );
                   },
                 );

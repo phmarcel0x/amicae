@@ -11,17 +11,19 @@ class SpotsPage extends StatefulWidget {
 }
 
 class _SpotsPage extends State<SpotsPage> {
-
   @override
   Widget build(BuildContext context) {
     return FlutterMap(
       options: const MapOptions(
-        initialCenter: LatLng(45.497059, -73.578421), // Center the map over Concordia University
+        initialCenter: LatLng(
+            45.497059, -73.578421), // Center the map over Concordia University
         initialZoom: 16,
       ),
       children: [
-        TileLayer( // Display map tiles from any source
-          urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png', // OSMF's Tile Server
+        TileLayer(
+          // Display map tiles from any source
+          urlTemplate:
+              'https://tile.openstreetmap.org/{z}/{x}/{y}.png', // OSMF's Tile Server
           userAgentPackageName: 'com.example.app',
           // And many more recommended properties!
         ),

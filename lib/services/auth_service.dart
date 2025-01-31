@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
@@ -9,13 +10,14 @@ class AuthService {
     required String password,
   }) async {
     try {
-      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+      UserCredential userCredential =
+          await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
       return userCredential.user;
     } on FirebaseAuthException catch (e) {
-      print("Sign Up Error: ${e.message}");
+      log("Sign Up Error: ${e.message}");
       throw e.message ?? "An unknown error occurred";
     }
   }
@@ -32,7 +34,7 @@ class AuthService {
       );
       return userCredential.user;
     } on FirebaseAuthException catch (e) {
-      print("Login Error: ${e.message}");
+      log("Login Error: ${e.message}");
       throw e.message ?? "An unknown error occurred";
     }
   }
