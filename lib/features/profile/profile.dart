@@ -1,7 +1,7 @@
-import 'package:amicae_app/features/home/home.dart';
-import 'package:amicae_app/features/login/index.dart';
-import 'package:amicae_app/features/nav%20bar/nav_bar.dart';
 import 'package:flutter/material.dart';
+
+import '../login/index.dart';
+import '../nav bar/nav_bar.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
