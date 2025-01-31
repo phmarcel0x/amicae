@@ -1,6 +1,6 @@
+import 'package:amicae/features/nav%20bar/nav_bar.dart';
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
-import 'home_page.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -24,7 +24,7 @@ class LoginPage extends StatelessWidget {
           );
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => const HomePage()),
+            MaterialPageRoute(builder: (context) => const NavBar()),
           );
         }
       } catch (e) {
