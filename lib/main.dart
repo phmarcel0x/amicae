@@ -1,31 +1,44 @@
 import 'package:flutter/material.dart';
 import 'swipeFeature/home_page.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'pages/landing_page.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          title: const Text(
-            'Welcome to amicae',
-            style: TextStyle(color: Colors.white),
-          ),
-          centerTitle: true,
-          backgroundColor: Colors.black,
-        ),
-        body: const Center(
-          child: HomePage(),
-        ),
-      ),
+      home: const LandingPage(),
+      theme: AppThemes.lightTheme,
+      darkTheme: AppThemes.darkTheme,
+      themeMode: ThemeMode.system,
     );
   }
 }
+
+class AppColors {
+  static const black = Colors.black;
+  static const white = Colors.white;
+}
+
+class AppThemes {
+  static final lightTheme = ThemeData(
+    primaryColor: AppColors.white,
+    brightness: Brightness.light,
+  );
+
+  static final darkTheme = ThemeData(
+    primaryColor: AppColors.black,
+    brightness: Brightness.dark,
+  );

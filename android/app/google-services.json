@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "362982684603",
+    "project_id": "amicae-app",
+    "storage_bucket": "amicae-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:362982684603:android:b8cc962b55c9d55374369e",
+        "android_client_info": {
+          "package_name": "com.example.amicae"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9jTRo_Hv9WHkqfbVIGFtTwQfGg1dvn0w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
