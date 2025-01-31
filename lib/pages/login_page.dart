@@ -49,19 +49,67 @@ class LoginPage extends StatelessWidget {
               "Log in to AMICAE",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
             ),
-            TextField(
-              controller: emailController,
-              decoration: const InputDecoration(labelText: "Email"),
+            const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.all(5),
+              child:
+                TextField(
+                  cursorColor: Colors.black,
+                  controller: emailController,
+                  decoration: InputDecoration(
+                    labelText: "Email",
+                    labelStyle: const TextStyle(color: Colors.black),
+                    border: const OutlineInputBorder(),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.circular(12),
+
+                  ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.circular(12),
+
+                    ),
+                  ),
+
+                ),
             ),
-            TextField(
-              controller: passwordController,
-              obscureText: true,
-              decoration: const InputDecoration(labelText: "Password"),
+            Padding(
+              padding: const EdgeInsets.all(5),
+              child:
+              TextField(
+                cursorColor: Colors.black,
+                controller: passwordController,
+                decoration: InputDecoration(
+                  labelText: "Password",
+                  labelStyle: const TextStyle(color: Colors.black),
+                  border: const OutlineInputBorder(),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.black),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.black),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+
+              ),
             ),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: loginUser,
-              child: const Text("LOG IN"),
+            Padding(
+                padding: const EdgeInsets.all(10),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      )
+                  ),
+                  onPressed: loginUser,
+                  child: const Text("LOG IN"),
+                )
             ),
           ],
         ),

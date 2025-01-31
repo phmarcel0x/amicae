@@ -277,16 +277,16 @@ class EventDetailScreen extends StatelessWidget {
   }
 }
 
-void main() => runApp(const API_EventsPage());
+void main() => runApp(const EventsPage());
 
-class API_EventsPage extends StatefulWidget {
-  const API_EventsPage({super.key});
+class EventsPage extends StatefulWidget {
+  const EventsPage({super.key});
 
   @override
-  State<API_EventsPage> createState() => _API_EventsPageState();
+  State<EventsPage> createState() => _EventsPageState();
 }
 
-class _API_EventsPageState extends State<API_EventsPage> {
+class _EventsPageState extends State<EventsPage> {
   late Future<List<Album>> futureAlbums;
 
   @override
@@ -299,7 +299,6 @@ class _API_EventsPageState extends State<API_EventsPage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Fetch Data Example',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
       ),
@@ -315,7 +314,7 @@ class _API_EventsPageState extends State<API_EventsPage> {
                   itemCount: albums.length,
                   itemBuilder: (context, index) {
                     return Padding(
-                      padding: const EdgeInsets.all(10),
+                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
                       child: ListTile(
                         title: Text(albums[index].title),
                         subtitle: Text(albums[index].start.toString()),
