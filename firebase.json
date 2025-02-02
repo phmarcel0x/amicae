@@ -1,1 +1,25 @@
-{"flutter":{"platforms":{"dart":{"lib/firebase_options.dart":{"projectId":"amicae-app","configurations":{"android":"1:362982684603:android:b8cc962b55c9d55374369e","ios":"1:362982684603:ios:003fec704b421c1174369e","macos":"1:362982684603:ios:003fec704b421c1174369e","web":"1:362982684603:web:110c7adcec408b3574369e","windows":"1:362982684603:web:110c7adcec408b3574369e"}}},"android":{"default":{"projectId":"amicae-app","appId":"1:362982684603:android:b8cc962b55c9d55374369e","fileOutput":"android/app/google-services.json"}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "amicae-app",
+          "configurations": {
+            "android": "1:362982684603:android:b8cc962b55c9d55374369e",
+            "ios": "1:362982684603:ios:003fec704b421c1174369e",
+            "macos": "1:362982684603:ios:003fec704b421c1174369e",
+            "web": "1:362982684603:web:110c7adcec408b3574369e",
+            "windows": "1:362982684603:web:110c7adcec408b3574369e"
+          }
+        }
+      },
+      "android": {
+        "default": {
+          "projectId": "amicae-app",
+          "appId": "1:362982684603:android:b8cc962b55c9d55374369e",
+          "fileOutput": "android/app/google-services.json"
+        }
+      }
+    }
+  }
+}
