@@ -304,7 +304,9 @@ class _EventsPageState extends State<EventsPage> {
       ),
       home: Scaffold(
         backgroundColor: Colors.white,
-        body: Center(
+
+        body:
+        Center(
           child: FutureBuilder<List<Album>>(
             future: futureAlbums,
             builder: (context, snapshot) {
