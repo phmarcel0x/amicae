@@ -1,6 +1,8 @@
 import 'package:amicae/features/nav%20bar/nav_bar.dart';
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
+import 'landing_page.dart';
+
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -41,6 +43,27 @@ class LoginPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            IconButton(
+              icon: const Icon(Icons.arrow_back),
+              color: Colors.black,
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation1, animation2) =>
+                    const LandingPage(),
+                    transitionDuration: Duration.zero,
+                    reverseTransitionDuration: Duration.zero,
+                  ),
+                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder:
+                //     (context) => const NavBar()
+                //   )
+                // );
+              },
+            ),
             const CircleAvatar(
               backgroundImage: AssetImage('assets/ae_short_white.png'),
               radius: 50,
