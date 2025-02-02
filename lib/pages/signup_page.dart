@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
 import 'package:amicae/features/nav%20bar/nav_bar.dart';
 import 'landing_page.dart';
+import 'package:amicae/features/nav%20bar/nav_bar.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -64,34 +65,10 @@ class _SignupPageState extends State<SignupPage> {
         child: Container(
           margin: const EdgeInsets.all(20),
           child: Form(
-
             key: _formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: 100),
-                IconButton(
-                  icon: const Icon(Icons.arrow_back),
-                  color: Colors.black,
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      PageRouteBuilder(
-                        pageBuilder: (context, animation1, animation2) =>
-                        const LandingPage(),
-                        transitionDuration: Duration.zero,
-                        reverseTransitionDuration: Duration.zero,
-                      ),
-                    );
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder:
-                    //     (context) => const NavBar()
-                    //   )
-                    // );
-                  },
-                ),
-
                 const CircleAvatar(
                   backgroundImage: AssetImage('assets/ae_short_white.png'),
                   radius: 50,
@@ -104,24 +81,8 @@ class _SignupPageState extends State<SignupPage> {
 
                 // First Name Field
                 TextFormField(
-                  cursorColor: Colors.black,
-
                   controller: _firstNameController,
-                  decoration: InputDecoration(
-                    labelText: "First Name",
-                    labelStyle: const TextStyle(color: Colors.black),
-                    border: const OutlineInputBorder(),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.black),
-                      borderRadius: BorderRadius.circular(12),
-
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.black),
-                      borderRadius: BorderRadius.circular(12),
-
-                    ),
-                  ),
+                  decoration: const InputDecoration(labelText: "First Name"),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return "Please enter your first name";
@@ -133,24 +94,9 @@ class _SignupPageState extends State<SignupPage> {
 
                 // Last Name Field
                 TextFormField(
-                  cursorColor: Colors.black,
-
                   controller: _lastNameController,
-                  decoration: InputDecoration(
-                    labelText: "Last Name",
-                    labelStyle: const TextStyle(color: Colors.black),
-                    border: const OutlineInputBorder(),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.black),
-                      borderRadius: BorderRadius.circular(12),
-
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.black),
-                      borderRadius: BorderRadius.circular(12),
-
-                    ),
-                  ),                  validator: (value) {
+                  decoration: const InputDecoration(labelText: "Last Name"),
+                  validator: (value) {
                     if (value == null || value.isEmpty) {
                       return "Please enter your last name";
                     }
@@ -161,24 +107,9 @@ class _SignupPageState extends State<SignupPage> {
 
                 // Email Field
                 TextFormField(
-                  cursorColor: Colors.black,
-
                   controller: _emailController,
-                  decoration: InputDecoration(
-                    labelText: "Email",
-                    labelStyle: const TextStyle(color: Colors.black),
-                    border: const OutlineInputBorder(),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.black),
-                      borderRadius: BorderRadius.circular(12),
-
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.black),
-                      borderRadius: BorderRadius.circular(12),
-
-                    ),
-                  ),                  validator: (value) {
+                  decoration: const InputDecoration(labelText: "Email"),
+                  validator: (value) {
                     if (value == null || value.isEmpty) {
                       return "Please enter your email";
                     }
@@ -192,25 +123,9 @@ class _SignupPageState extends State<SignupPage> {
 
                 // Password Field
                 TextFormField(
-                  cursorColor: Colors.black,
-
                   controller: _passwordController,
                   obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: "Password",
-                    labelStyle: const TextStyle(color: Colors.black),
-                    border: const OutlineInputBorder(),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.black),
-                      borderRadius: BorderRadius.circular(12),
-
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.black),
-                      borderRadius: BorderRadius.circular(12),
-
-                    ),
-                  ),
+                  decoration: const InputDecoration(labelText: "Password"),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return "Please enter a password";
@@ -225,25 +140,10 @@ class _SignupPageState extends State<SignupPage> {
 
                 // Confirm Password Field
                 TextFormField(
-                  cursorColor: Colors.black,
-
                   controller: _confirmPasswordController,
                   obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: "Confirm Password",
-                    labelStyle: const TextStyle(color: Colors.black),
-                    border: const OutlineInputBorder(),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.black),
-                      borderRadius: BorderRadius.circular(12),
-
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.black),
-                      borderRadius: BorderRadius.circular(12),
-
-                    ),
-                  ),
+                  decoration:
+                      const InputDecoration(labelText: "Confirm Password"),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return "Please confirm your password";
@@ -253,19 +153,9 @@ class _SignupPageState extends State<SignupPage> {
                 ),
                 const SizedBox(height: 20),
 
-                Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.black,
-                          foregroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          )
-                      ),
-                      onPressed: _signUpUser,
-                      child: const Text("SIGN UP"),
-                    )
+                ElevatedButton(
+                  onPressed: _signUpUser,
+                  child: const Text("SIGN UP"),
                 ),
               ],
             ),
