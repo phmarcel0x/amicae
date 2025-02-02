@@ -1,6 +1,8 @@
 import 'package:amicae/features/nav%20bar/nav_bar.dart';
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
+import 'landing_page.dart';
+
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -41,6 +43,27 @@ class LoginPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            IconButton(
+              icon: const Icon(Icons.arrow_back),
+              color: Colors.black,
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation1, animation2) =>
+                    const LandingPage(),
+                    transitionDuration: Duration.zero,
+                    reverseTransitionDuration: Duration.zero,
+                  ),
+                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder:
+                //     (context) => const NavBar()
+                //   )
+                // );
+              },
+            ),
             const CircleAvatar(
               backgroundImage: AssetImage('assets/ae_short_white.png'),
               radius: 50,
@@ -49,19 +72,67 @@ class LoginPage extends StatelessWidget {
               "Log in to AMICAE",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
             ),
-            TextField(
-              controller: emailController,
-              decoration: const InputDecoration(labelText: "Email"),
+            const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.all(5),
+              child:
+                TextField(
+                  cursorColor: Colors.black,
+                  controller: emailController,
+                  decoration: InputDecoration(
+                    labelText: "Email",
+                    labelStyle: const TextStyle(color: Colors.black),
+                    border: const OutlineInputBorder(),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.circular(12),
+
+                  ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.circular(12),
+
+                    ),
+                  ),
+
+                ),
             ),
-            TextField(
-              controller: passwordController,
-              obscureText: true,
-              decoration: const InputDecoration(labelText: "Password"),
+            Padding(
+              padding: const EdgeInsets.all(5),
+              child:
+              TextField(
+                cursorColor: Colors.black,
+                controller: passwordController,
+                decoration: InputDecoration(
+                  labelText: "Password",
+                  labelStyle: const TextStyle(color: Colors.black),
+                  border: const OutlineInputBorder(),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.black),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.black),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+
+              ),
             ),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: loginUser,
-              child: const Text("LOG IN"),
+            Padding(
+                padding: const EdgeInsets.all(10),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      )
+                  ),
+                  onPressed: loginUser,
+                  child: const Text("LOG IN"),
+                )
             ),
           ],
         ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
 import 'package:amicae/features/nav%20bar/nav_bar.dart';
+import 'landing_page.dart';
+import 'package:amicae/features/nav%20bar/nav_bar.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
