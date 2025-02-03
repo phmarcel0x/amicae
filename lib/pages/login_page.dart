@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
 import 'landing_page.dart';
 
-
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
@@ -101,6 +100,8 @@ class LoginPage extends StatelessWidget {
               padding: const EdgeInsets.all(5),
               child:
               TextField(
+                obscureText: true,
+
                 cursorColor: Colors.black,
                 controller: passwordController,
                 decoration: InputDecoration(
