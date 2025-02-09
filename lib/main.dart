@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'pages/landing_page.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -11,20 +18,27 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        textTheme: const TextTheme(
-          bodyMedium: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-        ),
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Welcome to amicae'),
-        ),
-        body: const Center(
-          child: Text('The best app ever made, ever. Now with a new theme!'),
-        ),
-      ),
+      home: const LandingPage(),
+      theme: AppThemes.lightTheme,
+      darkTheme: AppThemes.darkTheme,
+      themeMode: ThemeMode.system,
     );
   }
+}
+
+class AppColors {
+  static const black = Colors.black;
+  static const white = Colors.white;
+}
+
+class AppThemes {
+  static final lightTheme = ThemeData(
+    primaryColor: AppColors.white,
+    brightness: Brightness.light,
+  );
+
+  static final darkTheme = ThemeData(
+    primaryColor: AppColors.black,
+    brightness: Brightness.dark,
+  );
 }

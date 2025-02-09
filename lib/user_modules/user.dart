@@ -9,8 +9,7 @@ abstract class User {
   String? _lastName;
   final String? _email;
 
-
-  // counter for the number of times the info coould be changed 
+  // counter for the number of times the info coould be changed
   int _firstNameChangeCounter = 0;
   int _middleNameChangeCounter = 0;
   int _lastNameChangeCounter = 0;
@@ -20,16 +19,19 @@ abstract class User {
   static const int maxChange = 5;
 
   // Admin constructor
-  User(String username, String password, {required String firstName, String? middleName, required String lastName, required String email})
-      : _username = username,
+  User(
+    String username,
+    String password, {
+    required String firstName,
+    String? middleName,
+    required String lastName,
+    required String email,
+  })  : _username = username,
         _password = password,
         _firstName = firstName,
         _middleName = middleName,
         _lastName = lastName,
         _email = email;
-
-
-
 
   // Getters
   // Getter for the private variable: username
@@ -44,41 +46,36 @@ abstract class User {
   // Getter for private variable: middleName
   String? get middleName => _middleName;
 
-  // Getter for private variable: lastName 
+  // Getter for private variable: lastName
   String? get lastName => _lastName;
 
   // Getter for private variable: email
   String? get email => _email;
-    // made it in a way that the email cannot be changed 
+  // made it in a way that the email cannot be changed
 
-  // Getter for the private variable: _firstNameChangeCounter 
+  // Getter for the private variable: _firstNameChangeCounter
   int get firstNameChangeCounter => _firstNameChangeCounter;
 
-  // Getter for the private variable: _middleNameChangeCounter 
+  // Getter for the private variable: _middleNameChangeCounter
   int get middleNameChangeCounter => _middleNameChangeCounter;
 
-  // Getter for the private variable: _lastNameChangeCounter 
+  // Getter for the private variable: _lastNameChangeCounter
   int get lastNameChangeCounter => _lastNameChangeCounter;
 
   // getter for the private variable: _totalNameChangeCounter
   int get totalNameChangeCounter => _totalNameChangeCounter;
 
-
-  
-
-
   // Setters
 
-  // No setter for the username b/c the user should not be 
+  // No setter for the username b/c the user should not be
   // able to change it
 
-  // Setter for the password 
+  // Setter for the password
   set password(String? addedPassword) {
     _password = addedPassword;
   }
 
-
-  // Setter for firstName 
+  // Setter for firstName
   set firstName(String? addedFirstName) {
     if (_firstNameChangeCounter < maxChange) {
       if (firstName != addedFirstName) {
@@ -86,15 +83,14 @@ abstract class User {
         _firstNameChangeCounter++;
         _totalNameChangeCounter++;
         int numRemaining = maxChange - _firstNameChangeCounter;
-        print("Number of times remaining to change the first name: $numRemaining.");
-      }
-
-      else {
+        print(
+            "Number of times remaining to change the first name: $numRemaining.");
+      } else {
         int numRemaining = maxChange - _firstNameChangeCounter;
-        print("Number of times remaining to change the first name: $numRemaining.");
+        print(
+            "Number of times remaining to change the first name: $numRemaining.");
       }
-    }
-    else {
+    } else {
       throw MaxChangeExceeded();
     }
   }
@@ -102,21 +98,19 @@ abstract class User {
   // Setter for middleName
   set middleName(String? addedMiddleName) {
     if (_middleNameChangeCounter < maxChange) {
-      if (middleName != addedMiddleName){
-      _middleName = addedMiddleName;
-      _middleNameChangeCounter++;
-      _totalNameChangeCounter++;
-      int numRemaining = maxChange - _middleNameChangeCounter;
-      print("Number of times remaining to change the middle name: $numRemaining.");
-      }
-
-      else {
+      if (middleName != addedMiddleName) {
+        _middleName = addedMiddleName;
+        _middleNameChangeCounter++;
+        _totalNameChangeCounter++;
         int numRemaining = maxChange - _middleNameChangeCounter;
-        print("Number of times remaining to change the middle name: $numRemaining.");
+        print(
+            "Number of times remaining to change the middle name: $numRemaining.");
+      } else {
+        int numRemaining = maxChange - _middleNameChangeCounter;
+        print(
+            "Number of times remaining to change the middle name: $numRemaining.");
       }
-    }
-
-    else {
+    } else {
       throw MaxChangeExceeded();
     }
   }
@@ -125,44 +119,36 @@ abstract class User {
   set lastName(String? addedLastName) {
     if (_lastNameChangeCounter < maxChange) {
       if (lastName != addedLastName) {
-      _lastName = addedLastName;
-      _lastNameChangeCounter++;
-      _totalNameChangeCounter++;
-      int numRemaining = maxChange - _lastNameChangeCounter;
-      print("Number of times remaining to change the last name: $numRemaining.");
-      }
-
-      else {
+        _lastName = addedLastName;
+        _lastNameChangeCounter++;
+        _totalNameChangeCounter++;
         int numRemaining = maxChange - _lastNameChangeCounter;
-        print("Number of times remaining to change the last name: $numRemaining.");
+        print(
+            "Number of times remaining to change the last name: $numRemaining.");
+      } else {
+        int numRemaining = maxChange - _lastNameChangeCounter;
+        print(
+            "Number of times remaining to change the last name: $numRemaining.");
       }
-    }
-    else {
+    } else {
       throw MaxChangeExceeded();
     }
   }
 
-
   // Method to show the input
-  @override
-  String toString(){
-    if (totalNameChangeCounter == 0)  {
+  String toString() {
+    if (totalNameChangeCounter == 0) {
       if (middleName != null) {
-      return "Your name is: $firstName $middleName $lastName. You registered with the following email: $email.";
-      }
-      else {
+        return "Your name is: $firstName $middleName $lastName. You registered with the following email: $email.";
+      } else {
         return "Your name is: $firstName $lastName. You registered with the following email: $email.";
       }
-    }
-    else {
+    } else {
       if (middleName != null) {
-      return "Your new name is: $firstName $middleName $lastName. You registered with the following email: $email.";
-      }
-      else {
+        return "Your new name is: $firstName $middleName $lastName. You registered with the following email: $email.";
+      } else {
         return "Your new name is: $firstName $lastName. You registered with the following email: $email.";
       }
     }
   }
 }
-
-
