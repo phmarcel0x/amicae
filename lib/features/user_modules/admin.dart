@@ -1,9 +1,8 @@
 // Importation of the abstract class
 // to have the parent attribute and methods
-import "../user_modules/user.dart";
-
 // importing the custom exception module
-import "../exception_modules/custom_exceptions.dart";
+import "user.dart";
+import "user_errors.dart";
 
 // Class for the Admin
 class Admin extends User {
@@ -16,7 +15,6 @@ class Admin extends User {
   int _firstNameChangeCounter = 0;
   int _middleNameChangeCounter = 0;
   int _lastNameChangeCounter = 0;
-  int _totalNameChangeCounter = 0;
 
   // Maximum number of changes possible
   static const int maxChange = 5;
@@ -33,18 +31,6 @@ class Admin extends User {
 
   // made it in a way that the email cannot be changed
 
-  // Getter for the private variable: _firstNameChangeCounter
-  int get firstNameChangeCounter => _firstNameChangeCounter;
-
-  // Getter for the private variable: _middleNameChangeCounter
-  int get middleNameChangeCounter => _middleNameChangeCounter;
-
-  // Getter for the private variable: _firstNameChangeCounter
-  int get lastNameChangeCounter => _lastNameChangeCounter;
-
-  // getter for the private variable: _totalNameChangeCounter
-  int get totalNameChangeCounter => _totalNameChangeCounter;
-
   // Setters
   // Setter for firstName
   @override
@@ -53,7 +39,6 @@ class Admin extends User {
       if (firstName != addedFirstName) {
         firstName = addedFirstName;
         _firstNameChangeCounter++;
-        _totalNameChangeCounter++;
         int numRemaining = maxChange - _firstNameChangeCounter;
         print(
             "Number of times remaining to change the first name: $numRemaining.");
@@ -63,7 +48,7 @@ class Admin extends User {
             "Number of times remaining to change the first name: $numRemaining.");
       }
     } else {
-      throw MaxChangeExceeded();
+      throw UserErrors.maxChangesExceeded;
     }
   }
 
@@ -74,7 +59,6 @@ class Admin extends User {
       if (middleName != addedMiddleName) {
         middleName = addedMiddleName;
         _middleNameChangeCounter++;
-        _totalNameChangeCounter++;
         int numRemaining = maxChange - _middleNameChangeCounter;
         print(
             "Number of times remaining to change the middle name: $numRemaining.");
@@ -84,7 +68,7 @@ class Admin extends User {
             "Number of times remaining to change the middle name: $numRemaining.");
       }
     } else {
-      throw MaxChangeExceeded();
+      throw UserErrors.maxChangesExceeded;
     }
   }
 
@@ -95,7 +79,6 @@ class Admin extends User {
       if (lastName != addedLastName) {
         lastName = addedLastName;
         _lastNameChangeCounter++;
-        _totalNameChangeCounter++;
         int numRemaining = maxChange - _lastNameChangeCounter;
         print(
             "Number of times remaining to change the last name: $numRemaining.");
@@ -105,7 +88,7 @@ class Admin extends User {
             "Number of times remaining to change the last name: $numRemaining.");
       }
     } else {
-      throw MaxChangeExceeded();
+      throw UserErrors.maxChangesExceeded;
     }
   }
 

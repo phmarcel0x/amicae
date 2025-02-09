@@ -1,8 +1,8 @@
 import 'package:amicae/features/nav%20bar/nav_bar.dart';
 import 'package:flutter/material.dart';
-import '../services/auth_service.dart';
-import 'landing_page.dart';
 
+import '../../authentication/services/auth_service.dart';
+import 'landing_page.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -51,7 +51,7 @@ class LoginPage extends StatelessWidget {
                   context,
                   PageRouteBuilder(
                     pageBuilder: (context, animation1, animation2) =>
-                    const LandingPage(),
+                        const LandingPage(),
                     transitionDuration: Duration.zero,
                     reverseTransitionDuration: Duration.zero,
                   ),
@@ -75,32 +75,27 @@ class LoginPage extends StatelessWidget {
             const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.all(5),
-              child:
-                TextField(
-                  cursorColor: Colors.black,
-                  controller: emailController,
-                  decoration: InputDecoration(
-                    labelText: "Email",
-                    labelStyle: const TextStyle(color: Colors.black),
-                    border: const OutlineInputBorder(),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.black),
-                      borderRadius: BorderRadius.circular(12),
-
+              child: TextField(
+                cursorColor: Colors.black,
+                controller: emailController,
+                decoration: InputDecoration(
+                  labelText: "Email",
+                  labelStyle: const TextStyle(color: Colors.black),
+                  border: const OutlineInputBorder(),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.black),
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.black),
-                      borderRadius: BorderRadius.circular(12),
-
-                    ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.black),
+                    borderRadius: BorderRadius.circular(12),
                   ),
-
                 ),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(5),
-              child:
-              TextField(
+              child: TextField(
                 cursorColor: Colors.black,
                 controller: passwordController,
                 decoration: InputDecoration(
@@ -116,7 +111,6 @@ class LoginPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-
               ),
             ),
             const SizedBox(height: 20),
@@ -128,12 +122,10 @@ class LoginPage extends StatelessWidget {
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
-                      )
-                  ),
+                      )),
                   onPressed: loginUser,
                   child: const Text("LOG IN"),
-                )
-            ),
+                )),
           ],
         ),
       ),
