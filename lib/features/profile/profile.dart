@@ -1,6 +1,6 @@
-import 'package:amicae/pages/landing_page.dart';
-import 'package:flutter/material.dart';
+import 'package:amicae/features/login/pages/landing_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 import '../nav bar/nav_bar.dart';
 

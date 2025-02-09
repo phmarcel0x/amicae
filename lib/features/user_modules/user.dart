@@ -1,9 +1,23 @@
-import "../exception_modules/custom_exceptions.dart";
+import "user_errors.dart";
 
 // Creation of the abstract User class
 abstract class User {
+  // Admin constructor
+  User(
+    String username,
+    this.password, {
+    required String firstName,
+    String? middleName,
+    required String lastName,
+    required String email,
+  })  : _username = username,
+        _firstName = firstName,
+        _middleName = middleName,
+        _lastName = lastName,
+        _email = email;
+
   final String? _username;
-  String? _password;
+  final String? password;
   String? _firstName;
   String? _middleName;
   String? _lastName;
@@ -18,27 +32,9 @@ abstract class User {
   // Maximum number of changes possible
   static const int maxChange = 5;
 
-  // Admin constructor
-  User(
-    String username,
-    String password, {
-    required String firstName,
-    String? middleName,
-    required String lastName,
-    required String email,
-  })  : _username = username,
-        _password = password,
-        _firstName = firstName,
-        _middleName = middleName,
-        _lastName = lastName,
-        _email = email;
-
   // Getters
   // Getter for the private variable: username
   String? get username => _username;
-
-  // Getter for the private variabke: password
-  String? get password => _password;
 
   // Getter for private variable: firstName
   String? get firstName => _firstName;
@@ -70,11 +66,6 @@ abstract class User {
   // No setter for the username b/c the user should not be
   // able to change it
 
-  // Setter for the password
-  set password(String? addedPassword) {
-    _password = addedPassword;
-  }
-
   // Setter for firstName
   set firstName(String? addedFirstName) {
     if (_firstNameChangeCounter < maxChange) {
@@ -91,7 +82,7 @@ abstract class User {
             "Number of times remaining to change the first name: $numRemaining.");
       }
     } else {
-      throw MaxChangeExceeded();
+      throw UserErrors.maxChangesExceeded;
     }
   }
 
@@ -111,7 +102,7 @@ abstract class User {
             "Number of times remaining to change the middle name: $numRemaining.");
       }
     } else {
-      throw MaxChangeExceeded();
+      throw UserErrors.maxChangesExceeded;
     }
   }
 
@@ -131,11 +122,12 @@ abstract class User {
             "Number of times remaining to change the last name: $numRemaining.");
       }
     } else {
-      throw MaxChangeExceeded();
+      throw UserErrors.maxChangesExceeded;
     }
   }
 
   // Method to show the input
+  @override
   String toString() {
     if (totalNameChangeCounter == 0) {
       if (middleName != null) {
