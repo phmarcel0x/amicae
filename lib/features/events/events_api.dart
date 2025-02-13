@@ -277,16 +277,16 @@ class EventDetailScreen extends StatelessWidget {
   }
 }
 
-void main() => runApp(const API_EventsPage());
+void main() => runApp(const APIEventsPage());
 
-class API_EventsPage extends StatefulWidget {
-  const API_EventsPage({super.key});
+class APIEventsPage extends StatefulWidget {
+  const APIEventsPage({super.key});
 
   @override
-  State<API_EventsPage> createState() => _API_EventsPageState();
+  State<APIEventsPage> createState() => _APIEventsPageState();
 }
 
-class _API_EventsPageState extends State<API_EventsPage> {
+class _APIEventsPageState extends State<APIEventsPage> {
   late Future<List<Album>> futureAlbums;
 
   @override
