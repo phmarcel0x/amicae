@@ -16,7 +16,7 @@ class _InfoPage extends State<InfoPage> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
-            backgroundColor: Colors.purple,
+            backgroundColor: Colors.white,
             body: Container(
               margin: const EdgeInsets.all(20),
               width: double.infinity,
@@ -34,10 +34,7 @@ class _InfoPage extends State<InfoPage> {
                         textAlign: TextAlign.center,
                       )
                   ),
-                  const Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Text("info page goes here")
-                  ),
+
                   Padding(
                     padding: const EdgeInsets.all(10),
                     child: IconButton(

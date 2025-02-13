@@ -31,7 +31,11 @@ class _NavBarState extends State<NavBar> {
   final List<Widget> pages = [
     const HomePage(),
     const PeoplePage(),
+<<<<<<< HEAD
     const APIEventsPage(),
+=======
+    const EventsPage(),
+>>>>>>> b57ec57e0b5c57a10bc0831ec36262a8dd15e36c
     const SpotsPage(),
     // const ProfilePage(),
   ];
