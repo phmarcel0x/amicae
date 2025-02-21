@@ -101,41 +101,75 @@ class _NavBarState extends State<NavBar> {
       //   ]
       // ),
 
-      bottomNavigationBar: BottomNavigationBar(
-        selectedFontSize: 15,
-        selectedItemColor: Colors.orange,
-        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
-        unselectedItemColor: Colors.black,
-        // showSelectedLabels: false,
-        // showUnselectedLabels: false,
-        backgroundColor: Colors.white,
-        type: BottomNavigationBarType.fixed,
+          extendBody: true,  // <--- do not forget to mark this as true
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+          floatingActionButton: NavigationBar(
 
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Home",
+            // showUnselectedLabels: false,
+            // backgroundColor: Colors.white,
+
+            destinations: const <Widget>[
+              NavigationDestination(
+                icon: Icon(Icons.home),
+                label: "Home",
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.people),
+                label: "People",
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.event),
+                label: "Events",
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.coffee),
+                label: "Spots",
+              ),
+              // BottomNavigationBarItem(
+              //   icon: Icon(Icons.account_circle),
+              //   label: "Profile",
+              // )
+            ],
+            // currentIndex: selectedIndex,
+            onTap: onItemTapped,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.people),
-            label: "People",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.event),
-            label: "Events",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.coffee),
-            label: "Spots",
-          ),
-          // BottomNavigationBarItem(
-          //   icon: Icon(Icons.account_circle),
-          //   label: "Profile",
-          // )
-        ],
+      // bottomNavigationBar: BottomNavigationBar(
+      //   showSelectedLabels: false,
+      //   showUnselectedLabels: false,
+      //   selectedFontSize: 15,
+      //   selectedItemColor: Colors.orange,
+      //   selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
+      //   unselectedItemColor: Colors.black,
+      //   // showSelectedLabels: false,
+      //   // showUnselectedLabels: false,
+      //   backgroundColor: Colors.white,
+      //   type: BottomNavigationBarType.fixed,
+      //
+      //   items: const <BottomNavigationBarItem>[
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.home),
+      //       label: "Home",
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.people),
+      //       label: "People",
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.event),
+      //       label: "Events",
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.coffee),
+      //       label: "Spots",
+      //     ),
+      //     // BottomNavigationBarItem(
+      //     //   icon: Icon(Icons.account_circle),
+      //     //   label: "Profile",
+      //     // )
+      //   ],
         currentIndex: selectedIndex,
         onTap: onItemTapped,
-      ),
+      // ),
       backgroundColor: Colors.white,
     ));
   }
