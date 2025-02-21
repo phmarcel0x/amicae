@@ -1,11 +1,10 @@
-// Importation of the test framework
-import "package:test/test.dart";
-// importation of the file containing the admin class
-import "../user_modules/admin.dart";
-// importing the exception files
-import "../exception_modules/custom_exceptions.dart";
 // import the math library
 import "dart:math";
+
+import "package:amicae/features/user_modules/admin.dart";
+import "package:amicae/features/user_modules/user.dart";
+import "package:amicae/features/user_modules/user_errors.dart";
+import "package:test/test.dart";
 
 // creation of a list of names to test the middle names
 List<String> firstNameList = [
@@ -65,7 +64,7 @@ void main() {
       final random = Random();
 
       // for loop to have a random first name chosen from the list
-      for (int i = 0; i < Admin.maxChange; i++) {
+      for (int i = 0; i < User.maxChange; i++) {
         String randomName;
         do {
           randomName = firstNameList[random.nextInt(firstNameList.length)];
@@ -75,16 +74,14 @@ void main() {
       }
 
       // Verify that the number of changes is equal to the adminMaxChange
-      expect(admin.firstNameChangeCounter, equals(Admin.maxChange));
+      expect(admin.firstNameChangeCounter, equals(User.maxChange));
 
       // Change the first name one more time: with a name not in the list
       bool exceptionThrown = false;
       try {
         admin.firstName = "Vanessa";
-      } catch (error) {
-        if (error is MaxChangeExceeded) {
-          exceptionThrown = true;
-        }
+      } on UserErrors {
+        exceptionThrown = true;
       }
 
       // verify that the exception was thrown
@@ -108,7 +105,7 @@ void main() {
       final random = Random();
 
       // for loop to have a random middle name chosen from the list
-      for (int i = 0; i < Admin.maxChange; i++) {
+      for (int i = 0; i < User.maxChange; i++) {
         String randomName;
         do {
           randomName = middleNameList[random.nextInt(middleNameList.length)];
@@ -117,16 +114,14 @@ void main() {
       }
 
       // Verify that the number of changes is equal to the adminMaxChange
-      expect(admin.middleNameChangeCounter, equals(Admin.maxChange));
+      expect(admin.middleNameChangeCounter, equals(User.maxChange));
 
       // Change the middle Name one more time: with a name not in the list
       bool exceptionThrown = false;
       try {
         admin.middleName = "Vanessa";
-      } catch (error) {
-        if (error is MaxChangeExceeded) {
-          exceptionThrown = true;
-        }
+      } on UserErrors {
+        exceptionThrown = true;
       }
 
       // verify that the exception was thrown
@@ -150,7 +145,7 @@ void main() {
       final random = Random();
 
       // for loop to have a random last name chosen from the list
-      for (int i = 0; i < Admin.maxChange; i++) {
+      for (int i = 0; i < User.maxChange; i++) {
         String randomName;
         do {
           randomName = lastNameList[random.nextInt(lastNameList.length)];
@@ -159,16 +154,14 @@ void main() {
       }
 
       // Verify that the number of changes is equal to the adminMaxChange
-      expect(admin.lastNameChangeCounter, equals(Admin.maxChange));
+      expect(admin.lastNameChangeCounter, equals(User.maxChange));
 
       // Change the last Name one more time: with a name not in the list
       bool exceptionThrown = false;
       try {
         admin.lastName = "Michel";
-      } catch (error) {
-        if (error is MaxChangeExceeded) {
-          exceptionThrown = true;
-        }
+      } on UserErrors {
+        exceptionThrown = true;
       }
 
       // verify that the exception was thrown
@@ -218,20 +211,20 @@ void main() {
       // Initial change count should be 0
       expect(admin.middleName, equals("Manoushka"));
       expect(admin.middleNameChangeCounter, equals(0));
-      print(admin);
+      // print(admin);
 
       // Changing the firstName to a different name
       admin.middleName = middleNameList[0];
       expect(admin.middleName, equals(middleNameList[0]));
       expect(admin.middleNameChangeCounter, equals(1));
-      print(admin);
+      // print(admin);
 
       // Changing the firstName to the same name
       admin.middleName = middleNameList[0];
       expect(admin.middleName, equals(middleNameList[0]));
       expect(admin.middleNameChangeCounter, equals(1));
       // Counter should not increment
-      print(admin);
+      // print(admin);
     });
 
     test("changing to the same last name does not decrement the change counter",

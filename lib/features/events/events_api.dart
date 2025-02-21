@@ -1,11 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:http/http.dart' as http;
-
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
+import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
+// API call and data models remain largely the same
 Future<List<Album>> fetchAlbum() async {
   final response = await http.get(
     Uri.parse('https://opendata.concordia.ca/API/v1/library/events/'),
@@ -16,12 +17,8 @@ Future<List<Album>> fetchAlbum() async {
   );
 
   if (response.statusCode == 200) {
-    // return Album.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
-    // Decode the response and extract the 'events' list
     final jsonData = jsonDecode(response.body);
     final events = jsonData['events'] as List;
-
-    // Map each event from the 'events' list to an Album
     return events.map((event) => Album.fromJson(event)).toList();
   } else {
     throw Exception('Failed to load album');
@@ -44,21 +41,22 @@ class Album {
   final String color;
   final String featuredImage;
 
-  Album(
-      {required this.id,
-      required this.title,
-      required this.allDay,
-      required this.start,
-      required this.end,
-      required this.description,
-      required this.publicUrl,
-      required this.adminUrl,
-      required this.location,
-      required this.presenter,
-      required this.calendar,
-      required this.registration,
-      required this.color,
-      required this.featuredImage});
+  Album({
+    required this.id,
+    required this.title,
+    required this.allDay,
+    required this.start,
+    required this.end,
+    required this.description,
+    required this.publicUrl,
+    required this.adminUrl,
+    required this.location,
+    required this.presenter,
+    required this.calendar,
+    required this.registration,
+    required this.color,
+    required this.featuredImage,
+  });
 
   factory Album.fromJson(Map<String, dynamic> json) {
     try {
@@ -205,94 +203,88 @@ class EventDate {
   }
 }
 
+// Revised Event Detail Screen
 class EventDetailScreen extends StatelessWidget {
   final Album album;
 
-  const EventDetailScreen({
-    super.key,
-    required this.album,
-  });
+  const EventDetailScreen({super.key, required this.album});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: const Text("back to list"),
-        backgroundColor: Colors.white,
-        forceMaterialTransparency: true,
+    final DateFormat dateFormat = DateFormat('MMM dd, yyyy - hh:mm a');
 
-        // titleTextStyle: TextStyle(
-        //   color: Colors.white,
-        // ),
-        shape: RoundedRectangleBorder(
-          side: const BorderSide(color: Colors.black, width: 5),
-          borderRadius: BorderRadius.circular(0),
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Event Details"),
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(5),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                album.title,
-                style: Theme.of(context).textTheme.headlineSmall,
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              album.title,
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
+            const SizedBox(height: 8),
+            Text("Start: ${dateFormat.format(album.start)}"),
+            const SizedBox(height: 8),
+            Text("End: ${dateFormat.format(album.end)}"),
+            const SizedBox(height: 16),
+            HtmlWidget(album.description),
+            const SizedBox(height: 16),
+            Text(
+              "Location: ${album.location.name}, ${album.location.campus}",
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              "Presenter: ${album.presenter}",
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              "More Information:",
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            const SizedBox(height: 8),
+            InkWell(
+              onTap: () {
+                // You can add functionality to open the URL
+              },
+              child: Text(
+                album.publicUrl,
+                style: const TextStyle(
+                  color: Colors.blue,
+                  decoration: TextDecoration.underline,
+                ),
               ),
-              const SizedBox(height: 8),
-              Text(
-                'Start: ${album.start}',
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'End: ${album.end}',
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-              const SizedBox(height: 8),
-              HtmlWidget(
-                album.description,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'Location: ${album.location.name}, ${album.location.campus}',
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-              const SizedBox(height: 16),
-              Text(
-                'More Information:',
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'Public URL: ${album.publicUrl}',
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
 
-void main() => runApp(const EventsPage());
+// Revised Events List Page with enhanced UI
+void main() => runApp(const APIEventsPage());
 
-class EventsPage extends StatefulWidget {
-  const EventsPage({super.key});
+class APIEventsPage extends StatefulWidget {
+  const APIEventsPage({super.key});
 
   @override
-  State<EventsPage> createState() => _EventsPageState();
+  State<APIEventsPage> createState() => _APIEventsPageState();
 }
 
-class _EventsPageState extends State<EventsPage> {
+class _APIEventsPageState extends State<APIEventsPage> {
   late Future<List<Album>> futureAlbums;
+  final DateFormat dateFormat = DateFormat('MMM dd, yyyy - hh:mm a');
 
   @override
   void initState() {
     super.initState();
-    futureAlbums = fetchAlbum(); // Fetch the list of albums (events)
+    futureAlbums = fetchAlbum();
   }
 
   @override
@@ -300,53 +292,71 @@ class _EventsPageState extends State<EventsPage> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
+        primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: Colors.grey[200],
       ),
       home: Scaffold(
-        backgroundColor: Colors.white,
-
-        body:
-        Center(
-          child: FutureBuilder<List<Album>>(
-            future: futureAlbums,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                final albums = snapshot.data!;
-                return ListView.builder(
-                  itemCount: albums.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
-                      child: ListTile(
-                        title: Text(albums[index].title),
-                        subtitle: Text(albums[index].start.toString()),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  EventDetailScreen(album: albums[index]),
-                            ),
-                          );
-                        },
-                        shape: RoundedRectangleBorder(
-                          side: const BorderSide(color: Colors.black, width: 2),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+        appBar: AppBar(
+          title: const Text("Events"),
+          centerTitle: true,
+        ),
+        body: FutureBuilder<List<Album>>(
+          future: futureAlbums,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              final albums = snapshot.data!;
+              return ListView.builder(
+                padding: const EdgeInsets.all(8),
+                itemCount: albums.length,
+                itemBuilder: (context, index) {
+                  final album = albums[index];
+                  return Card(
+                    elevation: 4,
+                    margin:
+                        const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: ListTile(
+                      contentPadding: const EdgeInsets.all(16),
+                      title: Text(
+                        album.title,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-                    );
-                  },
-                );
-              } else if (snapshot.hasError) {
-                return Text('${snapshot.error}');
-              }
-
-              // By default, show a loading spinner.
-              return const CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 4),
+                          Text(
+                            dateFormat.format(album.start),
+                            style: const TextStyle(color: Colors.grey),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            "Location: ${album.location.name}",
+                            style: const TextStyle(color: Colors.grey),
+                          ),
+                        ],
+                      ),
+                      trailing: const Icon(Icons.arrow_forward_ios),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                EventDetailScreen(album: album),
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                },
               );
-            },
-          ),
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            }
+            return const Center(child: CircularProgressIndicator());
+          },
         ),
       ),
     );
