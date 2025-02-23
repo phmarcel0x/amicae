@@ -10,4 +10,4 @@ const TextStyle kMajorTextStyle = TextStyle(
     color: Colors.white,
     letterSpacing: 2,
     fontWeight: FontWeight.bold,
-    fontSize: 15);
+    fontSize: 20);

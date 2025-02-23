@@ -31,9 +31,9 @@ class _SwipePageState extends State<SwipePage> {
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       Expanded(
-          flex: 3,
+          flex: 4,
           child: Padding(
-            padding: const EdgeInsets.all(30),
+            padding: const EdgeInsets.all(15),
             child: ProfileCard(
                 profile: profilesBrain.users[profilesBrain.userNumber]),
           )),
