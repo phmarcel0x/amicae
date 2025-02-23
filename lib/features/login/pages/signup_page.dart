@@ -1,6 +1,6 @@
 import 'package:amicae/features/nav%20bar/nav_bar.dart';
 import 'package:flutter/material.dart';
-
+import "landing_page.dart";
 import '../../authentication/services/auth_service.dart';
 
 class SignupPage extends StatefulWidget {
@@ -60,28 +60,57 @@ class _SignupPageState extends State<SignupPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Container(
-          margin: const EdgeInsets.all(20),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const CircleAvatar(
-                  backgroundImage: AssetImage('assets/ae_short_white.png'),
-                  radius: 50,
-                ),
-                const Text(
-                  "Sign up for AMICAE",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-                ),
-                const SizedBox(height: 20),
+      body: Container(
+        margin: const EdgeInsets.all(20),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(
+                icon: const Icon(Icons.arrow_back),
+                color: Colors.black,
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) =>
+                      const LandingPage(),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ),
+                  );
+                },
+              ),
+              const CircleAvatar(
+                backgroundImage: AssetImage('assets/ae_short_white.png'),
+                radius: 50,
+              ),
+              const Text(
+                "Sign up for AMICAE",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+              ),
+              const SizedBox(height: 20),
 
-                // First Name Field
-                TextFormField(
+              // First Name Field
+              Padding(
+                padding: const EdgeInsets.all(5),
+                child: TextFormField(
                   controller: _firstNameController,
-                  decoration: const InputDecoration(labelText: "First Name"),
+                  cursorColor: Colors.black,
+                  decoration: InputDecoration(
+                    labelText: "First Name",
+                    labelStyle: const TextStyle(color: Colors.black),
+                    border: const OutlineInputBorder(),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return "Please enter your first name";
@@ -89,25 +118,55 @@ class _SignupPageState extends State<SignupPage> {
                     return null;
                   },
                 ),
-                const SizedBox(height: 10),
+              ),
 
-                // Last Name Field
-                TextFormField(
+              // Last Name Field
+              Padding(
+                padding: const EdgeInsets.all(5),
+                child: TextFormField(
                   controller: _lastNameController,
-                  decoration: const InputDecoration(labelText: "Last Name"),
+                  cursorColor: Colors.black,
+                  decoration: InputDecoration(
+                    labelText: "Last Name",
+                    labelStyle: const TextStyle(color: Colors.black),
+                    border: const OutlineInputBorder(),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Please enter your last name";
-                    }
-                    return null;
-                  },
+                  if (value == null || value.isEmpty) {
+                    return "Please enter your last name";
+                  }
+                  return null;
+                },
                 ),
-                const SizedBox(height: 10),
+              ),
 
-                // Email Field
-                TextFormField(
+              // Email Field
+              Padding(
+                padding: const EdgeInsets.all(5),
+                child: TextFormField(
                   controller: _emailController,
-                  decoration: const InputDecoration(labelText: "Email"),
+                  cursorColor: Colors.black,
+                  decoration: InputDecoration(
+                    labelText: "Email",
+                    labelStyle: const TextStyle(color: Colors.black),
+                    border: const OutlineInputBorder(),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return "Please enter your email";
@@ -118,31 +177,59 @@ class _SignupPageState extends State<SignupPage> {
                     return null;
                   },
                 ),
-                const SizedBox(height: 10),
+              ),
 
-                // Password Field
-                TextFormField(
+              // Password Field
+              Padding(
+                padding: const EdgeInsets.all(5),
+                child: TextFormField(
                   controller: _passwordController,
                   obscureText: true,
-                  decoration: const InputDecoration(labelText: "Password"),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Please enter a password";
-                    }
-                    if (value.length < 6) {
-                      return "Password must be at least 6 characters";
-                    }
-                    return null;
-                  },
+                  cursorColor: Colors.black,
+                  decoration: InputDecoration(
+                    labelText: "Password",
+                    labelStyle: const TextStyle(color: Colors.black),
+                    border: const OutlineInputBorder(),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),                  validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Please enter a password";
+                  }
+                  if (value.length < 6) {
+                    return "Password must be at least 6 characters";
+                  }
+                  return null;
+                },
                 ),
-                const SizedBox(height: 10),
+              ),
 
-                // Confirm Password Field
-                TextFormField(
+              // Confirm Password Field
+              Padding(
+                padding: const EdgeInsets.all(5),
+                child: TextFormField(
                   controller: _confirmPasswordController,
                   obscureText: true,
-                  decoration:
-                      const InputDecoration(labelText: "Confirm Password"),
+                  cursorColor: Colors.black,
+                  decoration: InputDecoration(
+                    labelText: "Confirm Password",
+                    labelStyle: const TextStyle(color: Colors.black),
+                    border: const OutlineInputBorder(),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return "Please confirm your password";
@@ -150,14 +237,23 @@ class _SignupPageState extends State<SignupPage> {
                     return null;
                   },
                 ),
-                const SizedBox(height: 20),
-
-                ElevatedButton(
+              ),
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    )
+                  ),
                   onPressed: _signUpUser,
                   child: const Text("SIGN UP"),
-                ),
-              ],
-            ),
+                )
+              ),
+            ],
           ),
         ),
       ),
