@@ -41,6 +41,7 @@ flutter:
     - assets/ae_short_white.png
     - assets/ae_long_black.png
     - assets/ae_long_white.png
+    - assets/temp_avatars/
 
 flutter_launcher_icons:
   android: true

@@ -29,36 +29,37 @@ class _SwipePageState extends State<SwipePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      Expanded(
-          flex: 4,
-          child: Padding(
-            padding: const EdgeInsets.all(15),
-            child: ProfileCard(
-                profile: profilesBrain.users[profilesBrain.userNumber]),
-          )),
-      Expanded(
-        flex: 1,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            SwipeButton(
-              swipeAction: buttonAction,
-              buttonColor: Colors.lightGreen,
-              buttonIcon: Icons.favorite,
-              iconColor: Colors.pinkAccent,
-            ),
-            SwipeButton(
-              swipeAction: buttonAction,
-              buttonColor: Colors.blueAccent,
-              buttonIcon: Icons.close,
-              iconColor: Colors.white60,
-            )
-          ],
+    return Column(
+      children: [
+        Expanded(
+            flex: 4,
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: ProfileCard(
+                  profile: profilesBrain.users[profilesBrain.userNumber]),
+            )),
+        Expanded(
+          flex: 1,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              SwipeButton(
+                swipeAction: buttonAction,
+                buttonColor: Colors.lightGreen,
+                buttonIcon: Icons.favorite,
+                iconColor: Colors.pinkAccent,
+              ),
+              SwipeButton(
+                swipeAction: buttonAction,
+                buttonColor: Colors.blueAccent,
+                buttonIcon: Icons.close,
+                iconColor: Colors.white60,
+              )
+            ],
+          ),
         ),
-      ),
-    ] // local navbar),
-        );
+      ],
+    );
   }
 }
