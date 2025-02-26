@@ -88,7 +88,7 @@ class _SignupPageState extends State<SignupPage> {
               ),
               const Text(
                 "Sign up for AMICAE",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25, color: Colors.black),
               ),
               const SizedBox(height: 20),
 
@@ -98,6 +98,8 @@ class _SignupPageState extends State<SignupPage> {
                 child: TextFormField(
                   controller: _firstNameController,
                   cursorColor: Colors.black,
+                  style: const TextStyle(color: Colors.black),
+
                   decoration: InputDecoration(
                     labelText: "First Name",
                     labelStyle: const TextStyle(color: Colors.black),
@@ -126,6 +128,8 @@ class _SignupPageState extends State<SignupPage> {
                 child: TextFormField(
                   controller: _lastNameController,
                   cursorColor: Colors.black,
+                  style: const TextStyle(color: Colors.black),
+
                   decoration: InputDecoration(
                     labelText: "Last Name",
                     labelStyle: const TextStyle(color: Colors.black),
@@ -154,6 +158,8 @@ class _SignupPageState extends State<SignupPage> {
                 child: TextFormField(
                   controller: _emailController,
                   cursorColor: Colors.black,
+                  style: const TextStyle(color: Colors.black),
+
                   decoration: InputDecoration(
                     labelText: "Email",
                     labelStyle: const TextStyle(color: Colors.black),
@@ -186,6 +192,8 @@ class _SignupPageState extends State<SignupPage> {
                   controller: _passwordController,
                   obscureText: true,
                   cursorColor: Colors.black,
+                  style: const TextStyle(color: Colors.black),
+
                   decoration: InputDecoration(
                     labelText: "Password",
                     labelStyle: const TextStyle(color: Colors.black),
@@ -217,6 +225,8 @@ class _SignupPageState extends State<SignupPage> {
                   controller: _confirmPasswordController,
                   obscureText: true,
                   cursorColor: Colors.black,
+                  style: const TextStyle(color: Colors.black),
+
                   decoration: InputDecoration(
                     labelText: "Confirm Password",
                     labelStyle: const TextStyle(color: Colors.black),

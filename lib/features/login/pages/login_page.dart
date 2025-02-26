@@ -64,13 +64,15 @@ class LoginPage extends StatelessWidget {
             ),
             const Text(
               "Log in to AMICAE",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25, color: Colors.black),
             ),
             const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.all(5),
               child: TextField(
                 cursorColor: Colors.black,
+                style: const TextStyle(color: Colors.black),
+
                 controller: emailController,
                 decoration: InputDecoration(
                   labelText: "Email",
@@ -91,6 +93,7 @@ class LoginPage extends StatelessWidget {
               padding: const EdgeInsets.all(5),
               child: TextField(
                 cursorColor: Colors.black,
+                style: const TextStyle(color: Colors.black),
                 obscureText: true,
                 controller: passwordController,
                 decoration: InputDecoration(
