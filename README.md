@@ -1,17 +1,17 @@
-![Amicae Logo](./assets/logo/short_logo_dark.png)
+![Amicae logo](./assets/logo/short_logo_dark.png)
 
 # Amicae: Your Networking & Study App
 
-#### **Coming soon.**
+**Amicae** is a mobile app designed for students at Concordia University to connect with potential study buddies and mentors. Whether you're looking for a study partner, academic guidance, or just someone to share a coffee-fueled cram session with, Amicae makes it easy to connect.
 
+**Connect, study, and succeed with Amicae!**
 
-**Amicae** is a mobile app designed to connect students at Concordia University with mentors and potential study buddies based on shared interests. It also recommends the best on- and off- campus study spots to support academic success.
+## Key Features
+- **Swipe and Study**: Match with fellow students and potential study buddies based on shared courses, interests, and study preferences.
+- **Mentor-Mentee Pairing**: Get expert advice and guidance from experienced students and alumni who align with your interests and goals.
+- **Discover Study Spots**: Find the best study-friendly locations around downtown Montreal, tailored to your preferences.
+- **Stay in the Loop**: Explore upcoming university events, networking opportunities, and study sessions, so you never miss out.
 
-## Features
-- Matching Mentors and Mentees: For academic guidance, career advice, or personal growth.
-- Forming Study Groups: Bringing students together based on common interests or shared courses.  
-- Building Friendships: Encouraging networking through shared hobbies and goals.
-- Recommending Study Spots: Suggesting optimal locations around downtown Montreal for productive study sessions.
-- Event Promotion: Stay updated on university events, study sessions, and networking opportunities.
+Did you know? "Amicae" is Latin for "friends", the perfect way to describe what this app is all about!
 
-Fun Fact: "amicae" is a Latin word that translates to "friends" in English!
+Launching soon on the iOS App Store and Google Play Store... 👀
