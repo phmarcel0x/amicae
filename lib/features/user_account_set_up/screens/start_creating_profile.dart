@@ -42,79 +42,54 @@ class _StartScreenState extends State<StartScreen> {
       _isCreating = true;
     });
 
+    // Get the current user UID from Firebase Authentication
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) {
       // Handle user not signed in
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('User is not authenticated')),
       );
-      setState(() {
-        _isCreating = false;
-      });
       return;
     }
+    final String documentId = user.uid;
 
-    // Try fetching the ID token
-    try {
-      final idToken = await user.getIdToken();
-      print('ID Token: $idToken'); // Ensure token is being retrieved
+    // Use the user's UID as the document ID in the database
+    final url = Uri.https(
+        'amicae-app-default-rtdb.firebaseio.com', 'user-profile/$documentId.json');
 
-      final String documentId = user.uid;
-
-      // Firebase Realtime Database URL
-      final url = Uri.https(
-          'amicae-app-default-rtdb.firebaseio.com', 'user-profile/$documentId.json', {'auth': idToken});
-
-      // Make HTTP PUT request with the token in the header
-      final response = await http.put(
-        url,
-        headers: {
-          'Content-Type': 'application/json',
-          // 'Authorization': 'Bearer $idToken',
+    final response = await http.put( // Use PUT instead of POST to set data under a specific key
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: json.encode(
+        {
+          'firstName': _enteredFirstName,
+          'description': _enteredDescription,
+          'lookingFor': _selectedLookingFor,
+          'eduStatus': _selectedEduStatus.title,
+          'department': _selectedDepartment.title,
+          'interests': _selectedInterests,
+          'courses': _selectedCoursesCode,
         },
-        body: json.encode(
-          {
-            'firstName': _enteredFirstName,
-            'description': _enteredDescription,
-            'lookingFor': _selectedLookingFor,
-            'eduStatus': _selectedEduStatus.title,
-            'department': _selectedDepartment.title,
-            'interests': _selectedInterests,
-            'courses': _selectedCoursesCode,
-          },
+      ),
+    );
+
+    if (response.statusCode == 200) {
+      // Navigate to the next screen using the user's UID
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => AmicaeFirstNameScreen(documentId: documentId),
         ),
       );
-
-      // Check if the request was successful
-      if (response.statusCode == 200) {
-        // Navigate to the next screen using the user's UID
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => AmicaeFirstNameScreen(documentId: documentId),
-          ),
-        );
-      } else {
-        // Log and show error message
-        print('Error response: ${response.statusCode}');
-        print('Response body: ${response.body}');
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Failed to create user profile')),
-        );
-      }
-    } catch (error) {
-      // Handle token retrieval error
-      print('Error fetching token: $error');
+    } else {
+      // Handle error
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Failed to retrieve token')),
+        const SnackBar(content: Text('Failed to create user profile')),
       );
     }
-
-    setState(() {
-      _isCreating = false;
-    });
   }
-
 
   @override
   Widget build(BuildContext context) {
