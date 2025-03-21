@@ -14,10 +14,10 @@ dependencies:
   flutter_widget_from_html_core: ^0.15.2
   flutter_map: any
 
-
+  firebase_database: ^11.3.4
   cupertino_icons: ^1.0.8
-  firebase_core: ^3.9.0
-  firebase_auth: ^5.3.4
+  firebase_core: ^3.12.1
+  firebase_auth: ^5.5.1
   latlong2: ^0.9.1
   intl: ^0.17.0
   google_fonts: ^6.2.1

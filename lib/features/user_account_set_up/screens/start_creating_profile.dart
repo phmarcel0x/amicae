@@ -30,7 +30,7 @@ class _StartScreenState extends State<StartScreen> {
   var _selectedLookingFor = '';
   var _selectedEduStatus = educationStatusMap[EducationStatus.InCollege]!;
   var _selectedDepartment = departmentDetails[
-      UserDepartment.GinaCodySchoolOfEngineeringAndComputerScience]!;
+  UserDepartment.GinaCodySchoolOfEngineeringAndComputerScience]!;
   // List<dynamic> _selectedInterests = [interests[Interests.Acting]!.title, interests[Interests.AdventureTrips]!.title];
   // List<dynamic> _selectedCoursesCode = [coursesCodes[CourseCode.ACCO]!.courseCode,coursesCodes[CourseCode.ADED]!.courseCode,];
   List<dynamic> _selectedInterests = ['', ''];
@@ -63,14 +63,14 @@ class _StartScreenState extends State<StartScreen> {
 
       // Firebase Realtime Database URL
       final url = Uri.https(
-          'amicae-app-default-rtdb.firebaseio.com', 'user-profile/$documentId.json');
+          'amicae-app-default-rtdb.firebaseio.com', 'user-profile/$documentId.json', {'auth': idToken});
 
       // Make HTTP PUT request with the token in the header
       final response = await http.put(
         url,
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer $idToken',
+          // 'Authorization': 'Bearer $idToken',
         },
         body: json.encode(
           {
