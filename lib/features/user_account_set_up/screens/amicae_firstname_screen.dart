@@ -1,182 +1,7 @@
-// import 'dart:convert';
-//
-// import 'package:flutter/material.dart';
-// import 'package:google_fonts/google_fonts.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-//
-// import 'package:http/http.dart' as http;
-//
-// // import 'package:amicae_v5/screens/amicae_profile_picture_screen.dart';
-// import '../screens/amicae_description_screen.dart';
-//
-// class AmicaeFirstNameScreen extends StatefulWidget {
-//   const AmicaeFirstNameScreen({super.key, required this.documentId});
-//
-//   final String documentId;
-//
-//   @override
-//   _AmicaeFirstNameScreenState createState() => _AmicaeFirstNameScreenState();
-// }
-//
-// class _AmicaeFirstNameScreenState extends State<AmicaeFirstNameScreen> {
-//   final TextEditingController _controller = TextEditingController();
-//   bool isButtonEnabled = false;
-//   var _isCreating = false;
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//     _controller.addListener(_onTextChanged);
-//   }
-//
-//   @override
-//   void dispose() {
-//     _controller.dispose();
-//     super.dispose();
-//   }
-//
-//   void _onTextChanged() {
-//     setState(() {
-//       isButtonEnabled = _controller.text.isNotEmpty;
-//     });
-//   }
-//
-//
-//   Future<void> updateFirstName(String documentId, String firstName) async {
-//     // Construct the Firebase URL using the document ID to update the specific user's profile
-//     final url = Uri.https(
-//       'amicae-app-default-rtdb.firebaseio.com',
-//       'user-profile/$documentId.json',
-//         // {'auth': idToken}
-//     );
-//
-//     try {
-//       // Send PATCH request to update the first name
-//       final response = await http.patch(
-//         url,
-//         body: json.encode({'firstName': firstName}), // Sending the first name as JSON
-//       );
-//
-//       if (response.statusCode == 200) {
-//         print('First name updated successfully!');
-//         // Optionally navigate to the next screen or give feedback to the user
-//       } else {
-//         print('Failed to update first name: ${response.statusCode}');
-//       }
-//     } catch (error) {
-//       print('Error occurred: $error');
-//     }
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: Colors.white,
-//       appBar: AppBar(
-//         backgroundColor: Colors.white,
-//         automaticallyImplyLeading: false,
-//       ),
-//       body: Padding(
-//         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 36.0),
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             SizedBox(height: 40), // Space from top
-//             Text(
-//               "What's your first name?",
-//               style: GoogleFonts.lato(
-//                 fontSize: 28,
-//                 fontWeight: FontWeight.bold,
-//                 color: Colors.black,
-//               ),
-//             ),
-//             SizedBox(height: 12),
-//             Text(
-//               "We won't be able to change this later.",
-//               style: GoogleFonts.lato(
-//                 fontSize: 16,
-//                 color: Colors.black54,
-//               ),
-//             ),
-//             SizedBox(height: 24),
-//             Container(
-//               decoration: BoxDecoration(
-//                 color: Colors.white,
-//                 borderRadius: BorderRadius.circular(8),
-//                 boxShadow: [
-//                   BoxShadow(
-//                     color: Colors.black26,
-//                     blurRadius: 6.0, // Soft blur effect
-//                     offset: Offset(0, 2), // Slight vertical shadow
-//                   ),
-//                 ],
-//               ),
-//               child: TextField(
-//                 controller: _controller,
-//                 decoration: InputDecoration(
-//                   hintText: "Add your first name",
-//                   filled: true,
-//                   fillColor: Colors.white,
-//                   border: OutlineInputBorder(
-//                     borderRadius: BorderRadius.circular(8),
-//                     borderSide: BorderSide.none,
-//                   ),
-//                 ),
-//                 keyboardType: TextInputType.text,
-//               ),
-//             ),
-//             Spacer(),
-//             Row(
-//               children: [
-//                 Icon(
-//                   Icons.remove_red_eye,
-//                   color: Colors.black,
-//                   size: 20.0,
-//                 ),
-//                 SizedBox(width: 4.0),
-//                 Expanded(
-//                   child: Text(
-//                     'This will be shown on your profile.',
-//                     style: GoogleFonts.lato(
-//                       fontSize: 12.0,
-//                       color: Colors.black,
-//                     ),
-//                   ),
-//                 ),
-//                 CircleAvatar(
-//                   backgroundColor: Colors.white,
-//                   radius: 28,
-//                   child: IconButton(
-//                     icon: Icon(
-//                       Icons.arrow_circle_right_sharp,
-//                       size: 50,
-//                       color: isButtonEnabled ? Colors.black : Colors.grey, // Conditional color
-//                     ),
-//                     onPressed: isButtonEnabled
-//                         ? () {
-//                       updateFirstName(widget.documentId, _controller.text);
-//                       // Handle forward button press
-//                       Navigator.push(
-//                         context,
-//                         MaterialPageRoute(builder: (context) => AmicaeDescriptionScreen(documentId: widget.documentId)),
-//                       );
-//                     }
-//                         : null, // Disable button if input is empty
-//                   ),
-//                 ),
-//               ],
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:firebase_database/firebase_database.dart';
 
+import '../services/user_profile_service.dart';
 import '../screens/amicae_description_screen.dart';
 
 class AmicaeFirstNameScreen extends StatefulWidget {
@@ -190,11 +15,9 @@ class AmicaeFirstNameScreen extends StatefulWidget {
 
 class _AmicaeFirstNameScreenState extends State<AmicaeFirstNameScreen> {
   final TextEditingController _controller = TextEditingController();
+  final _userProfileService = UserProfileService();
   bool isButtonEnabled = false;
-  var _isCreating = false;
-
-  // Initialize Firebase Database
-  final DatabaseReference _database = FirebaseDatabase.instance.ref();
+  bool _isUpdating = false;
 
   @override
   void initState() {
@@ -214,19 +37,37 @@ class _AmicaeFirstNameScreenState extends State<AmicaeFirstNameScreen> {
     });
   }
 
-  Future<void> updateFirstName(String documentId, String firstName) async {
+  Future<void> _updateFirstName() async {
+    if (!isButtonEnabled || _isUpdating) return;
+
+    setState(() {
+      _isUpdating = true;
+    });
+
     try {
-      // Create a reference to the specific user profile in the database
-      final userProfileRef = _database.child('user-profile/$documentId');
+      await _userProfileService.updateFirstName(_controller.text.trim());
 
-      // Update the firstName field
-      await userProfileRef.update({
-        'firstName': firstName,
-      });
-
-      print('First name updated successfully!');
+      if (mounted) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                AmicaeDescriptionScreen(documentId: widget.documentId),
+          ),
+        );
+      }
     } catch (error) {
-      print('Error occurred: $error');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to update first name: $error')),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isUpdating = false;
+        });
+      }
     }
   }
 
@@ -243,7 +84,7 @@ class _AmicaeFirstNameScreenState extends State<AmicaeFirstNameScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 40), // Space from top
+            const SizedBox(height: 40),
             Text(
               "What's your first name?",
               style: GoogleFonts.lato(
@@ -252,7 +93,7 @@ class _AmicaeFirstNameScreenState extends State<AmicaeFirstNameScreen> {
                 color: Colors.black,
               ),
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             Text(
               "We won't be able to change this later.",
               style: GoogleFonts.lato(
@@ -260,16 +101,16 @@ class _AmicaeFirstNameScreenState extends State<AmicaeFirstNameScreen> {
                 color: Colors.black54,
               ),
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             Container(
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(8),
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
                     color: Colors.black26,
-                    blurRadius: 6.0, // Soft blur effect
-                    offset: Offset(0, 2), // Slight vertical shadow
+                    blurRadius: 6.0,
+                    offset: Offset(0, 2),
                   ),
                 ],
               ),
@@ -287,15 +128,15 @@ class _AmicaeFirstNameScreenState extends State<AmicaeFirstNameScreen> {
                 keyboardType: TextInputType.text,
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.remove_red_eye,
                   color: Colors.black,
                   size: 20.0,
                 ),
-                SizedBox(width: 4.0),
+                const SizedBox(width: 4.0),
                 Expanded(
                   child: Text(
                     'This will be shown on your profile.',
@@ -309,30 +150,23 @@ class _AmicaeFirstNameScreenState extends State<AmicaeFirstNameScreen> {
                   backgroundColor: Colors.white,
                   radius: 28,
                   child: IconButton(
-                    icon: Icon(
-                      Icons.arrow_circle_right_sharp,
-                      size: 50,
-                      color: isButtonEnabled ? Colors.black : Colors.grey, // Conditional color
-                    ),
-                    onPressed: isButtonEnabled
-                        ? () async {
-                      setState(() {
-                        _isCreating = true;
-                      });
-
-                      await updateFirstName(widget.documentId, _controller.text);
-
-                      setState(() {
-                        _isCreating = false;
-                      });
-
-                      // Navigate to next screen
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => AmicaeDescriptionScreen(documentId: widget.documentId)),
-                      );
-                    }
-                        : null, // Disable button if input is empty
+                    icon: _isUpdating
+                        ? const SizedBox(
+                            width: 24,
+                            height: 24,
+                            child: CircularProgressIndicator(
+                              color: Colors.black,
+                              strokeWidth: 2,
+                            ),
+                          )
+                        : Icon(
+                            Icons.arrow_circle_right_sharp,
+                            size: 50,
+                            color: isButtonEnabled ? Colors.black : Colors.grey,
+                          ),
+                    onPressed: isButtonEnabled && !_isUpdating
+                        ? _updateFirstName
+                        : null,
                   ),
                 ),
               ],
