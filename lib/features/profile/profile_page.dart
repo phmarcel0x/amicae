@@ -1,14 +1,21 @@
 import 'package:amicae/features/login/pages/landing_page.dart';
+import 'package:amicae/features/profile/service/profile_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../nav bar/nav_bar.dart';
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+  ProfilePage({super.key});
+
+  final ProfileService _profileService = ProfileService();
 
   @override
   Widget build(BuildContext context) {
+    // _profileService.findById(FirebaseAuth.instance.currentUser?.uid ?? '').then((profile) {
+    //   print(profile);
+    // });
+
     return Scaffold(
       backgroundColor: Colors.blue,
       body: Container(
