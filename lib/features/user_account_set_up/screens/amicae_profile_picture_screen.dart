@@ -9,7 +9,7 @@ class AmicaeProfilePictureScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Profile Picture'), automaticallyImplyLeading: false,),
+      appBar: AppBar(title: const Text('Profile Picture'), automaticallyImplyLeading: false,),
       body: Center(
         child: Text('Document ID: $documentId'),
       ),

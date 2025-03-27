@@ -3,15 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../services/user_profile_service.dart';
-import '../data/courses_codes.dart';
-import '../data/departments.dart';
-import '../data/education_status.dart';
-import '../data/interests.dart';
 
-import '../models/user_interest.dart';
 import '../models/user_department.dart';
 import '../models/user_edu_status.dart';
-import '../models/user_courses_code.dart';
 
 import '../screens/amicae_firstname_screen.dart';
 

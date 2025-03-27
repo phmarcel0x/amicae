@@ -130,12 +130,12 @@ class _AmicaeCourseSelectionScreenState
                   color: Colors.black,
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Text(
                 'Pick up to 5 to find friends with shared courses',
                 style: GoogleFonts.lato(fontSize: 16, color: Colors.black54),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               // Row to display Subject and Course Code on the same line
               Row(
@@ -144,7 +144,7 @@ class _AmicaeCourseSelectionScreenState
                   Expanded(
                     child: DropdownButton<String>(
                       value: selectedSubject,
-                      hint: Text('Select Subject'),
+                      hint: const Text('Select Subject'),
                       isExpanded: true,
                       items: coursesCodes.keys.map((CourseCode courseCode) {
                         return DropdownMenuItem<String>(
@@ -163,13 +163,13 @@ class _AmicaeCourseSelectionScreenState
                       },
                     ),
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   // Dropdown for Course Codes (if available)
                   if (selectedSubject != null && courseCodes.isNotEmpty)
                     Expanded(
                       child: DropdownButton<String>(
                         value: selectedCourse,
-                        hint: Text('Course Code'),
+                        hint: const Text('Course Code'),
                         isExpanded: true,
                         items: courseCodes.map((String courseCode) {
                           return DropdownMenuItem<String>(
@@ -187,7 +187,7 @@ class _AmicaeCourseSelectionScreenState
                 ],
               ),
 
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
 
               // Button to add the selected course to the list
               if (selectedCourse != null && selectedCourses.length < 5)
@@ -198,11 +198,11 @@ class _AmicaeCourseSelectionScreenState
                       foregroundColor: Colors.white,
                     ),
                     onPressed: () => addCourse(selectedCourse!),
-                    child: Text('Add Course'),
+                    child: const Text('Add Course'),
                   ),
                 ),
 
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
 
               // Display the selected courses
               if (selectedCourses.isNotEmpty)
@@ -212,13 +212,13 @@ class _AmicaeCourseSelectionScreenState
                     Text(
                       'Selected Courses (${selectedCourses.length}/5):',
                       style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     ...selectedCourses.map((course) => ListTile(
                           title: Text(course),
                           trailing: IconButton(
-                            icon: Icon(Icons.remove_circle_outline),
+                            icon: const Icon(Icons.remove_circle_outline),
                             onPressed: () {
                               removeCourse(course);
                             },
@@ -229,7 +229,7 @@ class _AmicaeCourseSelectionScreenState
 
               // Display a message when 5 courses have been selected
               if (selectedCourses.length == 5)
-                Center(
+                const Center(
                   child: Text(
                     'You have selected the maximum number of courses.',
                     style: TextStyle(
