@@ -74,7 +74,7 @@ class ProfileCard extends StatelessWidget {
                     ),
                     subtitle: Text(
                       profile.getBio(),
-                      style: TextStyle(fontSize: 15),
+                      style: const TextStyle(fontSize: 15),
                     ),
                   ),
                   ListTile(
@@ -84,7 +84,7 @@ class ProfileCard extends StatelessWidget {
                     ),
                     subtitle: Text(
                       classes(),
-                      style: TextStyle(fontSize: 15),
+                      style: const TextStyle(fontSize: 15),
                     ),
                   ),
                   ListTile(
@@ -94,7 +94,7 @@ class ProfileCard extends StatelessWidget {
                     ),
                     subtitle: Text(
                       skills(),
-                      style: TextStyle(fontSize: 15),
+                      style: const TextStyle(fontSize: 15),
                     ),
                   ),
                 ],
