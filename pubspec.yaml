@@ -21,6 +21,7 @@ dependencies:
   latlong2: ^0.9.1
   intl: ^0.17.0
   google_fonts: ^6.2.1
+  geolocator: ^9.0.1  # Add geolocator package
 
 
 dev_dependencies:

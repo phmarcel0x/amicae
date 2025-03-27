@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'package:amicae/features/nav%20bar/nav_bar.dart';
 import 'package:flutter/material.dart';
 import "landing_page.dart";
@@ -47,7 +49,7 @@ class _SignupPageState extends State<SignupPage> {
           Navigator.pushReplacement(
             context,
             // MaterialPageRoute(builder: (context) => const NavBar()),
-            MaterialPageRoute(builder: (context) => StartScreen()),
+            MaterialPageRoute(builder: (context) => const StartScreen()),
           );
         }
       } catch (e) {
