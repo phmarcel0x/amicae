@@ -1,10 +1,8 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http;
 
+import '../services/user_profile_service.dart';
 import '../data/courses_codes.dart';
 import '../data/departments.dart';
 import '../data/education_status.dart';
@@ -25,107 +23,75 @@ class StartScreen extends StatefulWidget {
 }
 
 class _StartScreenState extends State<StartScreen> {
-  var _enteredFirstName = '';
-  var _enteredDescription = '';
-  var _selectedLookingFor = '';
-  var _selectedEduStatus = educationStatusMap[EducationStatus.InCollege]!;
-  var _selectedDepartment = departmentDetails[
-  UserDepartment.GinaCodySchoolOfEngineeringAndComputerScience]!;
-  // List<dynamic> _selectedInterests = [interests[Interests.Acting]!.title, interests[Interests.AdventureTrips]!.title];
-  // List<dynamic> _selectedCoursesCode = [coursesCodes[CourseCode.ACCO]!.courseCode,coursesCodes[CourseCode.ADED]!.courseCode,];
-  List<dynamic> _selectedInterests = ['', ''];
-  List<dynamic> _selectedCoursesCode = ['', ''];
+  final _userProfileService = UserProfileService();
   var _isCreating = false;
 
-  void _addUser() async {
+  Future<void> _initializeProfile() async {
     setState(() {
       _isCreating = true;
     });
 
-    final user = FirebaseAuth.instance.currentUser;
-    if (user == null) {
-      // Handle user not signed in
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('User is not authenticated')),
-      );
-      setState(() {
-        _isCreating = false;
-      });
-      return;
-    }
-
-    // Try fetching the ID token
     try {
-      final idToken = await user.getIdToken();
-      print('ID Token: $idToken'); // Ensure token is being retrieved
+      final user = FirebaseAuth.instance.currentUser;
+      if (user == null) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('User is not authenticated')),
+          );
+        }
+        return;
+      }
 
-      final String documentId = user.uid;
+      // Debug: Print user auth state
+      print('User ID: ${user.uid}');
+      print('User Email: ${user.email}');
+      print('User is authenticated: ${user != null}');
+      print('User token: ${await user.getIdToken()}');
 
-      // Firebase Realtime Database URL
-      final url = Uri.https(
-          'amicae-app-default-rtdb.firebaseio.com', 'user-profile/$documentId.json', {'auth': idToken});
-
-      // Make HTTP PUT request with the token in the header
-      final response = await http.put(
-        url,
-        headers: {
-          'Content-Type': 'application/json',
-          // 'Authorization': 'Bearer $idToken',
-        },
-        body: json.encode(
-          {
-            'firstName': _enteredFirstName,
-            'description': _enteredDescription,
-            'lookingFor': _selectedLookingFor,
-            'eduStatus': _selectedEduStatus.title,
-            'department': _selectedDepartment.title,
-            'interests': _selectedInterests,
-            'courses': _selectedCoursesCode,
-          },
-        ),
+      // Initialize with default values - these will be updated in subsequent screens
+      await _userProfileService.initializeProfile(
+        firstName: '',
+        description: '',
+        lookingFor: '',
+        educationStatus: EducationStatus.InCollege,
+        department:
+            UserDepartment.GinaCodySchoolOfEngineeringAndComputerScience,
+        interests: [],
+        coursesCodes: [],
       );
 
-      // Check if the request was successful
-      if (response.statusCode == 200) {
-        // Navigate to the next screen using the user's UID
+      // Navigate to the first name screen
+      if (mounted) {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => AmicaeFirstNameScreen(documentId: documentId),
+            builder: (context) => AmicaeFirstNameScreen(documentId: user.uid),
           ),
-        );
-      } else {
-        // Log and show error message
-        print('Error response: ${response.statusCode}');
-        print('Response body: ${response.body}');
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Failed to create user profile')),
         );
       }
     } catch (error) {
-      // Handle token retrieval error
-      print('Error fetching token: $error');
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Failed to retrieve token')),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to initialize profile: $error')),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isCreating = false;
+        });
+      }
     }
-
-    setState(() {
-      _isCreating = false;
-    });
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-                colors:
-                [Colors.white,
-                  Colors.white]
-            )
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.white, Colors.white],
+          ),
         ),
         child: Center(
           child: Column(
@@ -139,17 +105,29 @@ class _StartScreenState extends State<StartScreen> {
               Text(
                 'Connecting peers to peers',
                 style: GoogleFonts.lato(
-                    color: const Color.fromARGB(255, 0, 0, 0), fontSize: 24),
+                  color: const Color.fromARGB(255, 0, 0, 0),
+                  fontSize: 24,
+                ),
               ),
               const SizedBox(height: 80),
               OutlinedButton.icon(
-                // onPressed: startQuiz,
-                onPressed: _isCreating ? null : _addUser,
+                onPressed: _isCreating ? null : _initializeProfile,
                 style: OutlinedButton.styleFrom(
-                    backgroundColor: Colors.black, foregroundColor: Colors.white),
-                icon: const Icon(Icons.person),
-                label: const Text(
-                  'Start building',
+                  backgroundColor: Colors.black,
+                  foregroundColor: Colors.white,
+                ),
+                icon: _isCreating
+                    ? const SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                          strokeWidth: 2,
+                        ),
+                      )
+                    : const Icon(Icons.person),
+                label: Text(
+                  _isCreating ? 'Creating...' : 'Start building',
                 ),
               ),
             ],
