@@ -68,16 +68,22 @@
 //   }
 // }
 import 'package:amicae/features/login/pages/landing_page.dart';
+import 'package:amicae/features/profile/service/profile_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../nav bar/nav_bar.dart';
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+  ProfilePage({super.key});
+
+  final ProfileService _profileService = ProfileService();
 
   @override
   Widget build(BuildContext context) {
+    // _profileService.findById(FirebaseAuth.instance.currentUser?.uid ?? '').then((profile) {
+    //   print(profile);
+    // });
     // Get the current user
     final User? currentUser = FirebaseAuth.instance.currentUser;
 
@@ -114,7 +120,7 @@ class ProfilePage extends StatelessWidget {
                     context,
                     PageRouteBuilder(
                       pageBuilder: (context, animation1, animation2) =>
-                      const NavBar(),
+                          const NavBar(),
                       transitionDuration: Duration.zero,
                       reverseTransitionDuration: Duration.zero,
                     ),
@@ -133,7 +139,7 @@ class ProfilePage extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (context) => const LandingPage(),
                     ),
-                        (route) => false,
+                    (route) => false,
                   );
                 },
               ),

@@ -3,7 +3,7 @@ import "../home/home.dart";
 import "../people/people.dart";
 import "../events/events_api.dart";
 import "../spots/spots.dart";
-import "../profile/profile.dart";
+import "../profile/profile_page.dart";
 import "../info/info.dart";
 
 class NavBar extends StatefulWidget {
