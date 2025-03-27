@@ -65,7 +65,7 @@ class _NavBarState extends State<NavBar> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const ProfilePage()
+                        builder: (context) => ProfilePage()
                       )
                     );
                   }
