@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names, unused_import
+
 import 'package:flutter/material.dart';
 
 enum Interests {
