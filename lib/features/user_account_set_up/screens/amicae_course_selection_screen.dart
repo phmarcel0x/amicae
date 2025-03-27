@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:amicae/features/nav%20bar/nav_bar.dart';
 import '../models/user_courses_code.dart';
 import '../data/courses_codes.dart';
+import '../services/user_profile_service.dart';
 
 const String username = '791';
 const String password = 'cb24f3d4b086f625bc33f2097f28539c';
@@ -22,16 +23,20 @@ class AmicaeCourseSelectionScreen extends StatefulWidget {
 
 class _AmicaeCourseSelectionScreenState
     extends State<AmicaeCourseSelectionScreen> {
+  final _userProfileService = UserProfileService();
   String? selectedSubject;
   String? selectedCourse;
   Map<CourseCode, UserCoursesCode> subjects = coursesCodes;
   List<String> courseCodes = [];
   List<String> selectedCourses = [];
+  bool _isUpdating = false;
 
   Future<void> fetchCourseCodes(String subject) async {
-    final url = 'https://opendata.concordia.ca/API/v1/course/catalog/filter/$subject/*/*';
+    final url =
+        'https://opendata.concordia.ca/API/v1/course/catalog/filter/$subject/*/*';
     final response = await http.get(Uri.parse(url), headers: {
-      'Authorization': 'Basic ' + base64Encode(utf8.encode('$username:$password')),
+      'Authorization':
+          'Basic ' + base64Encode(utf8.encode('$username:$password')),
     });
 
     if (response.statusCode == 200) {
@@ -53,25 +58,36 @@ class _AmicaeCourseSelectionScreenState
     }
   }
 
-  Future<void> updateCourses(String documentId, List<String> _selectedCourses) async {
-    final url = Uri.https(
-      'amicae-app-default-rtdb.firebaseio.com',
-      'user-profile/$documentId.json',
-    );
+  Future<void> _updateCourses() async {
+    if (_isUpdating) return;
+
+    setState(() {
+      _isUpdating = true;
+    });
 
     try {
-      final response = await http.patch(
-        url,
-        body: json.encode({'courses': _selectedCourses}),
-      );
+      await _userProfileService.updateCourses(selectedCourses);
 
-      if (response.statusCode == 200) {
-        print('Courses updated successfully!');
-      } else {
-        print('Failed to update Courses: ${response.statusCode}');
+      if (mounted) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const NavBar(),
+          ),
+        );
       }
     } catch (error) {
-      print('Error occurred: $error');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to update courses: $error')),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isUpdating = false;
+        });
+      }
     }
   }
 
@@ -177,9 +193,11 @@ class _AmicaeCourseSelectionScreenState
               if (selectedCourse != null && selectedCourses.length < 5)
                 Center(
                   child: ElevatedButton(
-                    onPressed: () {
-                      addCourse(selectedCourse!);
-                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black,
+                      foregroundColor: Colors.white,
+                    ),
+                    onPressed: () => addCourse(selectedCourse!),
                     child: Text('Add Course'),
                   ),
                 ),
@@ -193,18 +211,19 @@ class _AmicaeCourseSelectionScreenState
                   children: [
                     Text(
                       'Selected Courses (${selectedCourses.length}/5):',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 8),
                     ...selectedCourses.map((course) => ListTile(
-                      title: Text(course),
-                      trailing: IconButton(
-                        icon: Icon(Icons.remove_circle_outline),
-                        onPressed: () {
-                          removeCourse(course);
-                        },
-                      ),
-                    )),
+                          title: Text(course),
+                          trailing: IconButton(
+                            icon: Icon(Icons.remove_circle_outline),
+                            onPressed: () {
+                              removeCourse(course);
+                            },
+                          ),
+                        )),
                   ],
                 ),
 
@@ -213,31 +232,36 @@ class _AmicaeCourseSelectionScreenState
                 Center(
                   child: Text(
                     'You have selected the maximum number of courses.',
-                    style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        color: Colors.red, fontWeight: FontWeight.bold),
                   ),
                 ),
-              Padding(
-                padding: const EdgeInsets.all(26.5),
-                child: Align(
-                  alignment: Alignment.bottomRight,
+              const Spacer(),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: CircleAvatar(
+                  backgroundColor: Colors.white,
+                  radius: 28,
                   child: IconButton(
-                    icon: Icon(
-                      Icons.arrow_circle_right_sharp,
-                      size: 50,
-                      color: Colors.black,
-                    ),
-                    onPressed: () {
-                      updateCourses(widget.documentId, selectedCourses);
-                      // Proceed to the next screen
-                      Navigator.push(
-                        context,
-                        // MaterialPageRoute(
-                        //   builder: (context) => AmicaeProfilePictureScreen(
-                        //       documentId: widget.documentId),
-                        // ),
-                        MaterialPageRoute(builder: (context) => NavBar()),
-                      );
-                    },
+                    icon: _isUpdating
+                        ? const SizedBox(
+                            width: 24,
+                            height: 24,
+                            child: CircularProgressIndicator(
+                              color: Colors.black,
+                              strokeWidth: 2,
+                            ),
+                          )
+                        : Icon(
+                            Icons.arrow_circle_right_sharp,
+                            size: 50,
+                            color: selectedCourses.isNotEmpty
+                                ? Colors.black
+                                : Colors.grey,
+                          ),
+                    onPressed: selectedCourses.isNotEmpty && !_isUpdating
+                        ? _updateCourses
+                        : null,
                   ),
                 ),
               ),

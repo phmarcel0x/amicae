@@ -1,11 +1,7 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:http/http.dart' as http;
-
-// import 'package:amicae_v5/screens/amicae_profile_picture_screen.dart';
-
+import '../services/user_profile_service.dart';
 import '../screens/amicae_edu_status_screen.dart';
 
 class AmicaeModeScreen extends StatefulWidget {
@@ -18,8 +14,10 @@ class AmicaeModeScreen extends StatefulWidget {
 }
 
 class _AmicaeModeScreenState extends State<AmicaeModeScreen> {
-  String? _selectedMode; // No option selected at first (null)
+  final _userProfileService = UserProfileService();
+  String? _selectedMode;
   bool isButtonEnabled = false;
+  bool _isUpdating = false;
 
   @override
   void initState() {
@@ -30,31 +28,41 @@ class _AmicaeModeScreenState extends State<AmicaeModeScreen> {
   void _onModeChanged(String? value) {
     setState(() {
       _selectedMode = value;
-      isButtonEnabled = _selectedMode != null; // Enable if a mode is selected
+      isButtonEnabled = _selectedMode != null;
     });
   }
 
-  Future<void> updateMode(String documentId, String selectedMode) async {
-    // Construct the Firebase URL using the document ID to update the specific user's profile
-    final url = Uri.https(
-      'amicae-app-default-rtdb.firebaseio.com',
-      'user-profile/$documentId.json',
-    );
+  Future<void> _updateMode() async {
+    if (!isButtonEnabled || _isUpdating || _selectedMode == null) return;
+
+    setState(() {
+      _isUpdating = true;
+    });
 
     try {
-      // Send PATCH request to update the  mode
-      final response = await http.patch(
-        url,
-        body: json.encode({'lookingFor': selectedMode}), // Sending the mode as JSON
-      );
+      await _userProfileService.updateLookingFor(_selectedMode!);
 
-      if (response.statusCode == 200) {
-        print('Mode updated successfully!');
-      } else {
-        print('Failed to update mode: ${response.statusCode}');
+      if (mounted) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                AmicaeEduStatusScreen(documentId: widget.documentId),
+          ),
+        );
       }
     } catch (error) {
-      print('Error occurred: $error');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to update mode: $error')),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isUpdating = false;
+        });
+      }
     }
   }
 
@@ -80,18 +88,17 @@ class _AmicaeModeScreenState extends State<AmicaeModeScreen> {
                 color: Colors.black87,
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               'Amicae\'s for making all kinds of connections! You\'ll be able to switch modes once you\'re all set up.',
               style: GoogleFonts.lato(fontSize: 16, color: Colors.black87),
             ),
-            SizedBox(height: 40),
-            // White container for 'BFF' option
+            const SizedBox(height: 40),
             Container(
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
                     color: Colors.black12,
                     blurRadius: 4,
@@ -101,20 +108,20 @@ class _AmicaeModeScreenState extends State<AmicaeModeScreen> {
               ),
               child: RadioListTile<String>(
                 title: Text('BFF', style: GoogleFonts.lato()),
-                subtitle: Text('Make new friends at every stage of your life', style: GoogleFonts.lato()),
+                subtitle: Text('Make new friends at every stage of your life',
+                    style: GoogleFonts.lato()),
                 value: 'BFF',
                 groupValue: _selectedMode,
                 activeColor: Colors.black87,
-                onChanged: _onModeChanged, // Use _onModeChanged
+                onChanged: _onModeChanged,
               ),
             ),
-            SizedBox(height: 20),
-            // White container for 'Mentor' option
+            const SizedBox(height: 20),
             Container(
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
                     color: Colors.black12,
                     blurRadius: 4,
@@ -124,35 +131,37 @@ class _AmicaeModeScreenState extends State<AmicaeModeScreen> {
               ),
               child: RadioListTile<String>(
                 title: Text('Mentor', style: GoogleFonts.lato()),
-                subtitle: Text('Find that special connection in the community', style: GoogleFonts.lato()),
+                subtitle: Text('Find that special connection in the community',
+                    style: GoogleFonts.lato()),
                 value: 'Mentor',
                 groupValue: _selectedMode,
                 activeColor: Colors.black87,
-                onChanged: _onModeChanged, // Use _onModeChanged
+                onChanged: _onModeChanged,
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Align(
               alignment: Alignment.bottomRight,
               child: CircleAvatar(
                 backgroundColor: Colors.white,
                 radius: 28,
                 child: IconButton(
-                  icon: Icon(
-                    Icons.arrow_circle_right_sharp,
-                    size: 50,
-                    color: isButtonEnabled ? Colors.black : Colors.grey, // Conditional color
-                  ),
-                  onPressed: isButtonEnabled
-                      ? () {
-                    updateMode(widget.documentId, _selectedMode!);
-                    // Handle forward button press
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => AmicaeEduStatusScreen(documentId: widget.documentId)),
-                    );
-                  }
-                      : null, // Disable button if no mode is selected
+                  icon: _isUpdating
+                      ? const SizedBox(
+                          width: 24,
+                          height: 24,
+                          child: CircularProgressIndicator(
+                            color: Colors.black,
+                            strokeWidth: 2,
+                          ),
+                        )
+                      : Icon(
+                          Icons.arrow_circle_right_sharp,
+                          size: 50,
+                          color: isButtonEnabled ? Colors.black : Colors.grey,
+                        ),
+                  onPressed:
+                      isButtonEnabled && !_isUpdating ? _updateMode : null,
                 ),
               ),
             ),
