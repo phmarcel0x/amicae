@@ -279,7 +279,7 @@ class ProfileCard extends StatelessWidget {
 
                         // Education
                         const Text(
-                          "My Education:",
+                          "My Education",
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -300,7 +300,7 @@ class ProfileCard extends StatelessWidget {
 
                         // Courses
                         const Text(
-                          "Courses:",
+                          "Courses",
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -331,7 +331,7 @@ class ProfileCard extends StatelessWidget {
 
                         // Interests
                         const Text(
-                          "My Interests:",
+                          "My Interests",
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
