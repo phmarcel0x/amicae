@@ -26,7 +26,7 @@ class _NavBarState extends State<NavBar> {
     const HomePage(),
     const PeoplePage(),
     const APIEventsPage(),
-    const SpotsPage(),
+    // const SpotsPage(),
   ];
 
   @override
@@ -41,14 +41,14 @@ class _NavBarState extends State<NavBar> {
               Padding(
                 padding: const EdgeInsets.only(right: 200),
                 child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const InfoPage()
-                      )
-                    );
-                  }, // Image tapped
+                  // onTap: () {
+                  //   Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => const InfoPage()
+                  //     )
+                  //   );
+                  // }, // Image tapped
                   child: Image.asset(
                     "assets/ae_short_white.png",
                     fit: BoxFit.contain,
@@ -104,10 +104,10 @@ class _NavBarState extends State<NavBar> {
               icon: Icon(Icons.event),
               label: "Events",
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.coffee),
-              label: "Spots",
-            ),
+            // BottomNavigationBarItem(
+            //   icon: Icon(Icons.coffee),
+            //   label: "Spots",
+            // ),
           ],
           currentIndex: selectedIndex,
           onTap: onItemTapped,

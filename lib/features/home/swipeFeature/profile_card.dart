@@ -30,78 +30,82 @@ class ProfileCard extends StatelessWidget {
     var height = MediaQuery.of(context).size.height;
     return Container(
       decoration: BoxDecoration(
-        //Style of the profile card
+        // Style of the profile card
         borderRadius: BorderRadius.circular(kProfileCardBorderRadius),
         color: kProfileCardColor,
       ),
-      child: Column(
-        children: [
-          Expanded(
-            flex: 4,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                CircleAvatar(
-                  radius: height * 0.07,
-                  backgroundImage: AssetImage(profile.getAvatarSource()),
-                ),
-                Text(
-                  profile.getName(),
-                  style: kNameTextStyle,
-                ),
-                Text(
-                  profile.getMajor(),
-                  style: kMajorTextStyle,
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(
-            width: 300,
-            child: Divider(),
-          ),
-          Expanded(
-            flex: 6,
-            child: ListTileTheme(
-              textColor: Colors.white,
+      child: SingleChildScrollView(
+        // Allows scrolling when the content overflows
+        child: Column(
+          children: [
+            // Profile Header (Avatar and Name)
+            Padding(
+              padding: const EdgeInsets.all(10.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  ListTile(
-                    title: const Text(
-                      'Biography: ',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    subtitle: Text(
-                      profile.getBio(),
-                      style: const TextStyle(fontSize: 15),
-                    ),
+                  CircleAvatar(
+                    radius: height * 0.07,
+                    backgroundImage: AssetImage(profile.getAvatarSource()),
                   ),
-                  ListTile(
-                    title: const Text(
-                      'Classes: ',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    subtitle: Text(
-                      classes(),
-                      style: const TextStyle(fontSize: 15),
-                    ),
+                  Text(
+                    profile.getName(),
+                    style: kNameTextStyle,
                   ),
-                  ListTile(
-                    title: const Text(
-                      'Skills: ',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    subtitle: Text(
-                      skills(),
-                      style: const TextStyle(fontSize: 15),
-                    ),
+                  Text(
+                    profile.getMajor(),
+                    style: kMajorTextStyle,
                   ),
                 ],
               ),
             ),
-          )
-        ],
+            const SizedBox(
+              width: 300,
+              child: Divider(),
+            ),
+            // Profile Details (Biography, Classes, and Skills)
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: ListTileTheme(
+                textColor: Colors.white,
+                child: Column(
+                  children: [
+                    ListTile(
+                      title: const Text(
+                        'Biography: ',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      subtitle: Text(
+                        profile.getBio(),
+                        style: const TextStyle(fontSize: 15),
+                      ),
+                    ),
+                    ListTile(
+                      title: const Text(
+                        'Classes: ',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      subtitle: Text(
+                        classes(),
+                        style: const TextStyle(fontSize: 15),
+                      ),
+                    ),
+                    ListTile(
+                      title: const Text(
+                        'Skills: ',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      subtitle: Text(
+                        skills(),
+                        style: const TextStyle(fontSize: 15),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
