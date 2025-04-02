@@ -1,155 +1,3 @@
-// // import 'package:amicae/features/login/pages/landing_page.dart';
-// // import 'package:firebase_auth/firebase_auth.dart';
-// // import 'package:flutter/material.dart';
-// //
-// // import '../nav bar/nav_bar.dart';
-// //
-// // class ProfilePage extends StatelessWidget {
-// //   const ProfilePage({super.key});
-// //
-// //   @override
-// //   Widget build(BuildContext context) {
-// //     return Scaffold(
-// //       backgroundColor: Colors.blue,
-// //       body: Container(
-// //         margin: const EdgeInsets.all(20),
-// //         width: double.infinity,
-// //         child: Column(
-// //           mainAxisAlignment: MainAxisAlignment.center,
-// //           children: [
-// //             const Padding(
-// //                 padding: EdgeInsets.all(10),
-// //                 child: Text("profile page goes here")),
-// //             Padding(
-// //               padding: const EdgeInsets.all(10),
-// //               child: IconButton(
-// //                 icon: const Icon(Icons.arrow_back),
-// //                 color: Colors.black,
-// //                 onPressed: () {
-// //                   Navigator.pushReplacement(
-// //                     context,
-// //                     PageRouteBuilder(
-// //                       pageBuilder: (context, animation1, animation2) =>
-// //                           const NavBar(),
-// //                       transitionDuration: Duration.zero,
-// //                       reverseTransitionDuration: Duration.zero,
-// //                     ),
-// //                   );
-// //                   // Navigator.push(
-// //                   //   context,
-// //                   //   MaterialPageRoute(builder:
-// //                   //     (context) => const NavBar()
-// //                   //   )
-// //                   // );
-// //                 },
-// //               ),
-// //             ),
-// //             Padding(
-// //               padding: const EdgeInsets.all(10),
-// //               child: IconButton(
-// //                 icon: const Icon(Icons.logout),
-// //                 color: Colors.black,
-// //                 onPressed: () {
-// //                   // TODO: firebase logout
-// //                   FirebaseAuth.instance.signOut();
-// //                   Navigator.of(context).pushAndRemoveUntil(
-// //                     MaterialPageRoute(
-// //                       builder: (context) => const LandingPage(),
-// //                     ),
-// //                     (route) => false,
-// //                   );
-// //                 },
-// //               ),
-// //             ),
-// //           ],
-// //         ),
-// //       ),
-// //     );
-// //   }
-// // }
-// import 'package:amicae/features/login/pages/landing_page.dart';
-// import 'package:amicae/features/profile/service/profile_service.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:flutter/material.dart';
-//
-// import '../nav bar/nav_bar.dart';
-//
-// class ProfilePage extends StatelessWidget {
-//   ProfilePage({super.key});
-//
-//   final ProfileService _profileService = ProfileService();
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     // _profileService.findById(FirebaseAuth.instance.currentUser?.uid ?? '').then((profile) {
-//     //   print(profile);
-//     // });
-//     // Get the current user
-//     final User? currentUser = FirebaseAuth.instance.currentUser;
-//
-//     return Scaffold(
-//       backgroundColor: Colors.blue,
-//       body: Container(
-//         margin: const EdgeInsets.all(20),
-//         width: double.infinity,
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             // Display user ID if a user is logged in
-//             if (currentUser != null)
-//               Padding(
-//                 padding: const EdgeInsets.all(10),
-//                 child: Text(
-//                   "User ID: ${currentUser.uid}",
-//                   style: const TextStyle(
-//                     color: Colors.white,
-//                     fontSize: 16,
-//                   ),
-//                 ),
-//               ),
-//             const Padding(
-//                 padding: EdgeInsets.all(10),
-//                 child: Text("profile page goes here")),
-//             Padding(
-//               padding: const EdgeInsets.all(10),
-//               child: IconButton(
-//                 icon: const Icon(Icons.arrow_back),
-//                 color: Colors.black,
-//                 onPressed: () {
-//                   Navigator.pushReplacement(
-//                     context,
-//                     PageRouteBuilder(
-//                       pageBuilder: (context, animation1, animation2) =>
-//                           const NavBar(),
-//                       transitionDuration: Duration.zero,
-//                       reverseTransitionDuration: Duration.zero,
-//                     ),
-//                   );
-//                 },
-//               ),
-//             ),
-//             Padding(
-//               padding: const EdgeInsets.all(10),
-//               child: IconButton(
-//                 icon: const Icon(Icons.logout),
-//                 color: Colors.black,
-//                 onPressed: () {
-//                   FirebaseAuth.instance.signOut();
-//                   Navigator.of(context).pushAndRemoveUntil(
-//                     MaterialPageRoute(
-//                       builder: (context) => const LandingPage(),
-//                     ),
-//                     (route) => false,
-//                   );
-//                 },
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
 import 'package:amicae/features/login/pages/landing_page.dart';
 import 'package:amicae/features/profile/entity/profile.dart';
 import 'package:amicae/features/profile/service/profile_service.dart';
@@ -165,14 +13,11 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Get the current user
     final User? currentUser = FirebaseAuth.instance.currentUser;
 
-    // Add these debug prints
+    // Debug prints
     print('Current User UID: ${currentUser?.uid}');
     print('Is User Authenticated: ${currentUser != null}');
-
-    // Additional authentication details
     print('Current User Email: ${currentUser?.email}');
     print('Current User Email Verified: ${currentUser?.emailVerified}');
     print('Current User Providers: ${currentUser?.providerData}');
@@ -185,25 +30,24 @@ class ProfilePage extends StatelessWidget {
     });
 
     if (currentUser == null) {
-      return Center(
+      return const Center(
         child: Text(
           "No user logged in",
-          style: TextStyle(color: Colors.white, fontSize: 18),
+          style: TextStyle(color: Colors.black, fontSize: 18),
         ),
       );
-    } else if (currentUser != null) {
+    } else {
       ProfileService().checkDatabaseAccess(currentUser.uid);
     }
 
     return Scaffold(
-      backgroundColor: Colors.blue,
-      body: currentUser != null
-          ? FutureBuilder<Profile>(
+      backgroundColor: Colors.grey[100],
+      body: FutureBuilder<Profile>(
         future: _profileService.findById(currentUser.uid),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
-              child: CircularProgressIndicator(color: Colors.white),
+              child: CircularProgressIndicator(),
             );
           }
 
@@ -212,10 +56,11 @@ class ProfilePage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text(
+                  Text(
                     "Error loading profile",
-                    style: TextStyle(color: Colors.white, fontSize: 18),
+                    style: TextStyle(color: Colors.red[800], fontSize: 18),
                   ),
+                  const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () {
                       Navigator.pushReplacement(
@@ -234,182 +79,327 @@ class ProfilePage extends StatelessWidget {
             return const Center(
               child: Text(
                 "No profile found",
-                style: TextStyle(color: Colors.white, fontSize: 18),
+                style: TextStyle(color: Colors.black, fontSize: 18),
               ),
             );
           }
 
           final Profile profile = snapshot.data!;
-
-          return SingleChildScrollView(
-            child: Container(
-              margin: const EdgeInsets.all(20),
-              width: double.infinity,
+          return SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Profile Information Display
-                  ProfileInfoCard(profile: profile),
+                  // Add extra spacing from the physical area (camera, etc.)
+                  const SizedBox(height: 30),
 
-                  // Navigation and Logout Buttons
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: IconButton(
-                          icon: const Icon(Icons.arrow_back),
-                          color: Colors.black,
-                          onPressed: () {
-                            Navigator.pushReplacement(
-                              context,
-                              PageRouteBuilder(
-                                pageBuilder: (context, animation1, animation2) =>
-                                const NavBar(),
-                                transitionDuration: Duration.zero,
-                                reverseTransitionDuration: Duration.zero,
-                              ),
-                            );
-                          },
+                  // Profile card with fixed height and scrollable content
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.75, // Fixed height for card
+                    child: ProfileCard(
+                      profile: profile,
+                      onBack: () {
+                        Navigator.pushReplacement(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder: (context, animation1, animation2) => const NavBar(),
+                            transitionDuration: Duration.zero,
+                            reverseTransitionDuration: Duration.zero,
+                          ),
+                        );
+                      },
+                      onLogout: () {
+                        FirebaseAuth.instance.signOut();
+                        Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                            builder: (context) => const LandingPage(),
+                          ),
+                              (route) => false,
+                        );
+                      },
+                    ),
+                  ),
+
+                  // Edit Profile button with full width and more visibility
+                  Container(
+                    margin: const EdgeInsets.only(top: 20, bottom: 30),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.blue.withOpacity(0.3),
+                          spreadRadius: 1,
+                          blurRadius: 10,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    width: double.infinity, // Full width
+                    height: 60, // Increased height for better visibility
+                    child: ElevatedButton.icon(
+                      icon: const Icon(Icons.edit, size: 24),
+                      label: const Text(
+                        "Edit Profile",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: IconButton(
-                          icon: const Icon(Icons.logout),
-                          color: Colors.black,
-                          onPressed: () {
-                            FirebaseAuth.instance.signOut();
-                            Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(
-                                builder: (context) => const LandingPage(),
-                              ),
-                                  (route) => false,
-                            );
-                          },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.black,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30), // Updated to 30px
                         ),
                       ),
-                    ],
+                      onPressed: () {
+                        // Edit profile functionality
+                      },
+                    ),
                   ),
                 ],
               ),
             ),
           );
         },
-      )
-          : const Center(
-        child: Text(
-          "No user logged in",
-          style: TextStyle(color: Colors.white, fontSize: 18),
-        ),
       ),
     );
   }
 }
 
-class ProfileInfoCard extends StatelessWidget {
+class ProfileCard extends StatelessWidget {
   final Profile profile;
+  final VoidCallback onBack;
+  final VoidCallback onLogout;
 
-  const ProfileInfoCard({super.key, required this.profile});
+  const ProfileCard({
+    super.key,
+    required this.profile,
+    required this.onBack,
+    required this.onLogout,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Colors.white,
-      elevation: 5,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(30), // Border radius for the entire card
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: const Offset(0, 3),
+          ),
+        ],
+        border: Border.all(color: Colors.grey[200]!),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Name and Department
-            Text(
-              profile.firstName,
-              style: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text(
-              profile.department,
-              style: const TextStyle(
-                fontSize: 18,
-                color: Colors.grey,
-              ),
-            ),
-            const SizedBox(height: 15),
+      child: Stack(
+        children: [
+          // Using ClipRRect to ensure content respects the container's border radius
+          ClipRRect(
+            borderRadius: BorderRadius.circular(30),
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Profile Image (now inside scrollable area)
+                  SizedBox(
+                    height: 180, // Maintained the same 180px height
+                    width: double.infinity,
+                    child: Image.asset(
+                      'assets/images/profile_placeholder.jpg',
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          height: 180,
+                          color: Colors.grey[300],
+                          width: double.infinity,
+                          child: const Icon(Icons.person, size: 80, color: Colors.white),
+                        );
+                      },
+                    ),
+                  ),
 
-            // Description
-            const Text(
-              'Description:',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text(
-              profile.description,
-              style: const TextStyle(fontSize: 16),
-            ),
-            const SizedBox(height: 15),
+                  // Profile Content
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Name and Department
+                        Text(
+                          profile.firstName,
+                          style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                          decoration: BoxDecoration(
+                            color: Colors.blue[50],
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Text(
+                            profile.department,
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.blue[800],
+                            ),
+                          ),
+                        ),
 
-            // Education Status
-            const Text(
-              'Education Status:',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text(
-              profile.educationStatus,
-              style: const TextStyle(fontSize: 16),
-            ),
-            const SizedBox(height: 15),
+                        const Divider(height: 24),
 
-            // Courses
-            const Text(
-              'Courses:',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Wrap(
-              spacing: 8,
-              runSpacing: 4,
-              children: profile.coursesCodes.map((course) =>
-                  Chip(
-                    label: Text(course),
-                    backgroundColor: Colors.blue.shade100,
-                  )
-              ).toList(),
-            ),
-            const SizedBox(height: 15),
+                        // Bio
+                        const Padding(
+                          padding: EdgeInsets.only(top: 8, bottom: 4),
+                          child: Text(
+                            "My Bio",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          profile.description,
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.grey[800],
+                          ),
+                        ),
 
-            // Interests
-            const Text(
-              'Interests:',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
+                        const SizedBox(height: 16),
+
+                        // Education
+                        const Text(
+                          "My Education:",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: Text(
+                            profile.educationStatus,
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.grey[800],
+                            ),
+                          ),
+                        ),
+
+                        const SizedBox(height: 8),
+
+                        // Courses
+                        const Text(
+                          "Courses:",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Wrap(
+                          spacing: 8,
+                          runSpacing: 8,
+                          children: profile.coursesCodes.map((course) =>
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                decoration: BoxDecoration(
+                                  color: Colors.blue[50],
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: Text(
+                                  course,
+                                  style: TextStyle(
+                                    color: Colors.blue[800],
+                                  ),
+                                ),
+                              )
+                          ).toList(),
+                        ),
+
+                        const SizedBox(height: 16),
+
+                        // Interests
+                        const Text(
+                          "My Interests:",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Wrap(
+                          spacing: 8,
+                          runSpacing: 8,
+                          children: profile.interests.map((interest) =>
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[200],
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: Text(
+                                  interest,
+                                  style: TextStyle(
+                                    color: Colors.grey[800],
+                                  ),
+                                ),
+                              )
+                          ).toList(),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
-            Wrap(
-              spacing: 8,
-              runSpacing: 4,
-              children: profile.interests.map((interest) =>
-                  Chip(
-                    label: Text(interest),
-                    backgroundColor: Colors.green.shade100,
-                  )
-              ).toList(),
+          ),
+
+          // Navigation buttons (float on top)
+          // Back button - top left corner
+          Positioned(
+            top: 12,
+            left: 12,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.5),
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: IconButton(
+                icon: const Icon(Icons.arrow_back, color: Colors.white),
+                onPressed: onBack,
+                tooltip: 'Back',
+              ),
             ),
-          ],
-        ),
+          ),
+
+          // Logout button - top right corner
+          Positioned(
+            top: 12,
+            right: 12,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.7),
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: IconButton(
+                icon: const Icon(Icons.logout, color: Colors.white),
+                onPressed: onLogout,
+                tooltip: 'Logout',
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
