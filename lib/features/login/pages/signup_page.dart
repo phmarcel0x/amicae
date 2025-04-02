@@ -18,8 +18,7 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-  TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -70,20 +69,26 @@ class _SignupPageState extends State<SignupPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start, // Align items to start
               children: [
-                IconButton(
-                  icon: const Icon(Icons.arrow_back),
-                  color: Colors.black,
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      PageRouteBuilder(
-                        pageBuilder: (context, animation1, animation2) =>
-                        const LandingPage(),
-                        transitionDuration: Duration.zero,
-                        reverseTransitionDuration: Duration.zero,
-                      ),
-                    );
-                  },
+                Padding(
+                  padding: const EdgeInsets.only(top: 40.0), // Ensure the button is visible with padding
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: IconButton(
+                      icon: const Icon(Icons.arrow_back),
+                      color: Colors.black,
+                      // tooltip: 'Go back',
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder: (context, animation1, animation2) => const LandingPage(),
+                            transitionDuration: Duration.zero,
+                            reverseTransitionDuration: Duration.zero,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
                 ),
                 const CircleAvatar(
                   backgroundImage: AssetImage('assets/ae_short_white.png'),
@@ -102,7 +107,6 @@ class _SignupPageState extends State<SignupPage> {
                     controller: _firstNameController,
                     cursorColor: Colors.black,
                     style: const TextStyle(color: Colors.black),
-
                     decoration: InputDecoration(
                       labelText: "First Name",
                       labelStyle: const TextStyle(color: Colors.black),
@@ -132,7 +136,6 @@ class _SignupPageState extends State<SignupPage> {
                     controller: _lastNameController,
                     cursorColor: Colors.black,
                     style: const TextStyle(color: Colors.black),
-
                     decoration: InputDecoration(
                       labelText: "Last Name",
                       labelStyle: const TextStyle(color: Colors.black),
@@ -162,7 +165,6 @@ class _SignupPageState extends State<SignupPage> {
                     controller: _emailController,
                     cursorColor: Colors.black,
                     style: const TextStyle(color: Colors.black),
-
                     decoration: InputDecoration(
                       labelText: "Email",
                       labelStyle: const TextStyle(color: Colors.black),
@@ -196,7 +198,6 @@ class _SignupPageState extends State<SignupPage> {
                     obscureText: true,
                     cursorColor: Colors.black,
                     style: const TextStyle(color: Colors.black),
-
                     decoration: InputDecoration(
                       labelText: "Password",
                       labelStyle: const TextStyle(color: Colors.black),
@@ -230,7 +231,6 @@ class _SignupPageState extends State<SignupPage> {
                     obscureText: true,
                     cursorColor: Colors.black,
                     style: const TextStyle(color: Colors.black),
-
                     decoration: InputDecoration(
                       labelText: "Confirm Password",
                       labelStyle: const TextStyle(color: Colors.black),
