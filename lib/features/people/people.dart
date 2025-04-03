@@ -1,31 +1,118 @@
+// import 'dart:async';
 import 'package:flutter/material.dart';
+
+void main() => runApp(const DatingApp());
+
+class Match {
+  final String name;
+  final String image;
+  final String message;
+
+  Match({
+    required this.name,
+    required this.image,
+    required this.message,
+  });
+}
+
+class DatingApp extends StatelessWidget {
+  const DatingApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData.light(),
+      home: const PeoplePage(),
+    );
+  }
+}
 
 class PeoplePage extends StatefulWidget {
   const PeoplePage({super.key});
 
   @override
-  State createState() => _PeoplePage();
+  State<PeoplePage> createState() => _PeoplePageState();
 }
 
-class _PeoplePage extends State<PeoplePage> {
+class _PeoplePageState extends State<PeoplePage> {
+  // Sample data for matches
+  final List<Match> matches = [
+    Match(
+      name: 'Amicae Dev Team',
+      image: 'assets/ae_short_black.png', // Fixed image path
+      message: 'Welcome to Amicae! Complete your profile and start swiping!',
+    ),
+    // Add more sample matches as needed
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.pink,
-      body: Container(
-        margin: const EdgeInsets.all(20),
-        width: double.infinity,
-        child: const Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: EdgeInsets.all(10),
-              child: Text("people page goes here")
-            ),
-          ],
+      appBar: AppBar(
+        title: const Text("Your connections"),
+        // backgroundColor: Colors.white,
+        centerTitle: true,
+        automaticallyImplyLeading: false, // This removes the back button
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: matches.isEmpty
+            ? const Center(
+          child: Text(
+            'No currently matches, keep swiping!',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+        )
+            : ListView.builder(
+          itemCount: matches.length + 1, // Add 1 for the footer
+          itemBuilder: (context, index) {
+            if (index == matches.length) {
+              // Display "Keep swiping!" message at the end
+              return const Padding(
+                padding: EdgeInsets.symmetric(vertical: 16.0),
+                child: Center(
+                  child: Text(
+                    'Keep swiping!',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
+              );
+            }
+
+            final match = matches[index];
+            return Card(
+              color: Colors.white, // Ensures the background is not pink
+              elevation: 4,
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: ListTile(
+                contentPadding: const EdgeInsets.all(16),
+                leading: CircleAvatar(
+                  backgroundImage: AssetImage(match.image),
+                ),
+                title: Text(
+                  match.name,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                subtitle: Text(match.message),
+                trailing: const Icon(Icons.message, color: Colors.black),
+                onTap: () {
+                  // Navigate to the conversation page or similar
+                },
+              ),
+            );
+          },
         ),
-      )
+      ),
     );
   }
 }

@@ -290,9 +290,12 @@ class _APIEventsPageState extends State<APIEventsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       appBar: AppBar(
         title: const Text("Events"),
         centerTitle: true,
+        automaticallyImplyLeading: false, // This removes the back button
+
       ),
       body: FutureBuilder<List<Album>>(
         future: futureAlbums,
@@ -305,6 +308,8 @@ class _APIEventsPageState extends State<APIEventsPage> {
               itemBuilder: (context, index) {
                 final album = albums[index];
                 return Card(
+                  color: Colors.white, // Ensures the background is not pink
+
                   elevation: 4,
                   margin:
                       const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
