@@ -5,29 +5,23 @@ import 'temp_profile.dart';
 class ProfileCard extends StatelessWidget {
   final Profile profile;
 
-  ProfileCard({required this.profile});
+  const ProfileCard({super.key, required this.profile});
 
-  String classes() {
-    String str = '';
-    for (var i = 0; i < profile.getClasses().length - 1; i++) {
-      str += profile.getClasses()[i] + ', ';
-    }
-    str += profile.getClasses().last;
-    return str;
-  }
+  String _formatList(List<String> items) {
+    if (items.isEmpty) return 'None';
 
-  String skills() {
     String str = '';
-    for (var i = 0; i < profile.getSkills().length - 1; i++) {
-      str += profile.getSkills()[i] + ', ';
+    for (var i = 0; i < items.length - 1; i++) {
+      str += items[i] + ', ';
     }
-    str += profile.getSkills().last;
+    str += items.last;
     return str;
   }
 
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
+
     return Container(
       decoration: BoxDecoration(
         //Style of the profile card
@@ -41,16 +35,20 @@ class ProfileCard extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
+                // Profile Image
                 CircleAvatar(
                   radius: height * 0.07,
                   backgroundImage: AssetImage(profile.getAvatarSource()),
+                  backgroundColor: Colors.grey[300],
                 ),
+                // Name
                 Text(
                   profile.getName(),
                   style: kNameTextStyle,
                 ),
+                // Department and Education Status
                 Text(
-                  profile.getMajor(),
+                  '${profile.getDepartment()} - ${profile.getEducationStatus()}',
                   style: kMajorTextStyle,
                 ),
               ],
@@ -58,7 +56,7 @@ class ProfileCard extends StatelessWidget {
           ),
           const SizedBox(
             width: 300,
-            child: Divider(),
+            child: Divider(color: Colors.white54),
           ),
           Expanded(
             flex: 6,
@@ -67,34 +65,48 @@ class ProfileCard extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
+                  // Bio
                   ListTile(
                     title: const Text(
                       'Biography: ',
-                      style: TextStyle(fontSize: 20),
+                      style: kSectionTitleStyle,
                     ),
                     subtitle: Text(
                       profile.getBio(),
-                      style: TextStyle(fontSize: 15),
+                      style: kSectionContentStyle,
                     ),
                   ),
+                  // Courses
                   ListTile(
                     title: const Text(
-                      'Classes: ',
-                      style: TextStyle(fontSize: 20),
+                      'Current Courses: ',
+                      style: kSectionTitleStyle,
                     ),
                     subtitle: Text(
-                      classes(),
-                      style: TextStyle(fontSize: 15),
+                      _formatList(profile.getCourses()),
+                      style: kSectionContentStyle,
                     ),
                   ),
+                  // Interests/Skills
                   ListTile(
                     title: const Text(
-                      'Skills: ',
-                      style: TextStyle(fontSize: 20),
+                      'Interests & Skills: ',
+                      style: kSectionTitleStyle,
                     ),
                     subtitle: Text(
-                      skills(),
-                      style: TextStyle(fontSize: 15),
+                      _formatList(profile.getInterests()),
+                      style: kSectionContentStyle,
+                    ),
+                  ),
+                  // Looking For
+                  ListTile(
+                    title: const Text(
+                      'Looking For: ',
+                      style: kSectionTitleStyle,
+                    ),
+                    subtitle: Text(
+                      profile.getLookingFor(),
+                      style: kSectionContentStyle,
                     ),
                   ),
                 ],
