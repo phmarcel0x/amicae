@@ -16,17 +16,21 @@ dependencies:
 
   firebase_database: ^11.3.4
   cupertino_icons: ^1.0.8
-  firebase_core: ^3.12.1
+  firebase_core: ^3.13.0
   firebase_auth: ^5.5.1
   latlong2: ^0.9.1
   intl: ^0.17.0
   google_fonts: ^6.2.1
   geolocator: ^13.0.3  # Updated geolocator version
   provider: ^6.1.2  # Added for state management
+  firebase_vertexai: ^1.5.0
+  
 
 
 dev_dependencies:
   flutter_launcher_icons: ^0.13.1
+  mockito: ^5.4.4
+  build_runner: ^2.4.8
 
   flutter_test:
     sdk: flutter

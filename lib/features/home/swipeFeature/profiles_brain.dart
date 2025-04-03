@@ -1,5 +1,7 @@
 import 'temp_profile.dart';
 import 'profile_service.dart';
+import 'gemini_service.dart';
+import 'match_insight.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer';
 
@@ -9,17 +11,32 @@ class ProfilesBrain extends ChangeNotifier {
   bool _isLoading = true;
   bool _noMoreProfiles = false;
   String? _errorMessage;
+  MatchInsight _matchInsight = MatchInsight.empty();
 
   final ProfileService _profileService = ProfileService();
+  final GeminiService _geminiService = GeminiService();
 
   ProfilesBrain() {
-    _loadProfiles();
+    _initialize();
+  }
+
+  // Initialize services and load profiles
+  Future<void> _initialize() async {
+    try {
+      await _loadProfiles();
+    } catch (e) {
+      log('Error initializing ProfilesBrain: $e');
+      _errorMessage = 'Failed to initialize: ${e.toString()}';
+      _isLoading = false;
+      notifyListeners();
+    }
   }
 
   // Getters
   bool get isLoading => _isLoading;
   bool get noMoreProfiles => _noMoreProfiles;
   String? get errorMessage => _errorMessage;
+  MatchInsight get matchInsight => _matchInsight;
 
   Profile? get currentProfile {
     if (_profiles.isEmpty) return null;
@@ -54,10 +71,80 @@ class ProfilesBrain extends ChangeNotifier {
       _currentProfileIndex = 0;
       _noMoreProfiles = _profiles.isEmpty;
       _isLoading = false;
+
+      // Generate match insight for the first profile
+      if (_profiles.isNotEmpty) {
+        _generateMatchInsight();
+      } else {
+        _matchInsight = MatchInsight.empty();
+      }
+
       notifyListeners();
     } catch (e) {
       _isLoading = false;
       _errorMessage = 'Failed to load profiles: ${e.toString()}';
+      _matchInsight = MatchInsight.empty();
+      notifyListeners();
+    }
+  }
+
+  // Generate match insight for current profile
+  Future<void> _generateMatchInsight() async {
+    if (currentProfile == null) {
+      _matchInsight = MatchInsight.empty();
+      notifyListeners();
+      return;
+    }
+
+    try {
+      // Set loading state
+      _matchInsight = MatchInsight.loading();
+      notifyListeners();
+
+      // Generate insight with retry mechanism
+      String insightText = '';
+      int retryCount = 0;
+      const maxRetries = 2;
+
+      while (retryCount <= maxRetries) {
+        try {
+          insightText =
+              await _geminiService.generateMatchInsights(currentProfile!);
+
+          // If we got a valid insight, break the retry loop
+          if (!insightText.contains('Unable to generate') &&
+              !insightText.contains('trouble generating') &&
+              insightText.isNotEmpty) {
+            break;
+          }
+
+          retryCount++;
+          if (retryCount <= maxRetries) {
+            // Short delay before retry
+            await Future.delayed(const Duration(milliseconds: 500));
+          }
+        } catch (e) {
+          log('Error in retry attempt $retryCount: $e');
+          retryCount++;
+          if (retryCount <= maxRetries) {
+            await Future.delayed(const Duration(milliseconds: 500));
+          }
+        }
+      }
+
+      // Update with result
+      if (insightText.isEmpty ||
+          insightText.contains('Unable to generate') ||
+          insightText.contains('trouble generating')) {
+        _matchInsight = MatchInsight.empty();
+      } else {
+        _matchInsight = MatchInsight(content: insightText);
+      }
+
+      notifyListeners();
+    } catch (e) {
+      log('Error generating match insight: $e');
+      _matchInsight = MatchInsight.empty();
       notifyListeners();
     }
   }
@@ -80,13 +167,16 @@ class ProfilesBrain extends ChangeNotifier {
       // Check if we've reached the end of available profiles
       if (_currentProfileIndex >= _profiles.length) {
         _noMoreProfiles = true;
+        _matchInsight = MatchInsight.empty();
+      } else {
+        // Generate match insight for the next profile
+        _generateMatchInsight();
       }
 
-      // Notify UI of the change before attempting Firebase operations
+      // Notify UI of the change
       notifyListeners();
 
-      // Now try to record the swipe - this is done after UI update
-      // so any errors won't affect the UI experience
+      // Record the swipe
       try {
         await _profileService.recordSwipe(
           targetUserId: currentProfile.getId(),
@@ -107,6 +197,9 @@ class ProfilesBrain extends ChangeNotifier {
 
       if (_currentProfileIndex >= _profiles.length) {
         _noMoreProfiles = true;
+        _matchInsight = MatchInsight.empty();
+      } else {
+        _generateMatchInsight();
       }
 
       notifyListeners();
@@ -115,6 +208,7 @@ class ProfilesBrain extends ChangeNotifier {
 
   // Refresh profiles
   Future<void> refreshProfiles() async {
+    _matchInsight = MatchInsight.empty();
     await _loadProfiles();
   }
 }
