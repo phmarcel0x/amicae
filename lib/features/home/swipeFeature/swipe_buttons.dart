@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 
 class SwipeButton extends StatelessWidget {
-  final VoidCallback? swipeAction;
-  final Color? buttonColor;
-  final IconData? buttonIcon;
-  final Color? iconColor;
+  final VoidCallback swipeAction;
+  final Color buttonColor;
+  final IconData buttonIcon;
+  final Color iconColor;
 
-  SwipeButton(
-      {this.swipeAction, this.buttonColor, this.buttonIcon, this.iconColor});
+  const SwipeButton({
+    super.key,
+    required this.swipeAction,
+    required this.buttonColor,
+    required this.buttonIcon,
+    required this.iconColor,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +24,13 @@ class SwipeButton extends StatelessWidget {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: buttonColor,
-          // boxShadow: [
-          //   BoxShadow(
-          //       color: const Color.fromARGB(255, 0, 106, 4),
-          //       blurRadius: 4,
-          //       offset: Offset(0, 0))
-          // ]
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            )
+          ],
         ),
         child: Padding(
           padding: const EdgeInsets.only(top: 5),
