@@ -19,8 +19,8 @@ class SwipeButton extends StatelessWidget {
     return TextButton(
       onPressed: swipeAction,
       child: Container(
-        height: 100,
-        width: 100,
+        height: 72,
+        width: 72,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: buttonColor,
@@ -33,11 +33,12 @@ class SwipeButton extends StatelessWidget {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.only(top: 5),
-          child: Icon(
-            buttonIcon,
-            color: iconColor,
-            size: 66,
+          padding: const EdgeInsets.all(16),
+          child: FittedBox(
+            child: Icon(
+              buttonIcon,
+              color: iconColor,
+            ),
           ),
         ),
       ),
