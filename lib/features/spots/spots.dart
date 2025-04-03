@@ -69,7 +69,7 @@ class _SpotsPage extends State<SpotsPage> {
     }
 
     // Get current position
-    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    Position position = await Geolocator.getCurrentPosition();
     print("User location: ${position.latitude}, ${position.longitude}"); // Debugging
 
     setState(() {
@@ -91,8 +91,7 @@ class _SpotsPage extends State<SpotsPage> {
           FlutterMap(
             options: MapOptions(
               initialCenter: _userLocation ?? LatLng(45.497059, -73.578421), // Default to a fixed location if no location found
-              // initialZoom: 16,
-              initialZoom: 2,
+              initialZoom: 16,
             ),
             children: [
               TileLayer(
