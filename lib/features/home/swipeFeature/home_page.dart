@@ -5,19 +5,6 @@ import 'swipe_buttons.dart';
 import 'constants.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    // This is now just a pass-through to SwipePage
-    // The ChangeNotifierProvider is in the parent HomePage
-    return const Scaffold(
-      body: SwipePage(),
-    );
-  }
-}
-
 class SwipePage extends StatelessWidget {
   const SwipePage({super.key});
 
@@ -89,29 +76,26 @@ class SwipePage extends StatelessWidget {
                 child: ProfileCard(profile: profilesBrain.currentProfile!),
               ),
             ),
-            Expanded(
-              flex: 1,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  // Like button
-                  SwipeButton(
-                    swipeAction: () => profilesBrain.swipeProfile(isLike: true),
-                    buttonColor: kLikeButtonColor,
-                    buttonIcon: Icons.favorite,
-                    iconColor: kLikeIconColor,
-                  ),
-                  // Dislike button
-                  SwipeButton(
-                    swipeAction: () =>
-                        profilesBrain.swipeProfile(isLike: false),
-                    buttonColor: kDislikeButtonColor,
-                    buttonIcon: Icons.close,
-                    iconColor: kDislikeIconColor,
-                  ),
-                ],
-              ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                // Like button
+                SwipeButton(
+                  swipeAction: () => profilesBrain.swipeProfile(isLike: true),
+                  buttonColor: kLikeButtonColor,
+                  buttonIcon: Icons.favorite,
+                  iconColor: kLikeIconColor,
+                ),
+                // Dislike button
+                SwipeButton(
+                  swipeAction: () =>
+                      profilesBrain.swipeProfile(isLike: false),
+                  buttonColor: kDislikeButtonColor,
+                  buttonIcon: Icons.close,
+                  iconColor: kDislikeIconColor,
+                ),
+              ],
             ),
           ],
         );
