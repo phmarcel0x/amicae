@@ -352,6 +352,7 @@ class _AmicaeEduStatusScreenState extends State<AmicaeEduStatusScreen> {
               style: GoogleFonts.lato(fontSize: 16, color: Colors.black87),
             ),
             SizedBox(height: 40),
+            Expanded(child: ListView(children: [
 
             // Generate radio buttons dynamically
             ...EducationStatus.values.map((status) => Padding(
@@ -380,8 +381,9 @@ class _AmicaeEduStatusScreenState extends State<AmicaeEduStatusScreen> {
                 ),
               ),
             )).toList(),
+            ],)),
 
-            Spacer(),
+
             Align(
               alignment: Alignment.bottomRight,
               child: CircleAvatar(

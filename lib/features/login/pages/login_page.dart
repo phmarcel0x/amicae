@@ -38,30 +38,18 @@ class LoginPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: const CircleAvatar(
+          backgroundImage: AssetImage('assets/ae_short_white.png'),
+          radius: 50,
+        ),
+      ),
       body: Container(
         margin: const EdgeInsets.all(20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            IconButton(
-              icon: const Icon(Icons.arrow_back),
-              color: Colors.black,
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) =>
-                        const LandingPage(),
-                    transitionDuration: Duration.zero,
-                    reverseTransitionDuration: Duration.zero,
-                  ),
-                );
-              },
-            ),
-            const CircleAvatar(
-              backgroundImage: AssetImage('assets/ae_short_white.png'),
-              radius: 50,
-            ),
             const Text(
               "Log in to AMICAE",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25, color: Colors.black),
