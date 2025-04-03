@@ -4,7 +4,6 @@ import "../people/people.dart";
 import "../events/events_api.dart";
 import "../spots/spots.dart";
 import "../profile/profile_page.dart";
-import "../info/info.dart";
 
 class NavBar extends StatefulWidget {
   const NavBar({super.key});
@@ -38,20 +37,13 @@ class _NavBarState extends State<NavBar> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Padding(
-            padding: const EdgeInsets.only(right: 200),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const InfoPage()));
-              }, // Image tapped
-              child: Image.asset(
-                "assets/ae_short_white.png",
-                fit: BoxFit.contain,
-                height: 70,
-              ),
-            )),
+          padding: const EdgeInsets.only(right: 200),
+          child: Image.asset(
+            "assets/ae_short_white.png",
+            fit: BoxFit.contain,
+            height: 70,
+          ),
+        ),
         Padding(
           padding: const EdgeInsets.all(10),
           child: IconButton(
