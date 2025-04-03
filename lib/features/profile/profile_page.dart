@@ -684,7 +684,7 @@ class ProfileCard extends StatelessWidget {
             children: [
               // Profile Image (now inside scrollable area)
               SizedBox(
-                height: 180,
+                height: 260,
                 width: double.infinity,
                 child: Image.asset(
                   'assets/images/profile_placeholder.jpg',

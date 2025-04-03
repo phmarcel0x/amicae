@@ -304,7 +304,9 @@ class _AmicaeEduStatusScreenState extends State<AmicaeEduStatusScreen> {
     if (_selectedMode == null) return;
 
     try {
-      await _userProfileService.updateEducationStatus(_selectedMode!);
+      final formattedEduStatus = "${educationStatusMap[_selectedMode]!.emoji} ${educationStatusMap[_selectedMode]!.title}";
+
+      await _userProfileService.updateProfileField('educationStatus', formattedEduStatus);
 
       // Navigate to next screen
       Navigator.push(
