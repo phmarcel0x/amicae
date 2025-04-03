@@ -541,6 +541,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Column(
             children: [
+              const SizedBox(height: 30),
               Expanded(
                 child: Container(
                   decoration: BoxDecoration(
