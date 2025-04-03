@@ -92,6 +92,7 @@ class _SpotsPage extends State<SpotsPage> {
             options: MapOptions(
               initialCenter: _userLocation ?? LatLng(45.497059, -73.578421), // Default to a fixed location if no location found
               initialZoom: 16,
+              // initialZoom: 2,
             ),
             children: [
               TileLayer(
