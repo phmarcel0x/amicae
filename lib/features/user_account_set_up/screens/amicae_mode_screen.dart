@@ -235,9 +235,9 @@ class _AmicaeModeScreenState extends State<AmicaeModeScreen> {
             Text(
               'Choose a mode to get started',
               style: GoogleFonts.lato(
-                fontSize: 24,
+                fontSize: 28,
                 fontWeight: FontWeight.bold,
-                color: Colors.black87,
+                color: Colors.black,
               ),
             ),
             SizedBox(height: 10),
