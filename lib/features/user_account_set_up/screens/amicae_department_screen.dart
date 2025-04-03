@@ -245,7 +245,10 @@ class _AmicaeDepartmentScreenState extends State<AmicaeDepartmentScreen> {
   Future<void> _updateDepartment() async {
     if (_selectedDepartment != null) {
       try {
-        await _userProfileService.updateDepartment(_selectedDepartment!);
+        final formattedDepartment = "${departmentDetails[_selectedDepartment]!.emoji} ${departmentDetails[_selectedDepartment]!.title}";
+
+        // Using updateProfileField directly to update with formatted string
+        await _userProfileService.updateProfileField('department', formattedDepartment);
 
         // Navigate to the next screen
         Navigator.push(

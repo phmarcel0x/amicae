@@ -503,6 +503,20 @@ class _ProfilePageState extends State<ProfilePage> with WidgetsBindingObserver {
 
     return Scaffold(
       backgroundColor: Colors.grey[100],
+      appBar: AppBar(
+        actions: [
+          IconButton(onPressed: () {
+            FirebaseAuth.instance.signOut();
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                builder: (context) => const LandingPage(),
+              ),
+                  (route) => false,
+            );
+
+          }, icon: Icon(Icons.logout)),
+        ],
+      ),
       body: FutureBuilder<Profile>(
         key: _futureBuilderKey, // Add key here to force rebuild
         future: _profileService.findById(currentUser.uid),
@@ -514,6 +528,8 @@ class _ProfilePageState extends State<ProfilePage> with WidgetsBindingObserver {
           }
 
           if (snapshot.hasError) {
+            print('Profile load error: ${snapshot.error}');
+            print('Profile load error stack trace: ${snapshot.stackTrace}');
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -522,16 +538,7 @@ class _ProfilePageState extends State<ProfilePage> with WidgetsBindingObserver {
                     "Error loading profile",
                     style: TextStyle(color: Colors.red[800], fontSize: 18),
                   ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => const NavBar()),
-                      );
-                    },
-                    child: const Text("Go Back"),
-                  )
+
                 ],
               ),
             );
@@ -556,8 +563,7 @@ class _ProfilePageState extends State<ProfilePage> with WidgetsBindingObserver {
                   const SizedBox(height: 30),
 
                   // Profile card with fixed height and scrollable content
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.75, // Fixed height for card
+                  Expanded(
                     child: ProfileCard(
                       profile: profile,
                       onBack: () {
@@ -669,210 +675,170 @@ class ProfileCard extends StatelessWidget {
         ],
         border: Border.all(color: Colors.grey[200]!),
       ),
-      child: Stack(
-        children: [
-          // Using ClipRRect to ensure content respects the container's border radius
-          ClipRRect(
-            borderRadius: BorderRadius.circular(30),
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Profile Image (now inside scrollable area)
-                  SizedBox(
-                    height: 260,
-                    width: double.infinity,
-                    child: Image.asset(
-                      'assets/images/profile_placeholder.jpg',
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Container(
-                          height: 180,
-                          color: Colors.grey[300],
-                          width: double.infinity,
-                          child: const Icon(Icons.person, size: 80, color: Colors.white),
-                        );
-                      },
+      child:  ClipRRect(
+        borderRadius: BorderRadius.circular(30),
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Profile Image (now inside scrollable area)
+              SizedBox(
+                height: 180,
+                width: double.infinity,
+                child: Image.asset(
+                  'assets/images/profile_placeholder.jpg',
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      height: 180,
+                      color: Colors.grey[300],
+                      width: double.infinity,
+                      child: const Icon(Icons.person, size: 80, color: Colors.white),
+                    );
+                  },
+                ),
+              ),
+
+              // Profile Content
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Name and Department
+                    Text(
+                      profile.firstName,
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-
-                  // Profile Content
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Name and Department
-                        Text(
-                          profile.firstName,
-                          style: const TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
+                    const SizedBox(height: 4),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: Colors.blue[50],
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Text(
+                        profile.department,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.blue[800],
                         ),
-                        const SizedBox(height: 4),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                          decoration: BoxDecoration(
-                            color: Colors.blue[50],
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: Text(
-                            profile.department,
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.blue[800],
-                            ),
-                          ),
-                        ),
-
-                        const Divider(height: 24),
-
-                        // Bio
-                        const Padding(
-                          padding: EdgeInsets.only(top: 8, bottom: 4),
-                          child: Text(
-                            "My Bio",
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        Text(
-                          profile.description,
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.grey[800],
-                          ),
-                        ),
-
-                        const SizedBox(height: 16),
-
-                        // Education
-                        const Text(
-                          "My Education",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                          child: Text(
-                            profile.educationStatus,
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.grey[800],
-                            ),
-                          ),
-                        ),
-
-                        const SizedBox(height: 8),
-
-                        // Courses
-                        const Text(
-                          "Courses",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Wrap(
-                          spacing: 8,
-                          runSpacing: 8,
-                          children: profile.coursesCodes.map((course) =>
-                              Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                                decoration: BoxDecoration(
-                                  color: Colors.blue[50],
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                child: Text(
-                                  course,
-                                  style: TextStyle(
-                                    color: Colors.blue[800],
-                                  ),
-                                ),
-                              )
-                          ).toList(),
-                        ),
-
-                        const SizedBox(height: 16),
-
-                        // Interests
-                        const Text(
-                          "My Interests",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Wrap(
-                          spacing: 8,
-                          runSpacing: 8,
-                          children: profile.interests.map((interest) =>
-                              Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                                decoration: BoxDecoration(
-                                  color: Colors.grey[200],
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                child: Text(
-                                  interest,
-                                  style: TextStyle(
-                                    color: Colors.grey[800],
-                                  ),
-                                ),
-                              )
-                          ).toList(),
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-          ),
 
-          // Navigation buttons (float on top)
-          // Back button - top left corner
-          Positioned(
-            top: 12,
-            left: 12,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.5),
-                borderRadius: BorderRadius.circular(30),
-              ),
-              child: IconButton(
-                icon: const Icon(Icons.arrow_back, color: Colors.white),
-                onPressed: onBack,
-                tooltip: 'Back',
-              ),
-            ),
-          ),
+                    const Divider(height: 24),
 
-          // Logout button - top right corner
-          Positioned(
-            top: 12,
-            right: 12,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.7),
-                borderRadius: BorderRadius.circular(30),
+                    // Bio
+                    const Padding(
+                      padding: EdgeInsets.only(top: 8, bottom: 4),
+                      child: Text(
+                        "My Bio",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      profile.description,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey[800],
+                      ),
+                    ),
+
+                    const SizedBox(height: 16),
+
+                    // Education
+                    const Text(
+                      "My Education",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: Text(
+                        profile.educationStatus,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey[800],
+                        ),
+                      ),
+                    ),
+
+                    const SizedBox(height: 8),
+
+                    // Courses
+                    const Text(
+                      "Courses",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: profile.coursesCodes.map((course) =>
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                            decoration: BoxDecoration(
+                              color: Colors.blue[50],
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Text(
+                              course,
+                              style: TextStyle(
+                                color: Colors.blue[800],
+                              ),
+                            ),
+                          )
+                      ).toList(),
+                    ),
+
+                    const SizedBox(height: 16),
+
+                    // Interests
+                    const Text(
+                      "My Interests",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: profile.interests.map((interest) =>
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                            decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Text(
+                              interest,
+                              style: TextStyle(
+                                color: Colors.grey[800],
+                              ),
+                            ),
+                          )
+                      ).toList(),
+                    ),
+                  ],
+                ),
               ),
-              child: IconButton(
-                icon: const Icon(Icons.logout, color: Colors.white),
-                onPressed: onLogout,
-                tooltip: 'Logout',
-              ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
