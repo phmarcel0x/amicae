@@ -461,7 +461,7 @@ class _SpotsPageState extends State<SpotsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Study Spots Map'),
+        title: const Text('Study Spots'),
         automaticallyImplyLeading: false,
       ),
       body: _isLocationFetched

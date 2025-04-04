@@ -295,7 +295,7 @@ class _APIEventsPageState extends State<APIEventsPage> {
         title: const Text("Events"),
         centerTitle: true,
         automaticallyImplyLeading: false, // This removes the back button
-
+        backgroundColor: Colors.white,
       ),
       body: FutureBuilder<List<Album>>(
         future: futureAlbums,

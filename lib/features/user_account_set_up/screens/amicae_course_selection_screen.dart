@@ -91,7 +91,7 @@ class _AmicaeCourseSelectionScreenState
             const SizedBox(height: 10),
             Text(
               'Select up to 5 courses to connect with others in the same classes.',
-              style: GoogleFonts.lato(fontSize: 16, color: Colors.black54),
+              style: GoogleFonts.lato(fontSize: 16, color: Colors.black),
             ),
             const SizedBox(height: 40),
             // Row to display Subject and Course Code on the same line

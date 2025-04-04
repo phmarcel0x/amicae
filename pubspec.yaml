@@ -50,6 +50,9 @@ flutter:
     - assets/ae_long_black.png
     - assets/ae_long_white.png
     - assets/temp_avatars/
+    - assets/logo/
+    - assets/blank_pfp.png
+    - assets/blank_pfp2.png
 
 flutter_launcher_icons:
   android: true

@@ -1,7 +1,8 @@
 // import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-void main() => runApp(const DatingApp());
+void main() => runApp(const ConnectionsPage());
 
 class Match {
   final String name;
@@ -15,8 +16,8 @@ class Match {
   });
 }
 
-class DatingApp extends StatelessWidget {
-  const DatingApp({super.key});
+class ConnectionsPage extends StatelessWidget {
+  const ConnectionsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +47,7 @@ class _PeoplePageState extends State<PeoplePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Your connections"),
+        title: Text("Your Connections"),
         // backgroundColor: Colors.white,
         centerTitle: true,
         automaticallyImplyLeading: false, // This removes the back button
