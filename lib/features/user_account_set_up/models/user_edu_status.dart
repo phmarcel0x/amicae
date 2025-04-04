@@ -6,10 +6,10 @@ enum EducationStatus {
   InCollege,             // 🎓
   University,            // 🏫
   JustGraduated,         // 🎉
-  GettingBackIntoEducation, // 🔄
+  // GettingBackIntoEducation, // 🔄
   WorkingAndStudying,    // 💼📚
   PostgradDegree,        // 🎓
-  GapYear,               // 🌍
+  // GapYear,               // 🌍
 }
 
 class UserEducationStatus {

@@ -95,12 +95,17 @@ class _StartScreenState extends State<StartScreen> {
                 'assets/ae_short_white.png',
                 width: 300,
               ),
-              const SizedBox(height: 80),
-              Text(
-                'Connecting peers to peers',
-                style: GoogleFonts.lato(
-                  color: const Color.fromARGB(255, 0, 0, 0),
-                  fontSize: 24,
+              // const SizedBox(height: 80),
+
+              Center(
+                child: Text(
+                  'Connect, study, and succeed with Amicae',
+                  style: GoogleFonts.lato(
+                    color: const Color.fromARGB(255, 0, 0, 0),
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
               ),
               const SizedBox(height: 80),
@@ -121,7 +126,7 @@ class _StartScreenState extends State<StartScreen> {
                       )
                     : const Icon(Icons.person),
                 label: Text(
-                  _isCreating ? 'Creating...' : 'Start building',
+                  _isCreating ? 'Creating...' : 'Start building your profile',
                 ),
               ),
             ],

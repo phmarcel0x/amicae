@@ -75,10 +75,7 @@ class _AmicaeFirstNameScreenState extends State<AmicaeFirstNameScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        automaticallyImplyLeading: false,
-      ),
+
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 36.0),
         child: Column(

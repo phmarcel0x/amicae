@@ -23,10 +23,16 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.white,
+        ),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.white,
+          elevation: 0,
+
         )
       ),
       // darkTheme: AppThemes.darkTheme,
       themeMode: ThemeMode.system,
+
     );
   }
 }

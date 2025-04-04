@@ -9,6 +9,14 @@ class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Colors.white,
+            elevation: 0,
+
+          )
+      ),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
 

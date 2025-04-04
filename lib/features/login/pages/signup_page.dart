@@ -43,7 +43,7 @@ class _SignupPageState extends State<SignupPage> {
 
         if (user != null) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Sign Up Successful! Redirecting...')),
+            const SnackBar(content: Text('Account created! Taking you to the next step...')),
           );
 
           Navigator.pushReplacement(
@@ -66,6 +66,9 @@ class _SignupPageState extends State<SignupPage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        surfaceTintColor: Colors.transparent,
         title: const CircleAvatar(
           backgroundImage: AssetImage('assets/ae_short_white.png'),
           radius: 50,
