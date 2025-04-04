@@ -24,122 +24,65 @@ class ProfileCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+
       decoration: BoxDecoration(
         //Style of the profile card
         borderRadius: BorderRadius.circular(kProfileCardBorderRadius),
-        color: kProfileCardColor,
+        color: Colors.black,
       ),
       child: ListView(
-        padding: EdgeInsets.symmetric(vertical: 16),
+        padding: const EdgeInsets.all(8),
         children: [
-          // Match Insights Section at the very top
-          Consumer<ProfilesBrain>(
-            builder: (context, profilesBrain, child) {
-              final matchInsight = profilesBrain.matchInsight;
-
-              if (matchInsight.isLoading) {
-                return Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Why we think it\'s a good match:',
-                        style: kSectionTitleStyle.copyWith(
-                          color: Colors.amber,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Row(
-                        children: [
-                          const SizedBox(
-                            width: 18,
-                            height: 18,
-                            child: CircularProgressIndicator(
-                              color: Colors.amber,
-                              strokeWidth: 2.0,
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          Text(
-                            'Analyzing profiles...',
-                            style: kSectionContentStyle.copyWith(
-                              color: Colors.amberAccent,
-                              fontStyle: FontStyle.italic,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const Divider(
-                        color: Colors.amberAccent,
-                        indent: 16,
-                        endIndent: 16,
-                        height: 32,
-                      ),
-                    ],
-                  ),
-                );
-              }
-
-              if (matchInsight.isEmpty) {
-                return const SizedBox.shrink(); // Hide if no insights available
-              }
-
-              return Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Why we think it\'s a good match:',
-                      style: kSectionTitleStyle.copyWith(
-                        color: Colors.amber,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      matchInsight.content,
-                      style: kSectionContentStyle.copyWith(
-                        color: Colors.amberAccent,
-                        fontStyle: FontStyle.italic,
-                      ),
-                    ),
-                    const Divider(
-                      color: Colors.amberAccent,
-                      indent: 16,
-                      endIndent: 16,
-                      height: 32,
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
           // Profile Image
           CircleAvatar(
             radius: 50,
             backgroundImage: AssetImage(profile.getAvatarSource()),
             backgroundColor: Colors.grey[300],
           ),
+          const SizedBox(height: 8),
+
           // Name
           Text(
             profile.getName(),
             textAlign: TextAlign.center,
             style: kNameTextStyle,
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
           // Department and Education Status
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(15),
+            ),
             child: Text(
-              '${profile.getDepartment()} - ${profile.getEducationStatus()}',
-              style: kMajorTextStyle,
+              profile.getDepartment(),
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 16,
+                color: Colors.black,
+              ),
             ),
           ),
-          Divider(
-            color: Colors.white54,
+          const SizedBox(height: 8),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Text(
+              profile.getEducationStatus(),
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 16,
+                color: Colors.black,
+              ),
+            ),
+          ),
+          const Divider(
+            color: Colors.white,
             indent: 16,
             endIndent: 16,
           ),
@@ -157,36 +100,68 @@ class ProfileCard extends StatelessWidget {
           // Courses
           ListTile(
             title: const Text(
-              'Current Courses: ',
+              'Courses: ',
               style: kSectionTitleStyle,
             ),
-            subtitle: Text(
-              _formatList(profile.getCourses()),
-              style: kSectionContentStyle,
+            subtitle: Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: profile.getCourses().map((course) =>
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Text(
+                      course,
+                      style: const TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                  )
+              ).toList(),
             ),
           ),
           // Interests/Skills
           ListTile(
             title: const Text(
-              'Interests & Skills: ',
+              'Interests: ',
               style: kSectionTitleStyle,
             ),
-            subtitle: Text(
-              _formatList(profile.getInterests()),
-              style: kSectionContentStyle,
+            subtitle: Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: profile.getInterests().map((interest) =>
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Text(
+                      interest,
+                      style: const TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                  )
+              ).toList(),
             ),
+
           ),
+
           // Looking For
-          ListTile(
-            title: const Text(
-              'Looking For: ',
-              style: kSectionTitleStyle,
-            ),
-            subtitle: Text(
-              profile.getLookingFor(),
-              style: kSectionContentStyle,
-            ),
-          ),
+          // ListTile(
+          //   title: const Text(
+          //     'Looking For: ',
+          //     style: kSectionTitleStyle,
+          //   ),
+          //   subtitle: Text(
+          //     profile.getLookingFor(),
+          //     style: kSectionContentStyle,
+          //   ),
+          // ),
         ],
       ),
     );

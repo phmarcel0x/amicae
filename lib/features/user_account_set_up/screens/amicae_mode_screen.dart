@@ -108,12 +108,12 @@ class _AmicaeModeScreenState extends State<AmicaeModeScreen> {
                         ],
                       ),
                       child: RadioListTile<String>(
-                        title: Text('BFF', style: GoogleFonts.lato()),
+                        title: Text('Friend / Study Buddy', style: GoogleFonts.lato()),
                         subtitle: Text(
                           'Make new friends at every stage of your life',
                           style: GoogleFonts.lato(),
                         ),
-                        value: 'BFF',
+                        value: 'Friend / Study Buddy',
                         groupValue: _selectedMode,
                         activeColor: Colors.black87,
                         onChanged: _onModeChanged,

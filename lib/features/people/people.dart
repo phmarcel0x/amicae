@@ -101,7 +101,7 @@ class _PeoplePageState extends State<PeoplePage> {
                   ),
                 ),
                 subtitle: Text(match.message),
-                trailing: const Icon(Icons.message, color: Colors.black),
+                trailing: const Icon(Icons.message_rounded, color: Colors.black),
                 onTap: () {
                   // Navigate to the conversation page or similar
                 },

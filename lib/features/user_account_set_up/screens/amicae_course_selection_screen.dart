@@ -123,7 +123,7 @@ class _AmicaeCourseSelectionScreenState
                       menuMaxHeight: MediaQuery.of(context).size.height * 0.4,
                       dropdownColor: Colors.white, // Set dropdown background to white
                       style: const TextStyle(color: Colors.black), // Text color
-                      icon: const Icon(Icons.arrow_drop_down, color: Colors.black), // Icon color
+                      icon: const Icon(Icons.arrow_drop_down_rounded, color: Colors.black), // Icon color
                       underline: Container(height: 2, color: Colors.black), // Underline color
                     ),
                   ),
@@ -150,7 +150,7 @@ class _AmicaeCourseSelectionScreenState
                         menuMaxHeight: MediaQuery.of(context).size.height * 0.4,
                         dropdownColor: Colors.white, // Set dropdown background to white
                         style: const TextStyle(color: Colors.black), // Text color
-                        icon: const Icon(Icons.arrow_drop_down, color: Colors.black), // Icon color
+                        icon: const Icon(Icons.arrow_drop_down_rounded, color: Colors.black), // Icon color
                         underline: Container(height: 2, color: Colors.black), // Underline color
                       ),
                     ),
@@ -210,7 +210,7 @@ class _AmicaeCourseSelectionScreenState
                       ...selectedCourses.map((course) => ListTile(
                         title: Text(course),
                         trailing: IconButton(
-                          icon: const Icon(Icons.remove_circle, color: Colors.red),
+                          icon: const Icon(Icons.remove_circle_outline_rounded, color: Colors.red),
                           onPressed: () {
                             removeCourse(course);
                           },

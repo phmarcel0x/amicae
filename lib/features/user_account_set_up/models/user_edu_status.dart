@@ -3,8 +3,9 @@
 import 'package:flutter/material.dart';
 
 enum EducationStatus {
-  InCollege,             // 🎓
   University,            // 🏫
+  
+  InCollege,             // 🎓
   JustGraduated,         // 🎉
   // GettingBackIntoEducation, // 🔄
   WorkingAndStudying,    // 💼📚

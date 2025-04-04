@@ -73,15 +73,114 @@ class SwipePage extends StatelessWidget {
               flex: 4,
               child: Padding(
                 padding: const EdgeInsets.only(
-                  top: 15.0,
-                  left: 15.0,
-                  right: 15.0,
+                  top: 8.0,
+                  left: 8.0,
+                  right: 8.0,
+                  bottom: 8.0,
                 ),
                 child: ProfileCard(profile: profilesBrain.currentProfile!),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(5.0),
+              padding: const EdgeInsets.only(
+                left: 8.0,
+                right: 8.0
+              ),
+              child: Consumer<ProfilesBrain>(
+                builder: (context, profilesBrain, child) {
+                  final matchInsight = profilesBrain.matchInsight;
+
+                  if (matchInsight.isLoading) {
+                    return Container(
+                      decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(kProfileCardBorderRadius)
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            // 'Why we think it\'s a good match:',
+                            'AMICAE AI: ',
+                            style: kSectionTitleStyle.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 0),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const SizedBox(
+                                width: 18,
+                                height: 18,
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                  strokeWidth: 2.0,
+                                ),
+                              ),
+                              const SizedBox(width: 16),
+                              Text(
+
+                                'Analyzing profiles...',
+                                style: kSectionContentStyle.copyWith(
+                                  color: Colors.white,
+                                  fontStyle: FontStyle.italic,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      ),
+                    );
+                  }
+
+                  if (matchInsight.isEmpty) {
+                    return const SizedBox.shrink(); // Hide if no insights available
+                  }
+
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(kProfileCardBorderRadius)
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+
+                      child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'AMICAE AI: ',
+                          textAlign: TextAlign.center, // Center the text within its container
+                          style: kSectionTitleStyle.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 0),
+                        Text(
+                          textAlign: TextAlign.center, // Center the text within its container
+                          "\"${matchInsight.content}\"",
+                          style: kSectionContentStyle.copyWith(
+                            color: Colors.white,
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                      ],
+                    ),
+                    ),
+                  );
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                bottom: 0,
+              ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
