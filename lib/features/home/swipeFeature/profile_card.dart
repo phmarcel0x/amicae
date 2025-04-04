@@ -36,8 +36,16 @@ class ProfileCard extends StatelessWidget {
           // Profile Image
           CircleAvatar(
             radius: 50,
-            backgroundImage: AssetImage(profile.getAvatarSource()),
             backgroundColor: Colors.grey[300],
+            child: Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  image: AssetImage(profile.getAvatarSource()),
+                  fit: BoxFit.contain, // Adjust this property as needed
+                ),
+              ),
+            ),
           ),
           const SizedBox(height: 8),
 

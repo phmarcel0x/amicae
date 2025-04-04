@@ -103,7 +103,7 @@ class SwipePage extends StatelessWidget {
                         children: [
                           Text(
                             // 'Why we think it\'s a good match:',
-                            'AMICAE AI: ',
+                            'Amicae AI: ',
                             style: kSectionTitleStyle.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -154,7 +154,7 @@ class SwipePage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          'AMICAE AI: ',
+                          'Amicae AI: ',
                           textAlign: TextAlign.center, // Center the text within its container
                           style: kSectionTitleStyle.copyWith(
                             color: Colors.white,

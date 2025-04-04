@@ -141,7 +141,7 @@ class _ProfilePageState extends State<ProfilePage> with WidgetsBindingObserver {
           final Profile profile = snapshot.data!;
           return SafeArea(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Column(
                 children: [
                   // Add extra spacing from the physical area (camera, etc.)
@@ -188,7 +188,7 @@ class _ProfilePageState extends State<ProfilePage> with WidgetsBindingObserver {
                       ],
                     ),
                     width: double.infinity, // Full width
-                    height: 60, // Increased height for better visibility
+                    height: 48, // Increased height for better visibility
                     child: ElevatedButton.icon(
                       icon: const Icon(Icons.edit_rounded, size: 24),
                       label: const Text(

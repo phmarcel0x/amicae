@@ -123,7 +123,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Edit Profile'),
         backgroundColor: Colors.white,
@@ -171,9 +171,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 children: [
                                   CircleAvatar(
                                     radius: 60,
-                                    backgroundColor: Colors.grey[300],
+                                    // backgroundColor: Colors.red,
+
                                     backgroundImage: const AssetImage(
-                                        'assets/images/blank_pfp.png'),
+                                        'assets/blank_pfp.png'),
                                     child: Container(), // Empty container to avoid error if image is null
                                   ),
                                   Positioned(
@@ -367,7 +368,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   ],
                 ),
                 width: double.infinity, // Full width
-                height: 60, // Increased height for better visibility
+                height: 48, // Increased height for better visibility
                 child: ElevatedButton.icon(
                   icon: const Icon(Icons.save, size: 24),
                   label: const Text(

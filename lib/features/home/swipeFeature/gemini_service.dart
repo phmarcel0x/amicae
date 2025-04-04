@@ -131,7 +131,7 @@ class GeminiService {
     - Interests: ${_formatList(otherProfile['interests'])}
     - Looking For: ${otherProfile['lookingFor']}
 
-    Generate a SHORT, concise paragraph (max 2-3 sentences) explaining why these students might be a good match. Focus on:
+    Generate a SHORT, concise paragraph (max 2 sentences, max 20 words) explaining why these students might be a good match. Focus on:
     1. Common interests or complementary skills
     2. Shared courses or academic goals
     3. Department synergies or potential for collaboration
@@ -141,7 +141,6 @@ class GeminiService {
     Do not use generic statements or phrases like "you both." Instead, use their names and specific details from their profiles.
     
     The insight should be immediate and practical - something they can use as a conversation starter.
-    The paragraph MUST be 20 words or less, this is very important
     ''';
   }
 
