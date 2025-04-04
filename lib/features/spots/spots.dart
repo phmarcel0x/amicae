@@ -464,7 +464,7 @@ class _SpotsPageState extends State<SpotsPage> {
                         side: const BorderSide(color: Colors.black, width: 2.0), // Add black border
                       ),
                       onPressed: () {
-                        Navigator.of(context).pop();
+                        print("Share button tapped");
                       },
                       child: const Text("Share this spot")
                   ),

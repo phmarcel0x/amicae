@@ -88,18 +88,20 @@ class _ProfilePageState extends State<ProfilePage> with WidgetsBindingObserver {
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
         title: const Text("Your Profile"),
-
         actions: [
-          IconButton(onPressed: () {
-            FirebaseAuth.instance.signOut();
-            Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(
-                builder: (context) => const LandingPage(),
-              ),
-                  (route) => false,
-            );
-
-          }, icon: Icon(Icons.logout_rounded), color: Colors.black,),
+          IconButton(
+            onPressed: () {
+              FirebaseAuth.instance.signOut();
+              Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                  builder: (context) => const LandingPage(),
+                ),
+                    (route) => false,
+              );
+            },
+            icon: const Icon(Icons.logout_rounded),
+            color: Colors.black,
+          ),
         ],
       ),
       body: FutureBuilder<Profile>(
@@ -108,7 +110,9 @@ class _ProfilePageState extends State<ProfilePage> with WidgetsBindingObserver {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
-              child: CircularProgressIndicator(color: Colors.black,),
+              child: CircularProgressIndicator(
+                color: Colors.black,
+              ),
             );
           }
 
@@ -123,7 +127,6 @@ class _ProfilePageState extends State<ProfilePage> with WidgetsBindingObserver {
                     "Error loading profile",
                     style: TextStyle(color: Colors.red[800], fontSize: 18),
                   ),
-
                 ],
               ),
             );
@@ -178,14 +181,7 @@ class _ProfilePageState extends State<ProfilePage> with WidgetsBindingObserver {
                     margin: const EdgeInsets.only(top: 20, bottom: 30),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.blue.withOpacity(0.3),
-                          spreadRadius: 1,
-                          blurRadius: 10,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
+                      // Removed the boxShadow here
                     ),
                     width: double.infinity, // Full width
                     height: 48, // Increased height for better visibility
@@ -260,7 +256,7 @@ class ProfileCard extends StatelessWidget {
         ],
         border: Border.all(color: Colors.grey[200]!),
       ),
-      child:  ClipRRect(
+      child: ClipRRect(
         borderRadius: BorderRadius.circular(30),
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),

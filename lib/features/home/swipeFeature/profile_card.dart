@@ -24,11 +24,11 @@ class ProfileCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-
       decoration: BoxDecoration(
         //Style of the profile card
         borderRadius: BorderRadius.circular(kProfileCardBorderRadius),
-        color: Colors.black,
+        border: Border.all(color: Colors.black, width: 4.0), // Black border
+        color: Colors.white, // White background
       ),
       child: ListView(
         padding: const EdgeInsets.all(8),
@@ -53,7 +53,7 @@ class ProfileCard extends StatelessWidget {
           Text(
             profile.getName(),
             textAlign: TextAlign.center,
-            style: kNameTextStyle,
+            style: kNameTextStyle.copyWith(color: Colors.black), // Black text
           ),
           const SizedBox(height: 8),
           // Department and Education Status
@@ -65,6 +65,7 @@ class ProfileCard extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(15),
+                border: Border.all(color: Colors.black, width: 1.0), // Optional black border for these containers
               ),
               child: Text(
                 profile.getDepartment(),
@@ -84,6 +85,7 @@ class ProfileCard extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(15),
+                border: Border.all(color: Colors.black, width: 1.0), // Optional black border for these containers
               ),
               child: Text(
                 profile.getEducationStatus(),
@@ -96,26 +98,26 @@ class ProfileCard extends StatelessWidget {
             ),
           ),
           const Divider(
-            color: Colors.white,
+            color: Colors.black, // Black divider
             indent: 16,
             endIndent: 16,
           ),
           // Bio
           ListTile(
-            title: const Text(
+            title: Text(
               'Biography: ',
-              style: kSectionTitleStyle,
+              style: kSectionTitleStyle.copyWith(color: Colors.black), // Black text
             ),
             subtitle: Text(
               profile.getBio(),
-              style: kSectionContentStyle,
+              style: kSectionContentStyle.copyWith(color: Colors.black), // Black text
             ),
           ),
           // Courses
           ListTile(
-            title: const Text(
+            title: Text(
               'Courses: ',
-              style: kSectionTitleStyle,
+              style: kSectionTitleStyle.copyWith(color: Colors.black), // Black text
             ),
             subtitle: Wrap(
               spacing: 8,
@@ -126,6 +128,7 @@ class ProfileCard extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(15),
+                      border: Border.all(color: Colors.black, width: 1.0), // Optional black border for course tags
                     ),
                     child: Text(
                       course,
@@ -139,9 +142,9 @@ class ProfileCard extends StatelessWidget {
           ),
           // Interests/Skills
           ListTile(
-            title: const Text(
+            title: Text(
               'Interests: ',
-              style: kSectionTitleStyle,
+              style: kSectionTitleStyle.copyWith(color: Colors.black), // Black text
             ),
             subtitle: Wrap(
               spacing: 8,
@@ -152,6 +155,7 @@ class ProfileCard extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(15),
+                      border: Border.all(color: Colors.black, width: 1.0), // Optional black border for interest tags
                     ),
                     child: Text(
                       interest,
@@ -162,9 +166,7 @@ class ProfileCard extends StatelessWidget {
                   )
               ).toList(),
             ),
-
           ),
-
           // Looking For
           // ListTile(
           //   title: const Text(

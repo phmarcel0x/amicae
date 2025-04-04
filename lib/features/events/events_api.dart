@@ -12,7 +12,7 @@ Future<List<Album>> fetchAlbum() async {
     Uri.parse('https://opendata.concordia.ca/API/v1/library/events/'),
     headers: {
       HttpHeaders.authorizationHeader:
-          'Basic ODIwOjljNzYzZDRmYWQ3MzZhYTliYzYxYWVhOTczZGY5MDMz',
+      'Basic ODIwOjljNzYzZDRmYWQ3MzZhYTliYzYxYWVhOTczZGY5MDMz',
     },
   );
 
@@ -65,7 +65,7 @@ class Album {
         title: json['title'] ?? '',
         allDay: json['allday'] ?? false,
         start:
-            DateTime.parse(json['start'] ?? DateTime.now().toIso8601String()),
+        DateTime.parse(json['start'] ?? DateTime.now().toIso8601String()),
         end: DateTime.parse(json['end'] ?? DateTime.now().toIso8601String()),
         description: json['description'] ?? '',
         publicUrl: json['public'] ?? '',
@@ -188,7 +188,7 @@ class EventDate {
       return EventDate(
         eventId: json['event_id'] ?? 0,
         start:
-            DateTime.parse(json['start'] ?? DateTime.now().toIso8601String()),
+        DateTime.parse(json['start'] ?? DateTime.now().toIso8601String()),
       );
     } catch (e) {
       throw Exception("Error parsing EventDate JSON: $e");
@@ -203,7 +203,7 @@ class EventDate {
   }
 }
 
-// Revised Event Detail Screen
+// Revised Event Detail Screen resembling the location detail popup
 class EventDetailScreen extends StatelessWidget {
   final Album album;
 
@@ -211,56 +211,133 @@ class EventDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final DateFormat dateFormat = DateFormat('MMM dd, yyyy - hh:mm a');
+    final DateFormat dateFormatter = DateFormat('MMM dd, yyyy'); // Added year for full date
+    final DateFormat timeFormatter = DateFormat('hh:mm a');
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Event Details"),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              album.title,
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
-            const SizedBox(height: 8),
-            Text("Start: ${dateFormat.format(album.start)}"),
-            const SizedBox(height: 8),
-            Text("End: ${dateFormat.format(album.end)}"),
-            const SizedBox(height: 16),
-            HtmlWidget(album.description),
-            const SizedBox(height: 16),
-            Text(
-              "Location: ${album.location.name}, ${album.location.campus}",
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-            const SizedBox(height: 16),
-            Text(
-              "Presenter: ${album.presenter}",
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-            const SizedBox(height: 16),
-            Text(
-              "More Information:",
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const SizedBox(height: 8),
-            InkWell(
-              onTap: () {
-                // You can add functionality to open the URL
-              },
-              child: Text(
-                album.publicUrl,
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: ConstrainedBox(
+        constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.75),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                album.title,
                 style: const TextStyle(
-                  color: Colors.blue,
-                  decoration: TextDecoration.underline,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-            ),
-          ],
+              const SizedBox(height: 8.0),
+              Row(
+                children: [
+                  const Icon(Icons.event_available, size: 16, color: Colors.grey),
+                  const SizedBox(width: 4),
+                  Text(
+                    "${dateFormatter.format(album.start)} - ${timeFormatter.format(album.start)}",
+                    style: const TextStyle(fontSize: 14.0, color: Colors.grey),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 4),
+              Row(
+                children: [
+                  const Icon(Icons.event_busy, size: 16, color: Colors.grey),
+                  const SizedBox(width: 4),
+                  Text(
+                    "${dateFormatter.format(album.end)} - ${timeFormatter.format(album.end)}", // Always show full date
+                    style: const TextStyle(fontSize: 14.0, color: Colors.grey),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16.0),
+              if (album.location.name.isNotEmpty)
+                Row(
+                  children: [
+                    const Icon(Icons.location_on, size: 16, color: Colors.grey),
+                    const SizedBox(width: 4),
+                    Text(
+                      "${album.location.name}${album.location.campus.isNotEmpty ? ', ${album.location.campus}' : ''}",
+                      style: const TextStyle(fontSize: 16.0),
+                    ),
+                  ],
+                ),
+              if (album.location.name.isNotEmpty) const SizedBox(height: 16.0),
+              if (album.description.isNotEmpty)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Description:",
+                      style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 8.0),
+                    HtmlWidget(album.description),
+                    const SizedBox(height: 16.0),
+                  ],
+                ),
+              if (album.presenter.isNotEmpty)
+                Text(
+                  "Presenter: ${album.presenter}",
+                  style: const TextStyle(fontSize: 16.0),
+                ),
+              if (album.presenter.isNotEmpty) const SizedBox(height: 16.0),
+              if (album.publicUrl.isNotEmpty)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "More Information:",
+                      style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 8.0),
+                    InkWell(
+                      onTap: () {
+                        // You can add functionality to open the URL
+                        print("Tapped on: ${album.publicUrl}");
+                      },
+                      child: Text(
+                        album.publicUrl,
+                        style: const TextStyle(
+                          color: Colors.blue,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              if (album.publicUrl.isNotEmpty) const SizedBox(height: 16.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.black,
+                      side: const BorderSide(color: Colors.black, width: 2.0),
+                    ),
+                    onPressed: () {
+                      print("Share button tapped");
+                    },
+                    child: const Text("Share this event"),
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black,
+                      foregroundColor: Colors.white,
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text("Close"),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8.0),
+            ],
+          ),
         ),
       ),
     );
@@ -279,7 +356,8 @@ class APIEventsPage extends StatefulWidget {
 
 class _APIEventsPageState extends State<APIEventsPage> {
   late Future<List<Album>> futureAlbums;
-  final DateFormat dateFormat = DateFormat('MMM dd, yyyy - hh:mm a');
+  final DateFormat dateFormatShort = DateFormat('MMM dd, yyyy');
+  final DateFormat timeFormat = DateFormat('hh:mm a');
 
   @override
   void initState() {
@@ -287,15 +365,29 @@ class _APIEventsPageState extends State<APIEventsPage> {
     futureAlbums = fetchAlbum();
   }
 
+  void _showEventDetails(BuildContext context, Album album) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+      ),
+      backgroundColor: Colors.white,
+      builder: (BuildContext context) {
+        return EventDetailScreen(album: album);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: AppBar(
         title: const Text("Events"),
         centerTitle: true,
-        automaticallyImplyLeading: false, // This removes the back button
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
       ),
       body: FutureBuilder<List<Album>>(
         future: futureAlbums,
@@ -308,11 +400,10 @@ class _APIEventsPageState extends State<APIEventsPage> {
               itemBuilder: (context, index) {
                 final album = albums[index];
                 return Card(
-                  color: Colors.white, // Ensures the background is not pink
-
+                  color: Colors.white,
                   elevation: 4,
                   margin:
-                      const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                  const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -327,7 +418,11 @@ class _APIEventsPageState extends State<APIEventsPage> {
                       children: [
                         const SizedBox(height: 4),
                         Text(
-                          dateFormat.format(album.start),
+                          "${dateFormatShort.format(album.start)} - ${timeFormat.format(album.start)}",
+                          style: const TextStyle(color: Colors.grey),
+                        ),
+                        Text( // Always show full end date in the list as well for consistency
+                          "to ${dateFormatShort.format(album.end)} - ${timeFormat.format(album.end)}",
                           style: const TextStyle(color: Colors.grey),
                         ),
                         const SizedBox(height: 4),
@@ -339,13 +434,7 @@ class _APIEventsPageState extends State<APIEventsPage> {
                     ),
                     trailing: const Icon(Icons.arrow_forward_ios),
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              EventDetailScreen(album: album),
-                        ),
-                      );
+                      _showEventDetails(context, album);
                     },
                   ),
                 );
@@ -354,7 +443,10 @@ class _APIEventsPageState extends State<APIEventsPage> {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           }
-          return const Center(child: CircularProgressIndicator(color: Colors.black,));
+          return const Center(
+              child: CircularProgressIndicator(
+                color: Colors.black,
+              ));
         },
       ),
     );

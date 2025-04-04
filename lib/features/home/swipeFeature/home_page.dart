@@ -16,7 +16,9 @@ class SwipePage extends StatelessWidget {
         // Show loading indicator
         if (profilesBrain.isLoading) {
           return const Center(
-            child: CircularProgressIndicator(color: Colors.black,),
+            child: CircularProgressIndicator(
+              color: Colors.black,
+            ),
           );
         }
 
@@ -45,8 +47,7 @@ class SwipePage extends StatelessWidget {
         }
 
         // Show message when no more profiles are available
-        if (profilesBrain.noMoreProfiles ||
-            profilesBrain.currentProfile == null) {
+        if (profilesBrain.noMoreProfiles || profilesBrain.currentProfile == null) {
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -72,20 +73,13 @@ class SwipePage extends StatelessWidget {
             Expanded(
               flex: 4,
               child: Padding(
-                padding: const EdgeInsets.only(
-                  top: 8.0,
-                  left: 8.0,
-                  right: 8.0,
-                  bottom: 8.0,
-                ),
+                padding: const EdgeInsets.all(16.0),
                 child: ProfileCard(profile: profilesBrain.currentProfile!),
               ),
             ),
+            // Amicae AI
             Padding(
-              padding: const EdgeInsets.only(
-                left: 8.0,
-                right: 8.0
-              ),
+              padding: const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
               child: Consumer<ProfilesBrain>(
                 builder: (context, profilesBrain, child) {
                   final matchInsight = profilesBrain.matchInsight;
@@ -93,47 +87,46 @@ class SwipePage extends StatelessWidget {
                   if (matchInsight.isLoading) {
                     return Container(
                       decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(kProfileCardBorderRadius)
+                        borderRadius: BorderRadius.circular(kProfileCardBorderRadius),
+                        border: Border.all(color: Colors.black, width: 2.0),
+                        color: Colors.white,
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            // 'Why we think it\'s a good match:',
-                            'Amicae AI: ',
-                            style: kSectionTitleStyle.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Amicae AI: ',
+                              style: kSectionTitleStyle.copyWith(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 0),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const SizedBox(
-                                width: 18,
-                                height: 18,
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                  strokeWidth: 2.0,
+                            const SizedBox(height: 0),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const SizedBox(
+                                  width: 18,
+                                  height: 18,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.black,
+                                    strokeWidth: 2.0,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(width: 16),
-                              Text(
-
-                                'Analyzing profiles...',
-                                style: kSectionContentStyle.copyWith(
-                                  color: Colors.white,
-                                  fontStyle: FontStyle.italic,
+                                const SizedBox(width: 16),
+                                Text(
+                                  'Analyzing profiles...',
+                                  style: kSectionContentStyle.copyWith(
+                                    color: Colors.black,
+                                    fontStyle: FontStyle.italic,
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   }
@@ -144,66 +137,64 @@ class SwipePage extends StatelessWidget {
 
                   return Container(
                     decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(kProfileCardBorderRadius)
+                      borderRadius: BorderRadius.circular(kProfileCardBorderRadius),
+                      border: Border.all(color: Colors.black, width: 2.0),
+                      color: Colors.white,
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-
                       child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Amicae AI: ',
-                          textAlign: TextAlign.center, // Center the text within its container
-                          style: kSectionTitleStyle.copyWith(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Amicae AI: ',
+                            textAlign: TextAlign.center, // Center the text within its container
+                            style: kSectionTitleStyle.copyWith(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 0),
-                        Text(
-                          textAlign: TextAlign.center, // Center the text within its container
-                          "\"${matchInsight.content}\"",
-                          style: kSectionContentStyle.copyWith(
-                            color: Colors.white,
-                            fontStyle: FontStyle.italic,
+                          const SizedBox(height: 0),
+                          Text(
+                            textAlign: TextAlign.center, // Center the text within its container
+                            "\"${matchInsight.content}\"",
+                            style: kSectionContentStyle.copyWith(
+                              color: Colors.black,
+                              fontStyle: FontStyle.italic,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
+                        ],
+                      ),
                     ),
                   );
                 },
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(
-                bottom: 0,
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  // Like button
-                  SwipeButton(
-                    swipeAction: () => profilesBrain.swipeProfile(isLike: true),
-                    buttonColor: kLikeButtonColor,
-                    // buttonIcon: Icons.handshake_outlined,
-                    buttonIcon: Icons.connect_without_contact_rounded,
-                    iconColor: kLikeIconColor,
-                  ),
-                  // Dislike button
-                  SwipeButton(
-                    swipeAction: () =>
-                        profilesBrain.swipeProfile(isLike: false),
-                    buttonColor: kDislikeButtonColor,
-                    buttonIcon: Icons.block_rounded,
-                    iconColor: kDislikeIconColor,
-                  ),
-                ],
-              ),
+
+            // Buttons
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                // Dislike button
+                SwipeButton(
+                  swipeAction: () =>
+                      profilesBrain.swipeProfile(isLike: false),
+                  buttonColor: kDislikeButtonColor,
+                  buttonIcon: Icons.block_rounded,
+                  iconColor: kDislikeIconColor,
+                ),
+                // Like button
+                SwipeButton(
+                  swipeAction: () => profilesBrain.swipeProfile(isLike: true),
+                  buttonColor: kLikeButtonColor,
+                  // buttonIcon: Icons.handshake_outlined,
+                  buttonIcon: Icons.connect_without_contact_rounded,
+                  iconColor: kLikeIconColor,
+                ),
+              ],
             ),
+            const SizedBox(height: 8.0),
           ],
         );
       },
