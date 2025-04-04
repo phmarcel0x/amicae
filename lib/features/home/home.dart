@@ -8,7 +8,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Provide ProfilesBrain at this level without creating a new MaterialApp
     return ChangeNotifierProvider(
       create: (context) => ProfilesBrain(),
       child: const Scaffold(
