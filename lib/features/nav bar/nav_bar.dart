@@ -53,7 +53,7 @@ class _NavBarState extends State<NavBar> {
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: IconButton(
-                  icon: const Icon(Icons.account_circle),
+                  icon: const Icon(Icons.account_circle_rounded),
                   color: Colors.black,
                   onPressed: () {
                     Navigator.push(
@@ -68,35 +68,45 @@ class _NavBarState extends State<NavBar> {
           shape: const Border(bottom: BorderSide(color: Colors.black, width: 4)),
         ),
         body: pages[selectedIndex],
-        bottomNavigationBar: BottomNavigationBar(
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          selectedFontSize: 15,
-          selectedItemColor: Colors.orange,
-          selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
-          unselectedItemColor: Colors.black,
-          backgroundColor: Colors.white,
-          type: BottomNavigationBarType.fixed,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: "Home",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.people),
-              label: "People",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.event),
-              label: "Events",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.coffee),
-              label: "Spots",
-            ),
-          ],
-          currentIndex: selectedIndex,
-          onTap: onItemTapped,
+        bottomNavigationBar: Container(
+          decoration: const BoxDecoration(
+            border: Border(
+              top: BorderSide(
+                color: Colors.black,
+                width: 3,
+              )
+            )
+          ),
+          child: BottomNavigationBar(
+            showSelectedLabels: true,
+            showUnselectedLabels: false,
+            selectedFontSize: 15,
+            selectedItemColor: Colors.black,
+            selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
+            unselectedItemColor: Colors.black,
+            backgroundColor: Colors.white,
+            type: BottomNavigationBarType.fixed,
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home_rounded),
+                label: "Home",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.people_rounded),
+                label: "Connections",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.event_rounded),
+                label: "Events",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.coffee_rounded),
+                label: "Spots",
+              ),
+            ],
+            currentIndex: selectedIndex,
+            onTap: onItemTapped,
+          ),
         ),
         backgroundColor: Colors.white,
       ),

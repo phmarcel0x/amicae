@@ -19,7 +19,7 @@ const TextStyle kSectionContentStyle =
     TextStyle(fontSize: 15, color: Colors.white70);
 
 // Button colors
-const Color kLikeButtonColor = Colors.lightGreen;
-const Color kLikeIconColor = Colors.pinkAccent;
-const Color kDislikeButtonColor = Colors.blueAccent;
-const Color kDislikeIconColor = Colors.white60;
+const Color kLikeButtonColor = Colors.black;
+const Color kLikeIconColor = Colors.green;
+const Color kDislikeButtonColor = Colors.black;
+const Color kDislikeIconColor = Colors.red;

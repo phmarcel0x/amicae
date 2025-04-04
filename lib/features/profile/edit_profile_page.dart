@@ -529,14 +529,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
         title: const Text('Edit Profile'),
         backgroundColor: Colors.white,
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.pop(context),
-        ),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back_rounded, color: Colors.black),
+        //   onPressed: () => Navigator.pop(context),
+        // ),
       ),
       body: SafeArea(
         child: _isLoading
-            ? const Center(child: CircularProgressIndicator())
+            ? const Center(child: CircularProgressIndicator(color: Colors.black,))
             : Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Column(

@@ -513,7 +513,7 @@ class _SpotsPageState extends State<SpotsPage> {
           ),
         ],
       )
-          : Center(child: CircularProgressIndicator()),
+          : const Center(child: CircularProgressIndicator(color: Colors.black,)),
       floatingActionButton: _isLocationFetched
           ? FloatingActionButton(
         onPressed: _centerOnUserLocation,

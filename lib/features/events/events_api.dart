@@ -354,7 +354,7 @@ class _APIEventsPageState extends State<APIEventsPage> {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           }
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator(color: Colors.black,));
         },
       ),
     );

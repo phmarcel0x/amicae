@@ -131,7 +131,7 @@ class GeminiService {
     - Interests: ${_formatList(otherProfile['interests'])}
     - Looking For: ${otherProfile['lookingFor']}
 
-    Generate a SHORT, concise paragraph (max 2-3 sentences) explaining why these students might be a good match. Focus on:
+    Generate a SHORT, concise paragraph (max 2-3 sentences, max 30 words) explaining why these students might be a good match. Focus on:
     1. Common interests or complementary skills
     2. Shared courses or academic goals
     3. Department synergies or potential for collaboration

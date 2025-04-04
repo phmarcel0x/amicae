@@ -24,11 +24,11 @@ class SwipeButton extends StatelessWidget {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: buttonColor,
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
-              color: Colors.black26,
+              color: Colors.black,
               blurRadius: 4,
-              offset: const Offset(0, 2),
+              offset: Offset(0, 2),
             )
           ],
         ),

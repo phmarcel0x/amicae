@@ -514,7 +514,7 @@ class _ProfilePageState extends State<ProfilePage> with WidgetsBindingObserver {
                   (route) => false,
             );
 
-          }, icon: Icon(Icons.logout)),
+          }, icon: Icon(Icons.logout_rounded), color: Colors.black,),
         ],
       ),
       body: FutureBuilder<Profile>(
@@ -605,7 +605,7 @@ class _ProfilePageState extends State<ProfilePage> with WidgetsBindingObserver {
                     width: double.infinity, // Full width
                     height: 60, // Increased height for better visibility
                     child: ElevatedButton.icon(
-                      icon: const Icon(Icons.edit, size: 24),
+                      icon: const Icon(Icons.edit_rounded, size: 24),
                       label: const Text(
                         "Edit Profile",
                         style: TextStyle(
