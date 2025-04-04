@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
           elevation: 0,
           surfaceTintColor: Colors.transparent,
 
-        )
+        ),
       ),
       // darkTheme: AppThemes.darkTheme,
       themeMode: ThemeMode.system,

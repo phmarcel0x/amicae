@@ -63,134 +63,139 @@ class _AmicaeModeScreenState extends State<AmicaeModeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
+    return Theme(
+      data: ThemeData(
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 36.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 40),
+                      Text(
+                        'Choose a mode to get started',
+                        style: GoogleFonts.lato(
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        'Amicae is for making all kinds of connections!',
+                        style: GoogleFonts.lato(
+                          fontSize: 16,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      const SizedBox(height: 40),
+                      // BFF option
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 4,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: RadioListTile<String>(
+                          title: Text('Friend / Study Buddy', style: GoogleFonts.lato()),
+                          subtitle: Text(
+                            'Make new friends at every stage of your life',
+                            style: GoogleFonts.lato(),
+                          ),
+                          value: 'Friend / Study Buddy',
+                          groupValue: _selectedMode,
+                          activeColor: Colors.black87,
+                          onChanged: _onModeChanged,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      // Mentor option
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 4,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: RadioListTile<String>(
+                          title: Text('Mentor', style: GoogleFonts.lato()),
+                          subtitle: Text(
+                            'Find that special connection in the community',
+                            style: GoogleFonts.lato(),
+                          ),
+                          value: 'Mentor',
+                          groupValue: _selectedMode,
+                          activeColor: Colors.black87,
+                          onChanged: _onModeChanged,
 
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 36.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 40),
-                    Text(
-                      'Choose a mode to get started',
-                      style: GoogleFonts.lato(
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      'Amicae is for making all kinds of connections!',
-                      style: GoogleFonts.lato(
-                        fontSize: 16,
-                        color: Colors.black87,
-                      ),
-                    ),
-                    const SizedBox(height: 40),
-                    // BFF option
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 4,
-                            offset: Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: RadioListTile<String>(
-                        title: Text('Friend / Study Buddy', style: GoogleFonts.lato()),
-                        subtitle: Text(
-                          'Make new friends at every stage of your life',
-                          style: GoogleFonts.lato(),
                         ),
-                        value: 'Friend / Study Buddy',
-                        groupValue: _selectedMode,
-                        activeColor: Colors.black87,
-                        onChanged: _onModeChanged,
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                    // Mentor option
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 4,
-                            offset: Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: RadioListTile<String>(
-                        title: Text('Mentor', style: GoogleFonts.lato()),
-                        subtitle: Text(
-                          'Find that special connection in the community',
-                          style: GoogleFonts.lato(),
-                        ),
-                        value: 'Mentor',
-                        groupValue: _selectedMode,
-                        activeColor: Colors.black87,
-                        onChanged: _onModeChanged,
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-            // const SizedBox(height: 20),
-            Row(
-              children: [
-                const Icon(
-                  Icons.info_outline,
-                  color: Colors.black,
-                  size: 20.0,
-                ),
-                const SizedBox(width: 4.0),
-                Expanded(
-                  child: Text(
-                    'You can change your mode later in settings.',
-                    style: GoogleFonts.lato(
-                      fontSize: 12.0,
-                      color: Colors.black,
-                    ),
+              Row(
+                children: [
+                  const Icon(
+                    Icons.info_outline,
+                    color: Colors.black,
+                    size: 20.0,
                   ),
-                ),
-                CircleAvatar(
-                  backgroundColor: Colors.white,
-                  radius: 28,
-                  child: IconButton(
-                    icon: _isUpdating
-                        ? const SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: CircularProgressIndicator(
+                  const SizedBox(width: 4.0),
+                  Expanded(
+                    child: Text(
+                      'You can change your mode later in settings.',
+                      style: GoogleFonts.lato(
+                        fontSize: 12.0,
                         color: Colors.black,
-                        strokeWidth: 2,
                       ),
-                    )
-                        : Icon(
-                      Icons.arrow_circle_right_sharp,
-                      size: 50,
-                      color: isButtonEnabled ? Colors.black : Colors.grey,
                     ),
-                    onPressed: isButtonEnabled && !_isUpdating ? _updateMode : null,
                   ),
-                ),
-              ],
-            ),
-          ],
+                  CircleAvatar(
+                    backgroundColor: Colors.white,
+                    radius: 28,
+                    child: IconButton(
+                      icon: _isUpdating
+                          ? const SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: CircularProgressIndicator(
+                          color: Colors.black,
+                          strokeWidth: 2,
+                        ),
+                      )
+                          : Icon(
+                        Icons.arrow_circle_right_sharp,
+                        size: 50,
+                        color: isButtonEnabled ? Colors.black : Colors.grey,
+                      ),
+                      onPressed: isButtonEnabled && !_isUpdating ? _updateMode : null,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

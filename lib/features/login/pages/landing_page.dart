@@ -20,14 +20,14 @@ class LandingPage extends StatelessWidget {
             const Padding(
               padding: EdgeInsets.all(10),
               child: CircleAvatar(
-                backgroundImage: AssetImage('assets/ae_short_white.png'),
+                backgroundImage: AssetImage('assets/ae_short_black.png'),
                 radius: 100,
               ),
             ),
             const Padding(
               padding: EdgeInsets.all(10),
               child: Text(
-                "Welcome to AMICAE",
+                "Welcome to Amicae",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 25,
@@ -44,6 +44,7 @@ class LandingPage extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.black,
                       foregroundColor: Colors.white,
+
                     ),
                     onPressed: () {
                       Navigator.push(
@@ -61,6 +62,7 @@ class LandingPage extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.black,
                       foregroundColor: Colors.white,
+
                     ),
                     onPressed: () {
                       Navigator.push(

@@ -61,78 +61,84 @@ class _AmicaeDepartmentScreenState extends State<AmicaeDepartmentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 36.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 40),
-            Text(
-              'Choose your department',
-              style: GoogleFonts.lato(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
+    return Theme(
+      data: ThemeData(
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 36.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 40),
+              Text(
+                'Choose your department',
+                style: GoogleFonts.lato(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
               ),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              'Amicae connects you across departments! Select yours to start making connections.',
-              style: GoogleFonts.lato(fontSize: 16, color: Colors.black87),
-            ),
-            const SizedBox(height: 40),
+              const SizedBox(height: 10),
+              Text(
+                'Amicae connects you across departments! Select yours to start making connections.',
+                style: GoogleFonts.lato(fontSize: 16, color: Colors.black87),
+              ),
+              const SizedBox(height: 40),
 
-            // Department selection radio tiles
-            ...UserDepartment.values.map((department) {
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 20),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.black12,
-                        blurRadius: 4,
-                        offset: Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: RadioListTile<String>(
-                    title: Text(
-                        '${departmentDetails[department]!.emoji} ${departmentDetails[department]!.title}',
-                        style: GoogleFonts.lato()
+              // Department selection radio tiles
+              ...UserDepartment.values.map((department) {
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.black12,
+                          blurRadius: 4,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
                     ),
-                    value: departmentDetails[department]!.title,
-                    groupValue: _selectedDepartment != null
-                        ? departmentDetails[_selectedDepartment]!.title
-                        : null,
-                    activeColor: Colors.black87,
-                    onChanged: _onDepartmentChanged,
+                    child: RadioListTile<String>(
+                      title: Text(
+                          '${departmentDetails[department]!.emoji} ${departmentDetails[department]!.title}',
+                          style: GoogleFonts.lato()
+                      ),
+                      value: departmentDetails[department]!.title,
+                      groupValue: _selectedDepartment != null
+                          ? departmentDetails[_selectedDepartment]!.title
+                          : null,
+                      activeColor: Colors.black87,
+                      onChanged: _onDepartmentChanged,
+                    ),
                   ),
-                ),
-              );
-            }),
+                );
+              }),
 
-            const Spacer(),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: CircleAvatar(
-                backgroundColor: Colors.white,
-                radius: 28,
-                child: IconButton(
-                  icon: Icon(
-                    Icons.arrow_circle_right_sharp,
-                    size: 50,
-                    color: isButtonEnabled ? Colors.black : Colors.grey,
+              const Spacer(),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: CircleAvatar(
+                  backgroundColor: Colors.white,
+                  radius: 28,
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.arrow_circle_right_sharp,
+                      size: 50,
+                      color: isButtonEnabled ? Colors.black : Colors.grey,
+                    ),
+                    onPressed: isButtonEnabled ? _updateDepartment : null,
                   ),
-                  onPressed: isButtonEnabled ? _updateDepartment : null,
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
