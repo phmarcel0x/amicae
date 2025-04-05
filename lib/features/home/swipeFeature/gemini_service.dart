@@ -16,7 +16,7 @@ class GeminiService {
   // Initialize Vertex AI
   GeminiService() {
     _vertexAi = FirebaseVertexAI.instance;
-    _model = _vertexAi.generativeModel(model: 'gemini-1.5-pro');
+    _model = _vertexAi.generativeModel(model: 'gemini-2.0-flash-001');
   }
 
   // Get the current user's profile from Firebase
@@ -131,7 +131,7 @@ class GeminiService {
     - Interests: ${_formatList(otherProfile['interests'])}
     - Looking For: ${otherProfile['lookingFor']}
 
-    Generate a SHORT, concise paragraph (max 2-3 sentences) explaining why these students might be a good match. Focus on:
+    Generate a SHORT, concise paragraph (max 2 sentences, max 20 words) explaining why these students might be a good match. Focus on:
     1. Common interests or complementary skills
     2. Shared courses or academic goals
     3. Department synergies or potential for collaboration

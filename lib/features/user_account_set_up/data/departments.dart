@@ -2,11 +2,11 @@ import '../models/user_department.dart';
 
 const departmentDetails = {
   UserDepartment.FacultyOfArtsAndScience: UserDepartmentDetails(
-      'Faculty Of Arts And Science', '🎨📚'),
+      'Faculty Of Arts And Science', '🎨'),
   UserDepartment.JohnMolsonSchoolOfBusiness: UserDepartmentDetails(
       'John Molson School Of Business', '💼'),
   UserDepartment.GinaCodySchoolOfEngineeringAndComputerScience: UserDepartmentDetails(
-      'Gina Cody School Of Engineering And Computer Science', '💻🔧'),
+      'Gina Cody School Of Engineering And Computer Science', '💻'),
   UserDepartment.FacultyOfFineArts: UserDepartmentDetails(
-      'Faculty Of Fine Arts', '🎭🎨'),
+      'Faculty Of Fine Arts', '🎭'),
 };

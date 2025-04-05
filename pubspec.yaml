@@ -13,6 +13,7 @@ dependencies:
   http:
   flutter_widget_from_html_core: ^0.15.2
   flutter_map: any
+  location: ^4.4.0
 
   firebase_database: ^11.3.4
   cupertino_icons: ^1.0.8
@@ -49,6 +50,9 @@ flutter:
     - assets/ae_long_black.png
     - assets/ae_long_white.png
     - assets/temp_avatars/
+    - assets/logo/
+    - assets/blank_pfp.png
+    - assets/blank_pfp2.png
 
 flutter_launcher_icons:
   android: true

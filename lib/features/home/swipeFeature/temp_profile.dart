@@ -15,7 +15,7 @@ class Profile {
     // default constructor
     _id = '';
     _firstName = 'User';
-    _avatarUrl = "assets/logo/full_logo_light.png";
+    _avatarUrl = "assets/blank_pfp.png";
     _department = 'Undecided';
     _educationStatus = 'Undergraduate';
     _description = '';
@@ -37,7 +37,7 @@ class Profile {
   }) {
     _id = id;
     _firstName = firstName;
-    _avatarUrl = avatarUrl ?? "assets/logo/full_logo_light.png";
+    _avatarUrl = avatarUrl ?? "assets/blank_pfp.png";
     _department = department;
     _educationStatus = educationStatus;
     _description = description;

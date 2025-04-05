@@ -16,22 +16,22 @@ class SwipePage extends StatelessWidget {
         // Show loading indicator
         if (profilesBrain.isLoading) {
           return const Center(
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator(
+              color: Colors.black,
+            ),
           );
         }
 
         // Error message should only be shown for initial loading errors
         // We'll completely hide any error message for swipe errors
-        if (profilesBrain.errorMessage != null &&
-            profilesBrain.noMoreProfiles == false &&
-            profilesBrain.currentProfile == null) {
+        if (profilesBrain.errorMessage != null && profilesBrain.noMoreProfiles == false && profilesBrain.currentProfile == null) {
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   'Could not load profiles. Please try again.',
-                  style: const TextStyle(color: Colors.red),
+                  style: TextStyle(color: Colors.red),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 20),
@@ -45,8 +45,7 @@ class SwipePage extends StatelessWidget {
         }
 
         // Show message when no more profiles are available
-        if (profilesBrain.noMoreProfiles ||
-            profilesBrain.currentProfile == null) {
+        if (profilesBrain.noMoreProfiles || profilesBrain.currentProfile == null) {
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -72,31 +71,40 @@ class SwipePage extends StatelessWidget {
             Expanded(
               flex: 4,
               child: Padding(
-                padding: const EdgeInsets.all(15),
+                padding: const EdgeInsets.only(
+                  top: 16,
+                  left: 16,
+                  right: 16,
+                  bottom: 8,
+                ),
                 child: ProfileCard(profile: profilesBrain.currentProfile!),
               ),
             ),
+
+            // Buttons
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                // Like button
-                SwipeButton(
-                  swipeAction: () => profilesBrain.swipeProfile(isLike: true),
-                  buttonColor: kLikeButtonColor,
-                  buttonIcon: Icons.favorite,
-                  iconColor: kLikeIconColor,
-                ),
                 // Dislike button
                 SwipeButton(
                   swipeAction: () =>
                       profilesBrain.swipeProfile(isLike: false),
                   buttonColor: kDislikeButtonColor,
-                  buttonIcon: Icons.close,
+                  buttonIcon: Icons.block_rounded,
                   iconColor: kDislikeIconColor,
+                ),
+                // Like button
+                SwipeButton(
+                  swipeAction: () => profilesBrain.swipeProfile(isLike: true),
+                  buttonColor: kLikeButtonColor,
+                  // buttonIcon: Icons.handshake_outlined,
+                  buttonIcon: Icons.connect_without_contact_rounded,
+                  iconColor: kLikeIconColor,
                 ),
               ],
             ),
+            const SizedBox(height: 8.0),
           ],
         );
       },

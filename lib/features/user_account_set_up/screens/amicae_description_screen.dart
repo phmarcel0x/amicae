@@ -248,105 +248,107 @@ class _AmicaeDescriptionScreenState extends State<AmicaeDescriptionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        automaticallyImplyLeading: false,
-      ),
-      body: ListView(
+
+      body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 36.0),
-        children: [
-          const SizedBox(height: 40),
-          Text(
-            "Tell us and everybody more about you",
-            style: GoogleFonts.lato(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
-          ),
-          const SizedBox(height: 12),
-          Text(
-            "Don't worry, you can change this later.",
-            style: GoogleFonts.lato(
-              fontSize: 16,
-              color: Colors.black54,
-            ),
-          ),
-          const SizedBox(height: 24),
-          Container(
-            width: double.infinity,
-            height: 150,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(8),
-              boxShadow: const [
-                BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 6.0,
-                  offset: Offset(0, 2),
-                ),
-              ],
-            ),
-            child: TextField(
-              controller: _controller,
-              decoration: InputDecoration(
-                hintText: "Add your description",
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-              keyboardType: TextInputType.multiline,
-              maxLines: null,
-              expands: true,
-            ),
-          ),
-          const Spacer(),
-          Row(
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+
             children: [
-              const Icon(
-                Icons.remove_red_eye,
-                color: Colors.black,
-                size: 20.0,
-              ),
-              const SizedBox(width: 4.0),
-              Expanded(
-                child: Text(
-                  'This will be shown on your profile.',
-                  style: GoogleFonts.lato(
-                    fontSize: 12.0,
-                    color: Colors.black,
-                  ),
+              const SizedBox(height: 40),
+              Text(
+                "Tell us more about you",
+                style: GoogleFonts.lato(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
                 ),
               ),
-              CircleAvatar(
-                backgroundColor: Colors.white,
-                radius: 28,
-                child: IconButton(
-                  icon: _isUpdating
-                      ? const SizedBox(
-                    width: 24,
-                    height: 24,
-                    child: CircularProgressIndicator(
-                      color: Colors.black,
-                      strokeWidth: 2,
+              const SizedBox(height: 12),
+              Text(
+                "Don't worry, you can change this later.",
+                style: GoogleFonts.lato(
+                  fontSize: 16,
+                  color: Colors.black54,
+                ),
+              ),
+              const SizedBox(height: 24),
+              Container(
+                width: double.infinity,
+                height: 150,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 6.0,
+                      offset: Offset(0, 2),
                     ),
-                  )
-                      : Icon(
-                    Icons.arrow_circle_right_sharp,
-                    size: 50,
-                    color: isButtonEnabled ? Colors.black : Colors.grey,
+                  ],
+                ),
+                child: TextField(
+                  controller: _controller,
+                  decoration: InputDecoration(
+                    hintText: "Add your description",
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide.none,
+                    ),
                   ),
-                  onPressed: isButtonEnabled && !_isUpdating
-                      ? _updateDescription
-                      : null,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                  expands: true,
                 ),
               ),
-            ],
-          ),
-        ],
+              const Spacer(),
+              Row(
+                children: [
+                  const Icon(
+                    Icons.remove_red_eye,
+                    color: Colors.black,
+                    size: 20.0,
+                  ),
+                  const SizedBox(width: 4.0),
+                  Expanded(
+                    child: Text(
+                      'This will be shown on your profile.',
+                      style: GoogleFonts.lato(
+                        fontSize: 12.0,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  CircleAvatar(
+                    backgroundColor: Colors.white,
+                    radius: 28,
+                    child: IconButton(
+                      icon: _isUpdating
+                          ? const SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: CircularProgressIndicator(
+                          color: Colors.black,
+                          strokeWidth: 2,
+                        ),
+                      )
+                          : Icon(
+                        Icons.arrow_circle_right_sharp,
+                        size: 50,
+                        color: isButtonEnabled ? Colors.black : Colors.grey,
+                      ),
+                      onPressed: isButtonEnabled && !_isUpdating
+                          ? _updateDescription
+                          : null,
+                    ),
+                  ),
+                ],
+              ),
+            ]
+
+        ),
       ),
     );
   }

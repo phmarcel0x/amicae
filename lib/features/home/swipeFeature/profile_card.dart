@@ -27,166 +27,254 @@ class ProfileCard extends StatelessWidget {
       decoration: BoxDecoration(
         //Style of the profile card
         borderRadius: BorderRadius.circular(kProfileCardBorderRadius),
-        color: kProfileCardColor,
+        border: Border.all(color: Colors.black, width: 4.0), // Black border
+        color: Colors.white, // White background
       ),
       child: ListView(
-        padding: EdgeInsets.symmetric(vertical: 16),
+        padding: const EdgeInsets.all(8),
         children: [
-          // Match Insights Section at the very top
-          Consumer<ProfilesBrain>(
-            builder: (context, profilesBrain, child) {
-              final matchInsight = profilesBrain.matchInsight;
+          // Amicae MatchUp AI
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
+            child: Consumer<ProfilesBrain>(
+              builder: (context, profilesBrain, child) {
+                final matchInsight = profilesBrain.matchInsight;
 
-              if (matchInsight.isLoading) {
-                return Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Why we think it\'s a good match:',
-                        style: kSectionTitleStyle.copyWith(
-                          color: Colors.amber,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Row(
+                if (matchInsight.isLoading) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(kProfileCardBorderRadius),
+                      border: Border.all(color: Colors.green, width: 2.0),
+                      color: Colors.white,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          const SizedBox(
-                            width: 18,
-                            height: 18,
-                            child: CircularProgressIndicator(
-                              color: Colors.amber,
-                              strokeWidth: 2.0,
+                          Text(
+                            'Amicae MatchUp AI: ',
+                            style: kSectionTitleStyle.copyWith(
+                              color: Colors.green,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const SizedBox(width: 10),
-                          Text(
-                            'Analyzing profiles...',
-                            style: kSectionContentStyle.copyWith(
-                              color: Colors.amberAccent,
-                              fontStyle: FontStyle.italic,
-                            ),
+                          const SizedBox(height: 0),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const SizedBox(
+                                width: 18,
+                                height: 18,
+                                child: CircularProgressIndicator(
+                                  color: Colors.black,
+                                  strokeWidth: 2.0,
+                                ),
+                              ),
+                              const SizedBox(width: 16),
+                              Text(
+                                'Analyzing profiles...',
+                                style: kSectionContentStyle.copyWith(
+                                  color: Colors.black,
+                                  fontStyle: FontStyle.italic,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                      const Divider(
-                        color: Colors.amberAccent,
-                        indent: 16,
-                        endIndent: 16,
-                        height: 32,
-                      ),
-                    ],
+                    ),
+                  );
+                }
+
+                if (matchInsight.isEmpty) {
+                  return const SizedBox.shrink(); // Hide if no insights available
+                }
+
+                return Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(kProfileCardBorderRadius),
+                    border: Border.all(color: Colors.green, width: 2.0),
+                    color: Colors.white,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Amicae MatchUp AI: ',
+                          textAlign: TextAlign.center, // Center the text within its container
+                          style: kSectionTitleStyle.copyWith(
+                            color: Colors.green,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 0),
+                        Text(
+                          textAlign: TextAlign.center, // Center the text within its container
+                          "\"${matchInsight.content}\"",
+                          style: kSectionContentStyle.copyWith(
+                            color: Colors.black,
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 );
-              }
-
-              if (matchInsight.isEmpty) {
-                return const SizedBox.shrink(); // Hide if no insights available
-              }
-
-              return Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Why we think it\'s a good match:',
-                      style: kSectionTitleStyle.copyWith(
-                        color: Colors.amber,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      matchInsight.content,
-                      style: kSectionContentStyle.copyWith(
-                        color: Colors.amberAccent,
-                        fontStyle: FontStyle.italic,
-                      ),
-                    ),
-                    const Divider(
-                      color: Colors.amberAccent,
-                      indent: 16,
-                      endIndent: 16,
-                      height: 32,
-                    ),
-                  ],
-                ),
-              );
-            },
+              },
+            ),
           ),
+
+          const SizedBox(height: 8),
+
           // Profile Image
           CircleAvatar(
             radius: 50,
-            backgroundImage: AssetImage(profile.getAvatarSource()),
             backgroundColor: Colors.grey[300],
+            child: Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  image: AssetImage(profile.getAvatarSource()),
+                  fit: BoxFit.contain, // Adjust this property as needed
+                ),
+              ),
+            ),
           ),
+          const SizedBox(height: 8),
+
           // Name
           Text(
             profile.getName(),
             textAlign: TextAlign.center,
-            style: kNameTextStyle,
+            style: kNameTextStyle.copyWith(color: Colors.black, fontSize: 32), // Black text
           ),
-          const SizedBox(height: 16),
           // Department and Education Status
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Text(
-              '${profile.getDepartment()} - ${profile.getEducationStatus()}',
-              style: kMajorTextStyle,
-            ),
-          ),
-          Divider(
-            color: Colors.white54,
+          const Divider(
+            color: Colors.black, // Black divider
             indent: 16,
             endIndent: 16,
           ),
+          const SizedBox(height: 8),
+
+          Align(
+            alignment: Alignment.centerRight,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(15),
+                border: Border.all(color: Colors.black, width: 1.0), // Optional black border for these containers
+              ),
+              child: Text(
+                profile.getDepartment(),
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 8),
+          Align(
+            alignment: Alignment.centerRight,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(15),
+                border: Border.all(color: Colors.black, width: 1.0), // Optional black border for these containers
+              ),
+              child: Text(
+                profile.getEducationStatus(),
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ),
+
           // Bio
           ListTile(
-            title: const Text(
+            title: Text(
               'Biography: ',
-              style: kSectionTitleStyle,
+              style: kSectionTitleStyle.copyWith(color: Colors.black), // Black text
             ),
             subtitle: Text(
               profile.getBio(),
-              style: kSectionContentStyle,
+              style: kSectionContentStyle.copyWith(color: Colors.black), // Black text
             ),
           ),
           // Courses
           ListTile(
-            title: const Text(
-              'Current Courses: ',
-              style: kSectionTitleStyle,
+            title: Text(
+              'Courses: ',
+              style: kSectionTitleStyle.copyWith(color: Colors.black), // Black text
             ),
-            subtitle: Text(
-              _formatList(profile.getCourses()),
-              style: kSectionContentStyle,
+            subtitle: Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: profile.getCourses().map((course) =>
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(color: Colors.black, width: 1.0), // Optional black border for course tags
+                    ),
+                    child: Text(
+                      course,
+                      style: const TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                  )
+              ).toList(),
             ),
           ),
           // Interests/Skills
           ListTile(
-            title: const Text(
-              'Interests & Skills: ',
-              style: kSectionTitleStyle,
+            title: Text(
+              'Interests: ',
+              style: kSectionTitleStyle.copyWith(color: Colors.black), // Black text
             ),
-            subtitle: Text(
-              _formatList(profile.getInterests()),
-              style: kSectionContentStyle,
+            subtitle: Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: profile.getInterests().map((interest) =>
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(color: Colors.black, width: 1.0), // Optional black border for interest tags
+                    ),
+                    child: Text(
+                      interest,
+                      style: const TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                  )
+              ).toList(),
             ),
           ),
           // Looking For
-          ListTile(
-            title: const Text(
-              'Looking For: ',
-              style: kSectionTitleStyle,
-            ),
-            subtitle: Text(
-              profile.getLookingFor(),
-              style: kSectionContentStyle,
-            ),
-          ),
+          // ListTile(
+          //   title: const Text(
+          //     'Looking For: ',
+          //     style: kSectionTitleStyle,
+          //   ),
+          //   subtitle: Text(
+          //     profile.getLookingFor(),
+          //     style: kSectionContentStyle,
+          //   ),
+          // ),
         ],
       ),
     );

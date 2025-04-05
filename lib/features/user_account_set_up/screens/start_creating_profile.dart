@@ -91,22 +91,29 @@ class _StartScreenState extends State<StartScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(
-                'assets/ae_short_white.png',
-                width: 300,
+              const CircleAvatar(
+                backgroundImage: AssetImage('assets/ae_short_black.png'),
+                radius: 100,
               ),
-              const SizedBox(height: 80),
-              Text(
-                'Connecting peers to peers',
-                style: GoogleFonts.lato(
-                  color: const Color.fromARGB(255, 0, 0, 0),
-                  fontSize: 24,
+              const SizedBox(height: 40),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Center(
+                  child: Text(
+                    'Connect, study, and succeed with Amicae',
+                    style: GoogleFonts.lato(
+                      color: Colors.black,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
               ),
-              const SizedBox(height: 80),
-              OutlinedButton.icon(
+              const SizedBox(height: 40),
+              ElevatedButton.icon(
                 onPressed: _isCreating ? null : _initializeProfile,
-                style: OutlinedButton.styleFrom(
+                style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.black,
                   foregroundColor: Colors.white,
                 ),
@@ -121,7 +128,7 @@ class _StartScreenState extends State<StartScreen> {
                       )
                     : const Icon(Icons.person),
                 label: Text(
-                  _isCreating ? 'Creating...' : 'Start building',
+                  _isCreating ? 'Creating...' : 'Start building your profile',
                 ),
               ),
             ],

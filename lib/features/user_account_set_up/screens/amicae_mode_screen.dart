@@ -1,167 +1,3 @@
-// import 'dart:convert';
-// import 'package:flutter/material.dart';
-// import 'package:google_fonts/google_fonts.dart';
-//
-// import 'package:http/http.dart' as http;
-//
-// // import 'package:amicae_v5/screens/amicae_profile_picture_screen.dart';
-//
-// import '../screens/amicae_edu_status_screen.dart';
-//
-// class AmicaeModeScreen extends StatefulWidget {
-//   const AmicaeModeScreen({super.key, required this.documentId});
-//
-//   final String documentId;
-//
-//   @override
-//   _AmicaeModeScreenState createState() => _AmicaeModeScreenState();
-// }
-//
-// class _AmicaeModeScreenState extends State<AmicaeModeScreen> {
-//   String? _selectedMode; // No option selected at first (null)
-//   bool isButtonEnabled = false;
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//     // Initialize button state (optional, as it's false by default)
-//   }
-//
-//   void _onModeChanged(String? value) {
-//     setState(() {
-//       _selectedMode = value;
-//       isButtonEnabled = _selectedMode != null; // Enable if a mode is selected
-//     });
-//   }
-//
-//   Future<void> updateMode(String documentId, String selectedMode) async {
-//     // Construct the Firebase URL using the document ID to update the specific user's profile
-//     final url = Uri.https(
-//       'amicae-app-default-rtdb.firebaseio.com',
-//       'user-profile/$documentId.json',
-//     );
-//
-//     try {
-//       // Send PATCH request to update the  mode
-//       final response = await http.patch(
-//         url,
-//         body: json.encode({'lookingFor': selectedMode}), // Sending the mode as JSON
-//       );
-//
-//       if (response.statusCode == 200) {
-//         print('Mode updated successfully!');
-//       } else {
-//         print('Failed to update mode: ${response.statusCode}');
-//       }
-//     } catch (error) {
-//       print('Error occurred: $error');
-//     }
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         backgroundColor: Colors.white,
-//         automaticallyImplyLeading: false,
-//       ),
-//       backgroundColor: Colors.white,
-//       body: Padding(
-//         padding: const EdgeInsets.all(20.0),
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             Text(
-//               'Choose a mode to get started',
-//               style: GoogleFonts.lato(
-//                 fontSize: 24,
-//                 fontWeight: FontWeight.bold,
-//                 color: Colors.black87,
-//               ),
-//             ),
-//             SizedBox(height: 10),
-//             Text(
-//               'Amicae\'s for making all kinds of connections! You\'ll be able to switch modes once you\'re all set up.',
-//               style: GoogleFonts.lato(fontSize: 16, color: Colors.black87),
-//             ),
-//             SizedBox(height: 40),
-//             // White container for 'BFF' option
-//             Container(
-//               decoration: BoxDecoration(
-//                 color: Colors.white,
-//                 borderRadius: BorderRadius.circular(10),
-//                 boxShadow: [
-//                   BoxShadow(
-//                     color: Colors.black12,
-//                     blurRadius: 4,
-//                     offset: Offset(0, 2),
-//                   ),
-//                 ],
-//               ),
-//               child: RadioListTile<String>(
-//                 title: Text('BFF', style: GoogleFonts.lato()),
-//                 subtitle: Text('Make new friends at every stage of your life', style: GoogleFonts.lato()),
-//                 value: 'BFF',
-//                 groupValue: _selectedMode,
-//                 activeColor: Colors.black87,
-//                 onChanged: _onModeChanged, // Use _onModeChanged
-//               ),
-//             ),
-//             SizedBox(height: 20),
-//             // White container for 'Mentor' option
-//             Container(
-//               decoration: BoxDecoration(
-//                 color: Colors.white,
-//                 borderRadius: BorderRadius.circular(10),
-//                 boxShadow: [
-//                   BoxShadow(
-//                     color: Colors.black12,
-//                     blurRadius: 4,
-//                     offset: Offset(0, 2),
-//                   ),
-//                 ],
-//               ),
-//               child: RadioListTile<String>(
-//                 title: Text('Mentor', style: GoogleFonts.lato()),
-//                 subtitle: Text('Find that special connection in the community', style: GoogleFonts.lato()),
-//                 value: 'Mentor',
-//                 groupValue: _selectedMode,
-//                 activeColor: Colors.black87,
-//                 onChanged: _onModeChanged, // Use _onModeChanged
-//               ),
-//             ),
-//             Spacer(),
-//             Align(
-//               alignment: Alignment.bottomRight,
-//               child: CircleAvatar(
-//                 backgroundColor: Colors.white,
-//                 radius: 28,
-//                 child: IconButton(
-//                   icon: Icon(
-//                     Icons.arrow_circle_right_sharp,
-//                     size: 50,
-//                     color: isButtonEnabled ? Colors.black : Colors.grey, // Conditional color
-//                   ),
-//                   onPressed: isButtonEnabled
-//                       ? () {
-//                     updateMode(widget.documentId, _selectedMode!);
-//                     // Handle forward button press
-//                     Navigator.push(
-//                       context,
-//                       MaterialPageRoute(builder: (context) => AmicaeEduStatusScreen(documentId: widget.documentId)),
-//                     );
-//                   }
-//                       : null, // Disable button if no mode is selected
-//                 ),
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -179,135 +15,187 @@ class AmicaeModeScreen extends StatefulWidget {
 
 class _AmicaeModeScreenState extends State<AmicaeModeScreen> {
   final UserProfileService _profileService = UserProfileService();
-  String? _selectedMode; // No option selected at first (null)
+  String? _selectedMode;
   bool isButtonEnabled = false;
-
-  @override
-  void initState() {
-    super.initState();
-    // Initialize button state (optional, as it's false by default)
-  }
+  bool _isUpdating = false;
 
   void _onModeChanged(String? value) {
     setState(() {
       _selectedMode = value;
-      isButtonEnabled = _selectedMode != null; // Enable if a mode is selected
+      isButtonEnabled = _selectedMode != null;
     });
   }
 
   Future<void> _updateMode() async {
-    try {
-      // Use the updateLookingFor method from UserProfileService
-      await _profileService.updateLookingFor(_selectedMode!);
+    if (!isButtonEnabled || _isUpdating) return;
 
-      // Navigate to the next screen
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => AmicaeEduStatusScreen(documentId: widget.documentId),
-        ),
-      );
+    setState(() {
+      _isUpdating = true;
+    });
+
+    try {
+      await _profileService.updateLookingFor(_selectedMode!);
+      if (mounted) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => AmicaeEduStatusScreen(documentId: widget.documentId),
+          ),
+        );
+      }
     } catch (error) {
-      // Show error dialog or snackbar
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Failed to update mode: $error'),
-          backgroundColor: Colors.red,
-        ),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to update mode: $error'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isUpdating = false;
+        });
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        automaticallyImplyLeading: false,
+    return Theme(
+      data: ThemeData(
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
       ),
-      backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Choose a mode to get started',
-              style: GoogleFonts.lato(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
-            ),
-            SizedBox(height: 10),
-            Text(
-              'Amicae\'s for making all kinds of connections! You\'ll be able to switch modes once you\'re all set up.',
-              style: GoogleFonts.lato(fontSize: 16, color: Colors.black87),
-            ),
-            SizedBox(height: 40),
-            // White container for 'BFF' option
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 4,
-                    offset: Offset(0, 2),
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 36.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 40),
+                      Text(
+                        'Choose a mode to get started',
+                        style: GoogleFonts.lato(
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        'Amicae is for making all kinds of connections!',
+                        style: GoogleFonts.lato(
+                          fontSize: 16,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      const SizedBox(height: 40),
+                      // BFF option
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 4,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: RadioListTile<String>(
+                          title: Text('Friend / Study Buddy', style: GoogleFonts.lato()),
+                          subtitle: Text(
+                            'Make new friends at every stage of your life',
+                            style: GoogleFonts.lato(),
+                          ),
+                          value: 'Friend / Study Buddy',
+                          groupValue: _selectedMode,
+                          activeColor: Colors.black87,
+                          onChanged: _onModeChanged,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      // Mentor option
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 4,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: RadioListTile<String>(
+                          title: Text('Mentor', style: GoogleFonts.lato()),
+                          subtitle: Text(
+                            'Find that special connection in the community',
+                            style: GoogleFonts.lato(),
+                          ),
+                          value: 'Mentor',
+                          groupValue: _selectedMode,
+                          activeColor: Colors.black87,
+                          onChanged: _onModeChanged,
+
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              child: RadioListTile<String>(
-                title: Text('BFF', style: GoogleFonts.lato()),
-                subtitle: Text('Make new friends at every stage of your life', style: GoogleFonts.lato()),
-                value: 'BFF',
-                groupValue: _selectedMode,
-                activeColor: Colors.black87,
-                onChanged: _onModeChanged,
-              ),
-            ),
-            SizedBox(height: 20),
-            // White container for 'Mentor' option
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 4,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: RadioListTile<String>(
-                title: Text('Mentor', style: GoogleFonts.lato()),
-                subtitle: Text('Find that special connection in the community', style: GoogleFonts.lato()),
-                value: 'Mentor',
-                groupValue: _selectedMode,
-                activeColor: Colors.black87,
-                onChanged: _onModeChanged,
-              ),
-            ),
-            Spacer(),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: CircleAvatar(
-                backgroundColor: Colors.white,
-                radius: 28,
-                child: IconButton(
-                  icon: Icon(
-                    Icons.arrow_circle_right_sharp,
-                    size: 50,
-                    color: isButtonEnabled ? Colors.black : Colors.grey, // Conditional color
-                  ),
-                  onPressed: isButtonEnabled ? _updateMode : null,
                 ),
               ),
-            ),
-          ],
+              Row(
+                children: [
+                  const Icon(
+                    Icons.info_outline,
+                    color: Colors.black,
+                    size: 20.0,
+                  ),
+                  const SizedBox(width: 4.0),
+                  Expanded(
+                    child: Text(
+                      'You can change your mode later in settings.',
+                      style: GoogleFonts.lato(
+                        fontSize: 12.0,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  CircleAvatar(
+                    backgroundColor: Colors.white,
+                    radius: 28,
+                    child: IconButton(
+                      icon: _isUpdating
+                          ? const SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: CircularProgressIndicator(
+                          color: Colors.black,
+                          strokeWidth: 2,
+                        ),
+                      )
+                          : Icon(
+                        Icons.arrow_circle_right_sharp,
+                        size: 50,
+                        color: isButtonEnabled ? Colors.black : Colors.grey,
+                      ),
+                      onPressed: isButtonEnabled && !_isUpdating ? _updateMode : null,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

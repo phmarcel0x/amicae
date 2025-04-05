@@ -23,12 +23,13 @@ class SwipeButton extends StatelessWidget {
         width: 72,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: buttonColor,
-          boxShadow: [
+          color: Colors.white, // White background
+          border: Border.all(color: Colors.black, width: 3.0), // Black border
+          boxShadow: const [
             BoxShadow(
-              color: Colors.black26,
+              color: Colors.black,
               blurRadius: 4,
-              offset: const Offset(0, 2),
+              offset: Offset(0, 2),
             )
           ],
         ),
@@ -37,7 +38,7 @@ class SwipeButton extends StatelessWidget {
           child: FittedBox(
             child: Icon(
               buttonIcon,
-              color: iconColor,
+              color: iconColor, // Default icon color to black
             ),
           ),
         ),

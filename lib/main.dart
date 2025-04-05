@@ -19,9 +19,22 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: const LandingPage(),
-      theme: AppThemes.lightTheme,
-      darkTheme: AppThemes.darkTheme,
+      // theme: AppThemes.lightTheme,
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.white,
+        ),
+        scaffoldBackgroundColor: Colors.white,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          surfaceTintColor: Colors.transparent,
+
+        ),
+      ),
+      // darkTheme: AppThemes.darkTheme,
       themeMode: ThemeMode.system,
+
     );
   }
 }

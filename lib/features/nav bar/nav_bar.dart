@@ -4,7 +4,6 @@ import "../people/people.dart";
 import "../events/events_api.dart";
 import "../spots/spots.dart";
 import "../profile/profile_page.dart";
-import "../info/info.dart";
 
 class NavBar extends StatefulWidget {
   const NavBar({super.key});
@@ -26,81 +25,94 @@ class _NavBarState extends State<NavBar> {
     const HomePage(),
     const PeoplePage(),
     const APIEventsPage(),
-    const SpotsPage(),
+    SpotsPage(),
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-          appBar: AppBar(automaticallyImplyLeading: false,
-    forceMaterialTransparency: true,
-    title: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Padding(
-            padding: const EdgeInsets.only(right: 200),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const InfoPage()));
-              }, // Image tapped
-              child: Image.asset(
-                "assets/ae_short_white.png",
-                fit: BoxFit.contain,
-                height: 70,
-              ),
-            )),
-        Padding(
-          padding: const EdgeInsets.all(10),
-          child: IconButton(
-              icon: const Icon(Icons.account_circle),
-              color: Colors.black,
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ProfilePage()));
-              }),
-        ),
-      ],
-    ),
-    shape: const Border(bottom: BorderSide(color: Colors.black, width: 4)),
-          ),
-          body: pages[selectedIndex],
-          bottomNavigationBar: BottomNavigationBar(
-    showSelectedLabels: false,
-    showUnselectedLabels: false,
-    selectedFontSize: 15,
-    selectedItemColor: Colors.orange,
-    selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
-    unselectedItemColor: Colors.black,
-    // showSelectedLabels: false,
-    // showUnselectedLabels: false,
-    backgroundColor: Colors.white,
-    type: BottomNavigationBarType.fixed,
-
-    items: const <BottomNavigationBarItem>[
-      BottomNavigationBarItem(
-        icon: Icon(Icons.home),
-        label: "Home",
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.people),
-        label: "People",
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.event),
-        label: "Events",
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.coffee),
-        label: "Spots",
-      ),
-    ],
-    currentIndex: selectedIndex,
-    onTap: onItemTapped,
-          ),
+    return WillPopScope(
+      // This will intercept the back press or swipe back gesture
+      onWillPop: () async {
+        return false; // Disable backswiping and hardware back button
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          // forceMaterialTransparency: true,
           backgroundColor: Colors.white,
-        );
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 200),
+                child: Image.asset(
+                  "assets/ae_short_white.png",
+                  fit: BoxFit.contain,
+                  height: 70,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: IconButton(
+                  icon: const Icon(Icons.account_circle_rounded),
+                  color: Colors.black,
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ProfilePage()));
+                  },
+                ),
+              ),
+            ],
+          ),
+          shape: const Border(bottom: BorderSide(color: Colors.black, width: 4)),
+        ),
+
+        body: pages[selectedIndex],
+        bottomNavigationBar: Container(
+
+          decoration: const BoxDecoration(
+            border: Border(
+              top: BorderSide(
+                color: Colors.black,
+                width: 3,
+              )
+            )
+          ),
+          child: BottomNavigationBar(
+            showSelectedLabels: true,
+            showUnselectedLabels: false,
+            selectedFontSize: 15,
+            selectedItemColor: Colors.black,
+            selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
+            unselectedItemColor: Colors.black,
+            backgroundColor: Colors.white,
+            type: BottomNavigationBarType.fixed,
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home_rounded),
+                label: "Home",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.people_rounded),
+                label: "Connections",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.event_rounded),
+                label: "Events",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.coffee_rounded),
+                label: "Spots",
+              ),
+            ],
+            currentIndex: selectedIndex,
+            onTap: onItemTapped,
+          ),
+        ),
+        backgroundColor: Colors.white,
+      ),
+    );
   }
 }
