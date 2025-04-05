@@ -39,16 +39,7 @@ class _PeoplePageState extends State<PeoplePage> {
       image: 'assets/ae_short_black.png', // Fixed image path
       message: 'Welcome to Amicae! Complete your profile and start swiping!',
     ),
-    Match(
-      name: 'John Doe',
-      image: 'assets/blank_pfp.png', // Placeholder image
-      message: 'Hey, how are you doing?',
-    ),
-    Match(
-      name: 'Jane Smith',
-      image: 'assets/blank_pfp.png', // Placeholder image
-      message: 'Nice to match with you!',
-    ),
+
     // Add more sample matches as needed
   ];
 
@@ -58,6 +49,7 @@ class _PeoplePageState extends State<PeoplePage> {
       isScrollControlled: true, // Allows the bottom sheet to take up more screen space
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+        side: BorderSide(color: Colors.white, width: 0.5), // Subtle white top border
       ),
       backgroundColor: Colors.white,
       builder: (BuildContext context) {
@@ -74,6 +66,7 @@ class _PeoplePageState extends State<PeoplePage> {
         centerTitle: true,
         automaticallyImplyLeading: false, // This removes the back button
       ),
+      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: matches.isEmpty
@@ -152,14 +145,7 @@ class _MessageChatPopupState extends State<MessageChatPopup> {
       text: 'Welcome to Amicae! Complete your profile and start swiping!',
       isMe: false,
     ),
-    ChatMessage(
-      text: 'Hello!',
-      isMe: false,
-    ),
-    ChatMessage(
-      text: 'Hello!',
-      isMe: true,
-    ),
+
   ]; // Sample messages
 
   void _sendMessage() {
@@ -168,18 +154,20 @@ class _MessageChatPopupState extends State<MessageChatPopup> {
         _messages.add(ChatMessage(text: _messageController.text.trim(), isMe: true));
         _messageController.clear();
       });
-      // In a real app, you would send the message here
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
+    final availableHeight = screenHeight - keyboardHeight;
+    final maxHeight = availableHeight * 0.75; // Limit to 75% of the *available* height
+
     return Padding(
-      padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context).viewInsets.bottom, // Adjust for keyboard
-      ),
+      padding: EdgeInsets.only(bottom: keyboardHeight), // Adjust padding for keyboard
       child: ConstrainedBox(
-        constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.75),
+        constraints: BoxConstraints(maxHeight: maxHeight),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
@@ -214,21 +202,27 @@ class _MessageChatPopupState extends State<MessageChatPopup> {
             ),
             const Divider(height: 1, color: Colors.grey),
             Expanded(
-              child: ListView.builder(
-                padding: const EdgeInsets.all(8.0),
-                itemCount: _messages.length,
-                itemBuilder: (context, index) {
-                  final message = _messages[index];
-                  return ChatBubble(message: message);
-                },
+              child: SingleChildScrollView(
+                reverse: false,
+                child: ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.all(8.0),
+                  itemCount: _messages.length,
+                  itemBuilder: (context, index) {
+                    final message = _messages[index];
+                    return ChatBubble(message: message);
+                  },
+                ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(16.0),
               child: Row(
                 children: <Widget>[
                   Expanded(
                     child: TextField(
+                      cursorColor: Colors.black,
                       controller: _messageController,
                       decoration: const InputDecoration(
                         hintText: 'Send a message...',
@@ -256,7 +250,8 @@ class _MessageChatPopupState extends State<MessageChatPopup> {
                 ],
               ),
             ),
-            const SizedBox(height: 32.0)
+            const SizedBox(height: 16)
+            // Removed the extra SizedBox at the bottom as the padding handles spacing
           ],
         ),
       ),

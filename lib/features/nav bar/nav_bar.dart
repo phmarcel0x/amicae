@@ -38,7 +38,8 @@ class _NavBarState extends State<NavBar> {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          forceMaterialTransparency: true,
+          // forceMaterialTransparency: true,
+          backgroundColor: Colors.white,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -67,8 +68,10 @@ class _NavBarState extends State<NavBar> {
           ),
           shape: const Border(bottom: BorderSide(color: Colors.black, width: 4)),
         ),
+
         body: pages[selectedIndex],
         bottomNavigationBar: Container(
+
           decoration: const BoxDecoration(
             border: Border(
               top: BorderSide(
