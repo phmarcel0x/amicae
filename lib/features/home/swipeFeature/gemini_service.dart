@@ -16,7 +16,7 @@ class GeminiService {
   // Initialize Vertex AI
   GeminiService() {
     _vertexAi = FirebaseVertexAI.instance;
-    _model = _vertexAi.generativeModel(model: 'gemini-1.5-pro');
+    _model = _vertexAi.generativeModel(model: 'gemini-2.0-flash-001');
   }
 
   // Get the current user's profile from Firebase
