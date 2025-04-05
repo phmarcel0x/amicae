@@ -33,6 +33,102 @@ class ProfileCard extends StatelessWidget {
       child: ListView(
         padding: const EdgeInsets.all(8),
         children: [
+          // Amicae MatchUp AI
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
+            child: Consumer<ProfilesBrain>(
+              builder: (context, profilesBrain, child) {
+                final matchInsight = profilesBrain.matchInsight;
+
+                if (matchInsight.isLoading) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(kProfileCardBorderRadius),
+                      border: Border.all(color: Colors.green, width: 2.0),
+                      color: Colors.white,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Amicae MatchUp AI: ',
+                            style: kSectionTitleStyle.copyWith(
+                              color: Colors.green,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 0),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const SizedBox(
+                                width: 18,
+                                height: 18,
+                                child: CircularProgressIndicator(
+                                  color: Colors.black,
+                                  strokeWidth: 2.0,
+                                ),
+                              ),
+                              const SizedBox(width: 16),
+                              Text(
+                                'Analyzing profiles...',
+                                style: kSectionContentStyle.copyWith(
+                                  color: Colors.black,
+                                  fontStyle: FontStyle.italic,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }
+
+                if (matchInsight.isEmpty) {
+                  return const SizedBox.shrink(); // Hide if no insights available
+                }
+
+                return Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(kProfileCardBorderRadius),
+                    border: Border.all(color: Colors.green, width: 2.0),
+                    color: Colors.white,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Amicae MatchUp AI: ',
+                          textAlign: TextAlign.center, // Center the text within its container
+                          style: kSectionTitleStyle.copyWith(
+                            color: Colors.green,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 0),
+                        Text(
+                          textAlign: TextAlign.center, // Center the text within its container
+                          "\"${matchInsight.content}\"",
+                          style: kSectionContentStyle.copyWith(
+                            color: Colors.black,
+                            fontStyle: FontStyle.italic,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+
+          const SizedBox(height: 8),
+
           // Profile Image
           CircleAvatar(
             radius: 50,
@@ -53,13 +149,18 @@ class ProfileCard extends StatelessWidget {
           Text(
             profile.getName(),
             textAlign: TextAlign.center,
-            style: kNameTextStyle.copyWith(color: Colors.black), // Black text
+            style: kNameTextStyle.copyWith(color: Colors.black, fontSize: 32), // Black text
+          ),
+          // Department and Education Status
+          const Divider(
+            color: Colors.black, // Black divider
+            indent: 16,
+            endIndent: 16,
           ),
           const SizedBox(height: 8),
-          // Department and Education Status
 
           Align(
-            alignment: Alignment.center,
+            alignment: Alignment.centerRight,
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
@@ -79,7 +180,7 @@ class ProfileCard extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Align(
-            alignment: Alignment.center,
+            alignment: Alignment.centerRight,
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
@@ -97,11 +198,7 @@ class ProfileCard extends StatelessWidget {
               ),
             ),
           ),
-          const Divider(
-            color: Colors.black, // Black divider
-            indent: 16,
-            endIndent: 16,
-          ),
+
           // Bio
           ListTile(
             title: Text(

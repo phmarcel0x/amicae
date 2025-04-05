@@ -24,9 +24,7 @@ class SwipePage extends StatelessWidget {
 
         // Error message should only be shown for initial loading errors
         // We'll completely hide any error message for swipe errors
-        if (profilesBrain.errorMessage != null &&
-            profilesBrain.noMoreProfiles == false &&
-            profilesBrain.currentProfile == null) {
+        if (profilesBrain.errorMessage != null && profilesBrain.noMoreProfiles == false && profilesBrain.currentProfile == null) {
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -73,101 +71,13 @@ class SwipePage extends StatelessWidget {
             Expanded(
               flex: 4,
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.only(
+                  top: 16,
+                  left: 16,
+                  right: 16,
+                  bottom: 8,
+                ),
                 child: ProfileCard(profile: profilesBrain.currentProfile!),
-              ),
-            ),
-            // Amicae AI
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
-              child: Consumer<ProfilesBrain>(
-                builder: (context, profilesBrain, child) {
-                  final matchInsight = profilesBrain.matchInsight;
-
-                  if (matchInsight.isLoading) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(kProfileCardBorderRadius),
-                        border: Border.all(color: Colors.black, width: 2.0),
-                        color: Colors.white,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Amicae AI: ',
-                              style: kSectionTitleStyle.copyWith(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 0),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const SizedBox(
-                                  width: 18,
-                                  height: 18,
-                                  child: CircularProgressIndicator(
-                                    color: Colors.black,
-                                    strokeWidth: 2.0,
-                                  ),
-                                ),
-                                const SizedBox(width: 16),
-                                Text(
-                                  'Analyzing profiles...',
-                                  style: kSectionContentStyle.copyWith(
-                                    color: Colors.black,
-                                    fontStyle: FontStyle.italic,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  }
-
-                  if (matchInsight.isEmpty) {
-                    return const SizedBox.shrink(); // Hide if no insights available
-                  }
-
-                  return Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(kProfileCardBorderRadius),
-                      border: Border.all(color: Colors.black, width: 2.0),
-                      color: Colors.white,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Amicae AI: ',
-                            textAlign: TextAlign.center, // Center the text within its container
-                            style: kSectionTitleStyle.copyWith(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 0),
-                          Text(
-                            textAlign: TextAlign.center, // Center the text within its container
-                            "\"${matchInsight.content}\"",
-                            style: kSectionContentStyle.copyWith(
-                              color: Colors.black,
-                              fontStyle: FontStyle.italic,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
               ),
             ),
 

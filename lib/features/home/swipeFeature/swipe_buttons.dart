@@ -24,7 +24,7 @@ class SwipeButton extends StatelessWidget {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: Colors.white, // White background
-          border: Border.all(color: Colors.black, width: 4.0), // Black border
+          border: Border.all(color: Colors.black, width: 3.0), // Black border
           boxShadow: const [
             BoxShadow(
               color: Colors.black,
